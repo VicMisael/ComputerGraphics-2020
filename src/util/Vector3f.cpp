@@ -16,14 +16,19 @@ Vector3f::Vector3f(float _vec[3])
         vec[i] = _vec[i];
     }
 }
-Vector3f::Vector3f(__m128 _xyz){
-    xyz=_xyz;
+Vector3f::Vector3f(__m128 _xyz)
+{
+    xyz = _xyz;
 }
-void Vector3f::normalize(){
-    float length=this->length();
-    x*=1/length;
-    y*=1/length;
-    z*=1/length;
+void Vector3f::normalize()
+{
+    float length = this->length();
+    if (length != 0)
+    {
+        x *= 1 / length;
+        y *= 1 / length;
+        z *= 1 / length;
+    }
 }
 float Vector3f::length()
 {
