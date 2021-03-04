@@ -2,8 +2,9 @@
 #define _VECTOR3F_
 #include <xmmintrin.h>
 #include <math.h>
-#define _USESIMDINTRINSICS
+#include "definitions.hpp"
 
+//Can be used to represent both vectors, and points
 class Vector3f
 {
 

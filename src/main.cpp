@@ -1,3 +1,4 @@
+#include "util/definitions.hpp"
 #include "util/Vector3f.hpp"
 #include "util/VectorUtilities.hpp"
 #include <iostream>
