@@ -2,6 +2,8 @@
 #define _VECTOR3F_
 #include <xmmintrin.h>
 #include <math.h>
+#define _USESIMDINTRINSICS
+
 class Vector3f
 {
 
@@ -26,7 +28,7 @@ public:
     float length();
     void normalize();
     union
-    {
+    {        
         __m128 xyz;
         float vec[3];
         struct

@@ -24,10 +24,15 @@ void Vector3f::normalize()
 {
     float length = this->length();
     if (length != 0)
-    {
+    { //Using Inntrinsics for SIMD
+#ifdef _USESIMDINTRINSICS
+        const __m128 scalar = _mm_set1_ps(length);
+        xyz = _mm_div_ps(xyz, scalar);
+#else
         x *= 1 / length;
         y *= 1 / length;
         z *= 1 / length;
+#endif
     }
 }
 float Vector3f::length()
