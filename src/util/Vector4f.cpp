@@ -2,6 +2,7 @@
 
 Vector4f::Vector4f()
 {
+    //creates a point
     Vector4f(1, 0, 0, 1);
 }
 Vector4f::Vector4f(float _x, float _y, float _z, float _w)
