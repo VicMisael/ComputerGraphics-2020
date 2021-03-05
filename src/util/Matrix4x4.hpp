@@ -5,6 +5,7 @@ class Matrix4x4
 { //using column major order
 
     float mm44[4][4];
+
 public:
     Matrix4x4();
     Matrix4x4(float _mm44[4][4]);
@@ -40,15 +41,15 @@ public:
         }
         return Matrix4x4(retmm44);
     }
-    
+
     void ConcatTransformation(const float _mm[4][4]);
     void ConcatTransformation(const Matrix4x4 &matrix44);
     Matrix4x4 Transpose();
     float Determinant();
     //Returns a new Transposed index of this matrix
     Matrix4x4 Transpose(const Matrix4x4 &matrix);
-
-  
+    Matrix4x4 Inverse();
+    void printMatrix();
     void Rotate(Vector3f &axis, float angle);
 };
 #endif
