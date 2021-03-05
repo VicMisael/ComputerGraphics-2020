@@ -1,13 +1,18 @@
-#include "util/definitions.hpp"
-#include "util/Vector3f.hpp"
-#include "util/VectorUtilities.hpp"
+#include "util/Matrix4x4.hpp"
 #include <iostream>
 
 int main()
 {
+    float M4[4][4] = {
+        0, 5, 3, 5,
+        9, 2, 1, 4,
+        4, 0.23, 1, 3,
+        1, 2, 3, 4.55};
 
-    Vector3f vec(2, 3, 5);
-    std::cout << VectorUtilities::Length(vec, Vector3f(2,3,5)) << std::endl;
-    for(int i=0;i<1000;i++)
-        std::cout << VectorUtilities::normalizeCopy(Vector3f(15*i/1000,89,23)).length() << std::endl;
+    Matrix4x4 matrx(M4);
+    for (int i; i < 100000; i++)
+    {
+
+        matrx.Determinant();
+    }
 }

@@ -2,9 +2,12 @@
 #define _MATRIX44_
 #include "Vector4f.hpp"
 class Matrix4x4
-{
+{ //using column major order
+
     float mm44[4][4];
+public:
     Matrix4x4();
+    Matrix4x4(float _mm44[4][4]);
     Vector4f operator*(const Vector4f &v) const
     {
         float x = mm44[0][0] * v.x + mm44[0][1] * v.y + mm44[0][2] * v.z + mm44[0][3] * v.w;
@@ -13,5 +16,39 @@ class Matrix4x4
         float w = mm44[0][0] * v.x + mm44[0][1] * v.y + mm44[0][2] * v.z + mm44[3][3] * v.w;
         return Vector4f(x, y, z, w);
     }
+    Matrix4x4 operator+(const Matrix4x4 &matrix) const
+    {
+        float retmm44[4][4];
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                retmm44[i][j] = mm44[i][j] + matrix.mm44[i][j];
+            }
+        }
+        return Matrix4x4(retmm44);
+    }
+    Matrix4x4 operator-(const Matrix4x4 &matrix) const
+    {
+        float retmm44[4][4];
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                retmm44[i][j] = mm44[i][j] - matrix.mm44[i][j];
+            }
+        }
+        return Matrix4x4(retmm44);
+    }
+    
+    void ConcatTransformation(const float _mm[4][4]);
+    void ConcatTransformation(const Matrix4x4 &matrix44);
+    Matrix4x4 Transpose();
+    float Determinant();
+    //Returns a new Transposed index of this matrix
+    Matrix4x4 Transpose(const Matrix4x4 &matrix);
+
+  
+    void Rotate(Vector3f &axis, float angle);
 };
 #endif
