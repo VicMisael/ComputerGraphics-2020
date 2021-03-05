@@ -19,9 +19,10 @@ Vector4f::Vector4f(float _vec[4])
         vec[i] = _vec[i];
     }
 }
-Vector4f::Vector4f(Vector3f vec){
-    xyzw=vec.xyz;
-    w=1;
+Vector4f::Vector4f(Vector3f vec)
+{
+    xyzw = vec.xyz;
+    w = 1;
 }
 Vector4f::Vector4f(__m128 _xyzw)
 {
@@ -44,6 +45,10 @@ void Vector4f::normalize()
     }
 }
 
+Vector3f Vector4f::toVector3f()
+{
+    return Vector3f(x, y, z);
+}
 float Vector4f::length()
 {
     return sqrt(x * x + y * y + z * z + w * w);

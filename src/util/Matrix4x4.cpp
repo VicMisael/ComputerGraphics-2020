@@ -1,7 +1,7 @@
 #include "Matrix4x4.hpp"
 #include <iostream>
 
-void inline getCofactor(float A[4][4], float temp[4][4], int p, int q, int n)
+void  getCofactor(float A[4][4], float temp[4][4], int p, int q, int n)
 {
     int i = 0, j = 0;
 
