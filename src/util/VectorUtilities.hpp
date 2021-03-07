@@ -7,8 +7,7 @@ namespace VectorUtilities
     float Length(const Vector3f &a, const Vector3f &b);
     Vector3f normalizeCopy(const Vector3f &v);
 
-    Vector4f crossProduct(const Vector4f &a, const Vector4f &b);
     float dotProduct(const Vector4f &a, const Vector4f &b);
     float Length(const Vector4f &a, const Vector4f &b);
-    Vector4f normalizedCopy(const Vector4f &v);
+    Vector4f normalizeCopy(const Vector4f &v);
 }

@@ -25,3 +25,26 @@ float VectorUtilities::Length(const Vector3f &a, const Vector3f &b)
 {
     return sqrt(VectorUtilities::dotProduct(a, b));
 }
+//Vector 4f
+
+float VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
+{
+    float scalar = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        scalar += a.vec[i] * b.vec[i];
+    }
+
+    return scalar;
+}
+Vector4f VectorUtilities::normalizeCopy(const Vector4f &v)
+{
+    Vector4f vec(v.xyzw);
+    vec.normalize();
+    return vec;
+}
+
+float VectorUtilities::Length(const Vector4f &a, const Vector4f &b)
+{
+    return sqrt(VectorUtilities::dotProduct(a, b));
+}
