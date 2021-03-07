@@ -7,5 +7,5 @@ class Circle
 {
     float radius;
     Vector3f Point;
-    
+    Vector3f color3f;
 };
