@@ -39,5 +39,12 @@ public:
         }
         return Matrix3x3(retmm33);
     }
+    Matrix3x3 Transpose();
+    Matrix3x3 Transpose(const Matrix3x3 &matrix);
+    Matrix3x3 Inverse();
+    void ConcatTransformation(const float _mm[3][3]);
+    void ConcatTransformation(const Matrix3x3 &matrix33);
+    float Determinant();
+    void printMatrix();
 };
 #endif
