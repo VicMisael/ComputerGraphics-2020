@@ -21,13 +21,21 @@ Vector4f::Vector4f(float _vec[4])
 }
 Vector4f::Vector4f(Vector3f vec)
 {
+#ifdef _USESIMDINTRINSICS
     xyzw = vec.xyz;
+#else
+    x=vec.x;
+    y=vec.y;
+    z=vec.z;
+#endif
     w = 1;
 }
+#ifdef _USESIMDINTRINSICS
 Vector4f::Vector4f(__m128 _xyzw)
 {
     xyzw = _xyzw;
 }
+#endif
 void Vector4f::normalize()
 {
     float length = this->length();

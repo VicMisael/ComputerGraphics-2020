@@ -16,10 +16,12 @@ Vector3f::Vector3f(float _vec[3])
         vec[i] = _vec[i];
     }
 }
+#ifdef _USESIMDINTRINSICS
 Vector3f::Vector3f(__m128 _xyz)
 {
     xyz = _xyz;
 }
+#endif
 void Vector3f::normalize()
 {
     float length = this->length();

@@ -17,7 +17,10 @@ float VectorUtilities::dotProduct(const Vector3f &a, const Vector3f &b)
 }
 Vector3f VectorUtilities::normalizeCopy(const Vector3f &v)
 {
+#ifdef _USESIMDINTRINSICS
     Vector3f vec(v.xyz);
+#endif
+    Vector3f vec(v.x, v.y, v.z);
     vec.normalize();
     return vec;
 }
@@ -39,7 +42,10 @@ float VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
 }
 Vector4f VectorUtilities::normalizeCopy(const Vector4f &v)
 {
+#ifdef _USESIMDINTRINSICS
     Vector4f vec(v.xyzw);
+#endif
+    Vector4f vec(v.x,v.y,v.z,v.w);
     vec.normalize();
     return vec;
 }

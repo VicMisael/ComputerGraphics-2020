@@ -11,7 +11,9 @@ public:
     Vector4f(float x, float y, float z, float w);
     Vector4f(Vector3f vec3);
     Vector4f(float vec[4]);
+#ifdef _USESIMDINTRINSICS
     Vector4f(__m128 xyzw);
+#endif
     Vector4f();
     Vector4f operator*(const float &a) const
     {
@@ -30,7 +32,9 @@ public:
     void normalize();
     union
     {
+#ifdef _USESIMDINTRINSICS
         __m128 xyzw;
+#endif
         float vec[4];
         struct
         {

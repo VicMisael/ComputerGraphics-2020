@@ -12,7 +12,9 @@ public:
     Vector3f();
     Vector3f(float x, float y, float z);
     Vector3f(float vec[3]);
+    #ifdef _USESIMDINTRINSICS
     Vector3f(__m128 xyz);
+    #endif
 
     Vector3f operator*(const float &a) const
     {
@@ -29,8 +31,10 @@ public:
     float length();
     void normalize();
     union
-    {        
+    {       
+        #ifdef _USESIMDINTRINSICS
         __m128 xyz;
+        #endif
         float vec[3];
         struct
         {
