@@ -19,8 +19,10 @@ Vector3f VectorUtilities::normalizeCopy(const Vector3f &v)
 {
 #ifdef _USESIMDINTRINSICS
     Vector3f vec(v.xyz);
-#endif
+#else
     Vector3f vec(v.x, v.y, v.z);
+#endif
+
     vec.normalize();
     return vec;
 }
@@ -44,8 +46,10 @@ Vector4f VectorUtilities::normalizeCopy(const Vector4f &v)
 {
 #ifdef _USESIMDINTRINSICS
     Vector4f vec(v.xyzw);
-#endif
+#else
     Vector4f vec(v.x,v.y,v.z,v.w);
+#endif
+    
     vec.normalize();
     return vec;
 }
