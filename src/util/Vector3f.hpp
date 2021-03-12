@@ -1,6 +1,8 @@
 #ifndef _VECTOR3F_
 #define _VECTOR3F_
+#ifdef _USESIMDINTRINSICS
 #include <xmmintrin.h>
+#endif
 #include <math.h>
 #include "definitions.hpp"
 
