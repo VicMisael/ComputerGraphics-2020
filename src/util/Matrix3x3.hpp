@@ -1,8 +1,11 @@
 #ifndef _MATRIX33_
 #define _MATRIX33_
 #include "Vector3f.hpp"
+#include "Matrix4x4.hpp"
 class Matrix3x3
 {
+
+protected:
     float mm33[3][3];
     //Inits a 3x3 matrix
 public:
@@ -38,6 +41,29 @@ public:
             }
         }
         return Matrix3x3(retmm33);
+    }
+    Matrix4x4 operator=(const Matrix3x3 &matrix) const
+    {
+        float mm44[4][4];
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (i < 3 && j < 3)
+                {
+                    mm44[i][j] = mm33[i][j];
+                }
+                else if (i == j)
+                {
+                    mm44[i][j] = 1;
+                }
+                else
+                {
+                    mm44[i][j] = 0;
+                }
+            }
+        }
+        return Matrix4x4(mm44);
     }
     Matrix3x3 Transpose();
     Matrix3x3 Transpose(const Matrix3x3 &matrix);
