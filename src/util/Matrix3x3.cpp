@@ -104,7 +104,13 @@ Matrix3x3::Matrix3x3()
 {
     for (int i = 0; i < 3; i++)
     {
-        mm33[i][i] = 1;
+        for (int j = 0; j < 3; j++)
+        {
+            if (i == j)
+                mm33[i][j] = 1;
+            else
+                mm33[i][j] = 0;
+        }
     }
 }
 
@@ -184,7 +190,27 @@ float Matrix3x3::Determinant()
 {
     return determinant(mm33, 3);
 }
-
+void Matrix3x3::ConcatRotateX(float angle)
+{
+    float rot[3][3] = {{1, 0, 0},
+                       {0, cos(angle), sin(angle)},
+                       {0, -sin(angle), cos(angle)}};
+    this->ConcatTransformation(rot);
+}
+void Matrix3x3::ConcatRotateY(float angle)
+{
+    float rot[3][3] = {{cos(angle), 0, -sin(angle)},
+                       {0, 1, 0},
+                       {sin(angle), 0, cos(angle)}};
+    this->ConcatTransformation(rot);
+}
+void Matrix3x3::ConcatRotateZ(float angle)
+{
+    float rot[3][3] = {{cos(angle), -sin(angle), 0},
+                       {sin(angle), cos(angle), 0},
+                       {0, 0, 1}};
+    this->ConcatTransformation(rot);
+}
 void Matrix3x3::printMatrix()
 {
     for (int i = 0; i < 3; i++)

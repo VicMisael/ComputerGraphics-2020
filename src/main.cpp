@@ -3,19 +3,12 @@
 
 int main()
 {
-    float M4[3][3] = {
-        12, -5, 3,
-        9, 1, 1,
-        4, 0, 1,};
-       
-
-    Matrix3x3 matrx(M4);
-    std::cout << matrx.Determinant() << std::endl;
-    matrx.printMatrix();
-    Matrix3x3 inv = matrx.Inverse();
-    inv.printMatrix();
-    matrx.ConcatTransformation(inv);
-    matrx.printMatrix();
+    Vector3f vec(1, 0, 0);
+    Matrix3x3 m33;
+    m33.ConcatRotateZ(PI/2);
+    m33.printMatrix();
+    Vector3f vec2 = m33 * vec;
+    std::cout << "X: " << vec2.x << " Y: " << vec2.y << " Z: " << vec2.z << std::endl;
     // matrx.ConcatTransformation(inv);
     // matrx.printMatrix(); // std::cout << matrx.Determinant() << std::endl;
 }

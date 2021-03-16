@@ -53,10 +53,6 @@ void Vector4f::normalize()
     }
 }
 
-Vector3f Vector4f::toVector3f()
-{
-    return Vector3f(x, y, z);
-}
 float Vector4f::length()
 {
     return sqrt(x * x + y * y + z * z + w * w);

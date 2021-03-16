@@ -29,7 +29,9 @@ public:
     {
         return Vector4f(v.x - x, v.y - y, v.z - z, v.w - w);
     }
-    Vector3f toVector3f();
+    Vector3f operator=(const Vector4f &v) const{
+        return Vector3f(v.x/v.w,v.y/v.w,v.z/v.w);
+    }
     float length();
     void normalize();
     union

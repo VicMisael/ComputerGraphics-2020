@@ -45,6 +45,9 @@ public:
     void ConcatTransformation(const float _mm[3][3]);
     void ConcatTransformation(const Matrix3x3 &matrix33);
     float Determinant();
+    void ConcatRotateX(float angle);
+    void ConcatRotateY(float angle);
+    void ConcatRotateZ(float angle);
     void printMatrix();
 };
 #endif
