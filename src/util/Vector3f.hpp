@@ -1,10 +1,11 @@
 #ifndef _VECTOR3F_
 #define _VECTOR3F_
+#include "definitions.hpp"
 #ifdef _USESIMDINTRINSICS
 #include <xmmintrin.h>
 #endif
 #include <math.h>
-#include "definitions.hpp"
+
 
 //Can be used to represent both vectors, and points
 class Vector3f

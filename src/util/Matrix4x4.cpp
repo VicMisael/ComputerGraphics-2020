@@ -188,6 +188,9 @@ void Matrix4x4::ConcatTransformation(const Matrix4x4 &matrix44)
 {
     ConcatTransformation(matrix44.mm44);
 }
+void Matrix4x4::Translate(float tx,float ty,float tz){
+    //sets the matrix to a Translation matrix
+}
 
 void Matrix4x4::printMatrix()
 {

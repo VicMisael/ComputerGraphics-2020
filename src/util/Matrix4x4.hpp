@@ -60,6 +60,11 @@ public:
 
     void ConcatTransformation(const float _mm[4][4]);
     void ConcatTransformation(const Matrix4x4 &matrix44);
+    void ConcatRotateX(float angle);
+    void ConcatRotateY(float angle);
+    void ConcatRotateZ(float angle);
+    void Translate(float tx, float ty, float tz);
+
     Matrix4x4 Transpose();
     float Determinant();
     //Returns a new Transposed index of this matrix

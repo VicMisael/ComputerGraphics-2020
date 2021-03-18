@@ -1,7 +1,7 @@
 #include "Vector3f.hpp"
 Vector3f::Vector3f()
 {
-    Vector3f(1, 1, 1);
+    Vector3f(0, 0, 0);
 }
 Vector3f::Vector3f(float _x, float _y, float _z)
 {
