@@ -1,2 +1,0 @@
-D:\University\Raycaster\ComputerGraphics-2020\x64\Debug\CG.exe
-D:\University\Raycaster\ComputerGraphics-2020\x64\Debug\CG.pdb
