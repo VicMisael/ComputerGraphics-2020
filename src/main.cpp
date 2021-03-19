@@ -1,22 +1,27 @@
 #include "util/Matrix3x3.hpp"
 #include <iostream>
 #include "util/Color.hpp"
+#include "objects/World.hpp"
+#ifdef _WIN32
+#include <SDL.h>
+#else
 #include <SDL2/SDL.h>
+#endif
 
 int main(int argc, char **argv)
 {
     SDL_DisplayMode DM;
-    SDL_GetCurrentDisplayMode(0, &DM);
-    auto Width = DM.w;
-    auto Height = DM.h;
     SDL_Window *win = NULL;
-    win = SDL_CreateWindow("RayCaster", Width/2, Height/2, 512, 512, 0);
+    win = SDL_CreateWindow("RayCaster",500,500, 512, 512, 0);
     SDL_Renderer* renderer  = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
     SDL_Texture* framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 512, 512);
     bool run=true;
-    while(run){
     auto window = new Color[512][512];
-    uint8_t val;
+    uint32_t* rgba = new uint32_t[512 * 512];
+    World world;
+    while(run){
+   
+    uint8_t val=0;
     for (int x = 0; x < 512; x++)
     {
         for (int y = 0; y < 512; y++)
@@ -26,7 +31,7 @@ int main(int argc, char **argv)
         }
     }
 
-    uint32_t* rgba=new uint32_t[512*512];
+    
       for (int x = 0; x < 512; x++)
     {
         for (int y = 0; y < 512; y++)
@@ -57,4 +62,5 @@ int main(int argc, char **argv)
         }
     }
     }
+    return 0;
 }
