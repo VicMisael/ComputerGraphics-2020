@@ -1,30 +1,37 @@
 #include "World.hpp"
 #include <iostream>
 
-World::World(){
+static uint8_t r = 135;
+static uint8_t g = 206;
+static uint8_t b = 235;
 
 
-    bgColor = Color(135, 206, 235);
-    Circle* c = new Circle((float)0.7f, Color(255, 0, 0));
-    c->Translate(3,1,6);
+World::World()
+{
+
+    bgColor = Color(r, g, b);
+    Circle *c = new Circle((float)0.7f, Color(255, 0, 0));
+    c->Translate(3, 1, 6);
     c->ApplyTransformation();
     objects.push_back(c);
 
-    Circle* c2 = new Circle((float)0.5f, Color(123, 255, 0));
-    c2->Translate(2, 4, 3);
+    Circle *c2 = new Circle((float)0.5f, Color(255, 255, 255));
+    c2->Translate(1, 1.8, 3);
     c2->ApplyTransformation();
     objects.push_back(c2);
 
-
-    
+    c2 = new Circle((float)0.8f, Color(0, 0, 255));
+    c2->Translate(1.5, 2, 5);
+    c2->ApplyTransformation();
+    objects.push_back(c2);
 }
 
 Color World::computeColor(Ray &ray)
 {
 
-    for (BaseObject* ob : objects)
+    for (BaseObject *ob : objects)
     {
-        if (ob->Intersects(ray)>0)
+        if (ob->Intersects(ray) > 0)
         {
             return ob->getColor();
         }

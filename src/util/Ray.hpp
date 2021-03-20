@@ -5,9 +5,9 @@
 class Ray
 {
 public:
-    Point4f O;
+    Point3f O;
     float t;
-    Vector4f D;
+    Vector3f D;
     Ray(Point3f vec, Point3f Eye);
 };
 #endif

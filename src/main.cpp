@@ -20,35 +20,34 @@ int main(int argc, char **argv)
     auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
     World world;
-    float vz = 0.01f;
+    float vz=0.01;
     while (run)
     {
         
-        uint8_t val = 0;
-        for (int x = 0; x < 512; x++)
+        for (int y = 0; y < 512; y++)
         {
-            for (int y = 0; y < 512; y++)
+            for (int x = 0; x < 512; x++)
             {
-                float vx = x * (1.0 / 512);
-                float vy = y * (1.0 / 512);
+                float vx = (float)x * (1.0 / 512);
+                float vy = (float)y * (1.0 / 512);
                 
                
-                Ray r = Ray(Point3f(vx, vy, vz), Point3f(0, 0, 0));
-                window[x][y]= world.computeColor(r);
-                //ray(eye,d)
-               
+                Ray r=Ray(Point3f(vx, vy,vz ), Point3f(0, 0, 0));
+                Color c=world.computeColor(r);
+                window[x][y]=c;
+          
             }
+      
         }
-        if(vz<1)
-            vz += 0.01f;
+        vz+=0.01;
 
-        for (int x = 0; x < 512; x++)
+        for (int y = 0; y < 512; y++)
         {
-            for (int y = 0; y < 512; y++)
+            for (int x = 0; x < 512; x++)
             {
 
                 rgba[y * 512 + x] = window[x][y].rgba;
-                // std::cout<<std::hex<<rgba[y*512+x]<<std::endl;
+                
             }
         }
         SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
@@ -72,6 +71,7 @@ int main(int argc, char **argv)
                 break;
             }
         }
+    //    run=false;
     }
     return 0;
 };

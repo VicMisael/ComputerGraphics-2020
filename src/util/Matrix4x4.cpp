@@ -1,6 +1,6 @@
 #include "Matrix4x4.hpp"
 #include <iostream>
-void  getCofactor(float A[4][4], float temp[4][4], int p, int q, int n)
+void getCofactor(float A[4][4], float temp[4][4], int p, int q, int n)
 {
     int i = 0, j = 0;
 
@@ -99,7 +99,19 @@ float inverse(float A[4][4], float inverse[4][4])
 
     return true;
 }
-
+void Matrix4x4::loadIdentity()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (i == j)
+                mm44[i][j] = 1;
+            else
+                mm44[i][j] = 0;
+        }
+    }
+}
 Matrix4x4::Matrix4x4()
 {
     for (int i = 0; i < 4; i++)
@@ -171,9 +183,7 @@ void Matrix4x4::ConcatTransformation(const float _mm[4][4])
             }
 
             temp[i][j] = num;
-
         }
-  
     }
 
     for (int i = 0; i < 4; i++)
@@ -190,20 +200,36 @@ void Matrix4x4::ConcatTransformation(const Matrix4x4 &matrix44)
 }
 void Matrix4x4::ConcatRotateX(float angle)
 {
+    float rot[4][4] = {{1, 0, 0, 0},
+                       {0, cos(angle), sin(angle), 0},
+                       {0, -sin(angle), cos(angle), 0},
+                       {0, 0, 0, 1}};
+    this->ConcatTransformation(rot);
 }
 void Matrix4x4::ConcatRotateY(float angle)
 {
+    float rot[4][4] = {{cos(angle), 0, -sin(angle), 0},
+                       {0, 1, 0, 0},
+                       {sin(angle), 0, cos(angle), 0},
+                       {0, 0, 0, 1}};
+    this->ConcatTransformation(rot);
 }
+
 void Matrix4x4::ConcatRotateZ(float angle)
 {
+    float rot[4][4] = {{cos(angle), -sin(angle), 0, 0},
+                       {sin(angle), cos(angle), 0, 0},
+                       {0, 0, 1, 0},
+                       {0, 0, 0, 1}};
+    this->ConcatTransformation(rot);
 }
 void Matrix4x4::ConcatTranslate(float tx, float ty, float tz)
 {
     float translateMatrix[4][4] = {
-        {1,0,0,tx},
-        {0,1,0,ty},
-        {0,0,1,tz},
-        {0,0,0,1},
+        {1, 0, 0, tx},
+        {0, 1, 0, ty},
+        {0, 0, 1, tz},
+        {0, 0, 0, 1},
     };
     this->ConcatTransformation(translateMatrix);
 }

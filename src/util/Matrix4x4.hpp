@@ -57,6 +57,7 @@ public:
         }
         return Matrix4x4(retmm44);
     }
+    void loadIdentity();
 
     void ConcatTransformation(const float _mm[4][4]);
     void ConcatTransformation(const Matrix4x4 &matrix44);
