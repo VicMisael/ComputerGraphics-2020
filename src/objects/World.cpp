@@ -31,7 +31,7 @@ Color World::computeColor(Ray &ray)
 
     for (BaseObject *ob : objects)
     {
-        if (ob->Intersects(ray) > 0)
+        if (ob->Intersects(ray))
         {
             return ob->getColor();
         }

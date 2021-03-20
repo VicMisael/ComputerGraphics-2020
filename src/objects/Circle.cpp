@@ -7,10 +7,10 @@ Circle::Circle(float radius, Color c)
 }
 int Circle::Intersects(Ray &ray)
 {
-	double a = VectorUtilities::dotProduct(ray.D, ray.D);
-	double b = 2 * VectorUtilities::dotProduct(ray.O - Center, ray.D);
-	double c = VectorUtilities::dotProduct(ray.O - Center, ray.O - Center) - radius * radius;
-	double delta = (b * b) - (4 * a * c);
+	float a = VectorUtilities::dotProduct(ray.D, ray.D);
+	float b = 2 * VectorUtilities::dotProduct(ray.O - Center, ray.D);
+	float c = VectorUtilities::dotProduct(ray.O - Center, ray.O - Center) - (double)radius * radius;
+	float delta = (b * b) - (4 * a * c);
 	if (delta < 0)
 	{
 		return 0;

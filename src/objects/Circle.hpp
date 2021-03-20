@@ -8,7 +8,7 @@ class Circle : public BaseObject
 {
 public:
     Circle(float radius,Color c);
-    float radius;
+    double radius;
     Point3f Center;
     int Intersects(Ray& ray);
     void Translate(float tx, float ty, float tz);

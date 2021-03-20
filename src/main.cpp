@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
     World world;
-    float vz=0.01;
+
     while (run)
     {
         
@@ -30,16 +30,14 @@ int main(int argc, char **argv)
             {
                 float vx = (float)x * (1.0 / 512);
                 float vy = (float)y * (1.0 / 512);
-                
+                float vz = 1.0;
                
                 Ray r=Ray(Point3f(vx, vy,vz ), Point3f(0, 0, 0));
-                Color c=world.computeColor(r);
-                window[x][y]=c;
+                window[x][y]= world.computeColor(r);
           
             }
       
         }
-        vz+=0.01;
 
         for (int y = 0; y < 512; y++)
         {
