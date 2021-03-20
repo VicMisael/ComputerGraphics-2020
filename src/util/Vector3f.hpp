@@ -29,8 +29,12 @@ public:
     }
     Vector3f operator-(const Vector3f &v) const
     {
-        return Vector3f(v.x - x, v.y - y, v.z - z);
+        return Vector3f(v.x - (float)x, v.y - (float)y, (float)v.z - z);
+        //return Vector3f(x - v.x, v.y - y, v.z - z);
     }
+
+
+
     float length();
     void normalize();
     union
@@ -45,4 +49,6 @@ public:
         };
     };
 };
+using Point3f = Vector3f;
+
 #endif

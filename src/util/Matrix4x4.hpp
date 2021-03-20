@@ -63,7 +63,7 @@ public:
     void ConcatRotateX(float angle);
     void ConcatRotateY(float angle);
     void ConcatRotateZ(float angle);
-    void Translate(float tx, float ty, float tz);
+    void ConcatTranslate(float tx, float ty, float tz);
 
     Matrix4x4 Transpose();
     float Determinant();

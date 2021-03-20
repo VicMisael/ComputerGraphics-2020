@@ -188,8 +188,24 @@ void Matrix4x4::ConcatTransformation(const Matrix4x4 &matrix44)
 {
     ConcatTransformation(matrix44.mm44);
 }
-void Matrix4x4::Translate(float tx,float ty,float tz){
-    //sets the matrix to a Translation matrix
+void Matrix4x4::ConcatRotateX(float angle)
+{
+}
+void Matrix4x4::ConcatRotateY(float angle)
+{
+}
+void Matrix4x4::ConcatRotateZ(float angle)
+{
+}
+void Matrix4x4::ConcatTranslate(float tx, float ty, float tz)
+{
+    float translateMatrix[4][4] = {
+        {1,0,0,tx},
+        {0,1,0,ty},
+        {0,0,1,tz},
+        {0,0,0,1},
+    };
+    this->ConcatTransformation(translateMatrix);
 }
 
 void Matrix4x4::printMatrix()

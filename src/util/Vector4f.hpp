@@ -32,6 +32,9 @@ public:
     Vector3f operator=(const Vector4f &v) const{
         return Vector3f(v.x/v.w,v.y/v.w,v.z/v.w);
     }
+    Vector4f operator=(const Vector3f& v) const {
+        return Vector4f(v.x, v.y, v.z, 1);
+    }
     float length();
     void normalize();
     union
@@ -47,4 +50,5 @@ public:
     };
 };
 
+using Point4f = Vector4f;
 #endif

@@ -4,6 +4,10 @@
 #include "Vector4f.hpp"
 class Ray
 {
-    Vector4f sads;
+public:
+    Point4f O;
+    float t;
+    Vector4f D;
+    Ray(Point3f vec, Point3f Eye);
 };
 #endif
