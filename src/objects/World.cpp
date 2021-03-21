@@ -16,6 +16,7 @@ World::World()
     objects.push_back(c);
 
     Circle *c2 = new Circle((float)0.5f, Color(255, 255, 255));
+    c2->RotateY(PI/3);
     c2->Translate(1, 1.8, 3);
     c2->ApplyTransformation();
     objects.push_back(c2);
