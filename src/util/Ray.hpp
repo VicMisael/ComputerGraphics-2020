@@ -6,7 +6,7 @@ class Ray
 {
 public:
     Point3f O;
-    float t;
+    float t; // Onde o raio intercepta o objeto;
     Vector3f D;
     Ray(Point3f vec, Point3f Eye);
 };

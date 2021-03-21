@@ -21,11 +21,28 @@ int Circle::Intersects(Ray &ray)
 	}
 	return 2;
 }
+
 void Circle::Translate(float x, float y, float z)
 {
 	transFMat.ConcatTranslate(x, y, z);
 }
+
 void Circle::ApplyTransformation()
 {
 	Center = transFMat * Center;
+}
+
+void Circle::RotateX(float angle)
+{
+	transFMat.ConcatRotateX(angle);
+}
+
+void Circle::RotateY(float angle)
+{
+	transFMat.ConcatRotateY(angle);
+}
+
+void Circle::RotateZ(float angle)
+{
+	transFMat.ConcatRotateZ(angle);
 }

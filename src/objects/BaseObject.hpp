@@ -14,6 +14,9 @@ public:
     Color c;
     virtual int Intersects(Ray& ray) = 0;
     virtual void Translate(float tx, float ty, float tz) = 0;
+    virtual void RotateX(float angle) = 0;
+    virtual void RotateY(float angle) = 0;
+    virtual void RotateZ(float angle) = 0;
     virtual void ApplyTransformation()=0;
     Color getColor();
 };

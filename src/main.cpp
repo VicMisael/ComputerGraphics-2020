@@ -30,7 +30,7 @@ int main(int argc, char **argv)
             {
                 float vx = (float)x * (1.0 / 512);
                 float vy = (float)y * (1.0 / 512);
-                float vz = 1.0;
+                float vz = 0.7;
                
                 Ray r=Ray(Point3f(vx, vy,vz ), Point3f(0, 0, 0));
                 window[x][y]= world.computeColor(r);
@@ -69,7 +69,16 @@ int main(int argc, char **argv)
                 break;
             }
         }
-    //    run=false;
+        std::cout <<"P6 512 512 255 ";
+
+        for (int x = 0; x < 512 ; x++)
+        {
+            for (int y = 0; y < 512; y++)
+            {
+                std::cout << window[x][y].r << window[x][y].g << window[x][y].b;
+            }
+        }
+        run=false;
     }
     return 0;
 };
