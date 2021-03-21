@@ -115,6 +115,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2test.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "C:\Dev\SDL2-2.0.14\lib\x86\SDL2.dll" "$(OutDir)"</Command>
@@ -139,6 +140,10 @@
     <PostBuildEvent>
       <Command>xcopy /y /d "C:\Dev\SDL2-2.0.14\lib\x64\SDL2.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
+    <ClCompile>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

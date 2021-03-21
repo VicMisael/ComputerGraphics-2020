@@ -3,3 +3,5 @@
 src/a.out
 src/bin
 x64/
+Release/
+Debug/
