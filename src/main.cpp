@@ -69,16 +69,16 @@ int main(int argc, char **argv)
                 break;
             }
         }
-        std::cout <<"P6 512 512 255 ";
+       // std::cout <<"P6 512 512 255 ";
 
-        for (int x = 0; x < 512 ; x++)
+       /* for (int x = 0; x < 512 ; x++)
         {
             for (int y = 0; y < 512; y++)
             {
                 std::cout << window[x][y].r << window[x][y].g << window[x][y].b;
             }
         }
-        run=false;
+        run=false;*/
     }
     return 0;
 };

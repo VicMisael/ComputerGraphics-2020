@@ -20,7 +20,7 @@ int Cylinder::Intersects(Ray& ray)
     //Multiplica o eixo pelo NewCenter -> Produto escalar;
     axis * VectorUtilities::dotProduct(NewCenter,axis);
     
-
+    return 0;
 }
 
 void Cylinder::Translate(float tx, float ty, float tz)

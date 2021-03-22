@@ -149,6 +149,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\Circle.cpp" />
     <ClCompile Include="src\objects\BaseObject.cpp" />
+    <ClCompile Include="src\objects\Cylinder.cpp" />
     <ClCompile Include="src\objects\World.cpp" />
     <ClCompile Include="src\util\Color.cpp" />
     <ClCompile Include="src\util\Matrix3x3.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="src\objects\Circle.hpp" />
     <ClInclude Include="src\objects\BaseObject.hpp" />
+    <ClInclude Include="src\objects\Cylinder.hpp" />
     <ClInclude Include="src\objects\World.hpp" />
     <ClInclude Include="src\util\Color.hpp" />
     <ClInclude Include="src\util\definitions.hpp" />
