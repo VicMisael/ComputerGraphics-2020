@@ -5,14 +5,13 @@
 #include "BaseObject.hpp"
 class Circle : public BaseObject
 {
-public:
-    Circle(float radius,Color c);
+private:
     double radius;
     Point3f Center;
+public:
+    Circle(float radius,Color c);
+  
     int Intersects(Ray& ray);
-    void Translate(float tx, float ty, float tz);
-    void RotateX(float angle);
-    void RotateY(float angle);
-    void RotateZ(float angle);
+
     void ApplyTransformation();
 };

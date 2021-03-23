@@ -13,10 +13,10 @@ public:
     Matrix4x4 transFMat;
     Color c;
     virtual int Intersects(Ray& ray) = 0;
-    virtual void Translate(float tx, float ty, float tz) = 0;
-    virtual void RotateX(float angle) = 0;
-    virtual void RotateY(float angle) = 0;
-    virtual void RotateZ(float angle) = 0;
+    void Translate(float tx, float ty, float tz) ;
+    void RotateX(float angle);
+    void RotateY(float angle);
+    void RotateZ(float angle);
     virtual void ApplyTransformation()=0;
     Color getColor();
 };

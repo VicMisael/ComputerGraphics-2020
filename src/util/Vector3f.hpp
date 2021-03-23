@@ -12,7 +12,7 @@ class Vector3f
 {
 
 public:
-    Vector3f();
+    Vector3f() :Vector3f(0, 0, 0) {};
     Vector3f(float x, float y, float z);
     Vector3f(float vec[3]);
     #ifdef _USESIMDINTRINSICS

@@ -42,7 +42,7 @@ float VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
 
 #ifdef _USESIMDINTRINSICS
     float scalar = 0;
-    __m128 val= _mm_dp_ps(a.xyzw, b.xyzw, 0b01111001);
+    __m128 val= _mm_dp_ps(a.xyzw, b.xyzw, 0b11111001);
     scalar=_mm_cvtss_f32(val);
 #else
     float scalar = 0;

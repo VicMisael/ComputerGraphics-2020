@@ -1,10 +1,6 @@
 #include "Vector4f.hpp"
 
-Vector4f::Vector4f()
-{
-    //creates a point
-    Vector4f(0, 0, 0, 1);
-}
+
 Vector4f::Vector4f(float _x, float _y, float _z, float _w)
 {
     x = _x;
@@ -19,16 +15,19 @@ Vector4f::Vector4f(float _vec[4])
         vec[i] = _vec[i];
     }
 }
-Vector4f::Vector4f(Vector3f vec)
+Vector4f::Vector4f(Vector3f vec, int _w)
 {
-#ifdef _USESIMDINTRINSICS
-    xyzw = vec.xyz;
-#else
     x=vec.x;
     y=vec.y;
     z=vec.z;
-#endif
-    w = 1;
+    w = _w;
+}
+Vector3f Vector4f::toVector3f() {
+    if (w > 0 || w==1) {
+        return Point3f(x / w, y / w, z / w);
+    }
+    return Vector3f(x, y, z);
+
 }
 #ifdef _USESIMDINTRINSICS
 Vector4f::Vector4f(__m128 _xyzw)

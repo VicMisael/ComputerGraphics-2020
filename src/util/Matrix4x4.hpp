@@ -12,11 +12,12 @@ public:
     Matrix4x4(float _mm44[4][4]);
     Vector4f operator*(const Vector4f &v) const
     {
-        float x = mm44[0][0] * v.x + mm44[0][1] * v.y + mm44[0][2] * v.z + mm44[0][3] * v.w;
-        float y = mm44[1][0] * v.x + mm44[1][1] * v.y + mm44[1][2] * v.z + mm44[1][3] * v.w;
-        float z = mm44[2][0] * v.x + mm44[2][1] * v.y + mm44[2][2] * v.z + mm44[2][3] * v.w;
-        float w = mm44[3][0] * v.x + mm44[3][1] * v.y + mm44[3][2] * v.z + mm44[3][3] * v.w;
-        return Vector4f(x, y, z, w);
+        Vector4f vec(0, 0, 0, 0);
+        vec.x = mm44[0][0] * v.x + mm44[0][1] * v.y + mm44[0][2] * v.z + mm44[0][3] * v.w;
+        vec.y = mm44[1][0] * v.x + mm44[1][1] * v.y + mm44[1][2] * v.z + mm44[1][3] * v.w;
+        vec.z = mm44[2][0] * v.x + mm44[2][1] * v.y + mm44[2][2] * v.z + mm44[2][3] * v.w;
+        vec.w= mm44[3][0] * v.x + mm44[3][1] * v.y + mm44[3][2] * v.z + mm44[3][3] * v.w;
+        return vec;
     }
     Vector3f operator*(const Vector3f &v) const
     {
@@ -32,6 +33,8 @@ public:
             vec.z /= w;
         }
         return vec;
+        
+
     }
     Matrix4x4 operator+(const Matrix4x4 &matrix) const
     {

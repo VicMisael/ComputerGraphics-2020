@@ -9,5 +9,8 @@ public:
     float t; // Onde o raio intercepta o objeto;
     Vector3f D;
     Ray(Point3f vec, Point3f Eye);
+    Vector4f getOriginInPoint4f();
+    Vector4f getDirectionInVector4f();
 };
+
 #endif

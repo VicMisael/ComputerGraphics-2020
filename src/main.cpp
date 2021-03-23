@@ -30,7 +30,7 @@ int main(int argc, char **argv)
             {
                 float vx = (float)x * (1.0 / 512);
                 float vy = (float)y * (1.0 / 512);
-                float vz = 0.7;
+                float vz = 1;
                
                 Ray r=Ray(Point3f(vx, vy,vz ), Point3f(0, 0, 0));
                 window[x][y]= world.computeColor(r);

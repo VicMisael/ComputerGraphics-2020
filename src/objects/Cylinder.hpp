@@ -1,3 +1,5 @@
+#ifndef _CYLINDER_
+#define _CYLINDER_
 #include <cmath>
 #include "../util/Vector3f.hpp"
 #include "../util/definitions.hpp"
@@ -6,18 +8,16 @@
 
 class Cylinder : public BaseObject
 {
-    private:
-    Point3f Center; // center of cylinder 
+    private: // center of cylinder 
     Vector3f axis; // cylinder axis 
+    Point3f Base;
     float height;
     float radius;
-
     public:
-    Cylinder(Vector3f axis, float height, float radius);
+     
+    Cylinder(Vector3f axis, float height, float radius,Color color);
     int Intersects(Ray& ray);
-    void Translate(float tx, float ty, float tz);
-    void RotateX(float angle);
-    void RotateY(float angle);
-    void RotateZ(float angle);
     void ApplyTransformation();
 };
+
+#endif
