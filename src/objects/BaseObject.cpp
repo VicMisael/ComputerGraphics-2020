@@ -23,3 +23,8 @@ void BaseObject::RotateZ(float angle)
 {
 	transFMat.ConcatRotateZ(angle);
 }
+
+float BaseObject::getTmin()
+{
+	return t_min;
+}

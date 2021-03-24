@@ -3,6 +3,8 @@
 #define _WORLD_
 #include "BaseObject.hpp"
 #include "Circle.hpp"
+#include "Cylinder.hpp"
+#include "Plane.hpp"
 #include "../util/Ray.hpp"
 #include "../util/Color.hpp"
 #include <iostream>

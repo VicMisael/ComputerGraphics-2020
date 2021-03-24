@@ -9,14 +9,18 @@
 #include <iostream>
 class BaseObject
 {
-public:
+protected:
     Matrix4x4 transFMat;
     Color c;
+    float t_min=-INFINITY;
+public:
+
     virtual int Intersects(Ray& ray) = 0;
     void Translate(float tx, float ty, float tz) ;
     void RotateX(float angle);
     void RotateY(float angle);
     void RotateZ(float angle);
+    float getTmin();
     virtual void ApplyTransformation()=0;
     Color getColor();
 };

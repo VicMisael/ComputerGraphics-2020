@@ -13,6 +13,7 @@ class Cylinder : public BaseObject
     Point3f Base;
     float height;
     float radius;
+    float t_min = -INFINITY;
     public:
      
     Cylinder(Vector3f axis, float height, float radius,Color color);

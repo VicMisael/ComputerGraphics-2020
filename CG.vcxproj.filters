@@ -51,6 +51,9 @@
     <ClCompile Include="src\objects\Cylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\Circle.hpp">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\Cylinder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\Plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
