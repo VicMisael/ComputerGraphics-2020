@@ -17,9 +17,9 @@ World::World()
     //objects.push_back(p);
 
      Circle* c = new Circle(0.5, Color(255, 0, 0));
-     c->Translate(0, 0, 5);
+     //c->Translate(0, 0, 5);
      c->ApplyTransformation();
-     objects.push_back(c);
+     //objects.push_back(c);
 
     // c = new Circle(5, Color(0, 0, 255));
     // c->Translate(0, 0, 10);
@@ -32,9 +32,9 @@ World::World()
     // cyl->ApplyTransformation();
     // objects.push_back(cyl);
 
-    // Cone* cone = new Cone(Point3f(0,0,3), Vector3f(1,0,3),10,3.5,Color(0,0,0));
-    // cone->Translate(0,1,3);
-    // objects.push_back(cone);
+    Cone* cone = new Cone(Point3f(0,0,0), Vector3f(0,1,0),1,1,Color(0,0,0));
+    cone->Translate(0,1,9);
+    objects.push_back(cone);
 
     // Triangle* t = new Triangle(Point3f(0,0,3), Point3f(1, 0, 3),Point3f(0,1,3),Color(255,0,255));
     // objects.push_back(t);
