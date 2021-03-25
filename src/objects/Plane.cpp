@@ -21,6 +21,8 @@ int Plane::Intersects(Ray& ray)
 	}
 	float intersection =dotProduct(kp - p0, u)/dn;
 	t_min = intersection;
+	Point3f IP=ray.getPoint(t_min);
+	//std::cout<<"X:"<<IP.x<<"Y:"<<IP.y<<"Z:"<<IP.z<<std::endl;
 	return 1;
 
 }
@@ -28,4 +30,10 @@ int Plane::Intersects(Ray& ray)
 
 void Plane::ApplyTransformation()
 {
+	Vector4f NormalVector=Vector4f(u, 0);
+	NormalVector=transFMat* NormalVector;
+	Point4f Point = Vector4f(kp, 1);
+	Point=transFMat* Point;
+	u = NormalVector.toVector3f();
+	kp = Point.toVector3f();
 }

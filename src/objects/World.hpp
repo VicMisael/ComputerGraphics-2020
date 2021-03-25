@@ -10,11 +10,13 @@
 #include <iostream>
 #include <vector>
 #include "Camera.hpp"
+#include "Triangle.hpp"
 class World{
      std::vector<BaseObject*> objects;
+     Camera camera;
 public:
     World();
     Color bgColor;
-    Color computeColor(Ray &ray);
+    Color computeColor(Ray &ray,float vz);
 };  
 #endif

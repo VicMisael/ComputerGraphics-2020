@@ -45,8 +45,8 @@ int Cylinder::Intersects(Ray& ray)
     }
     if (intersecs.size() < 2) {
         Point3f top_center = axis * height;
-        Plane plane_base( axis,Base,this->c);
-        Plane plane_top(axis, top_center, this->c);
+        Plane plane_base( axis,Base,Color(0,0,0));
+        Plane plane_top(axis, top_center, Color(0, 0, 0));
         if (plane_base.Intersects(ray)) {
             float t =plane_base.getTmin();
             Point3f intpoint=ray.getPoint(t);

@@ -153,6 +153,7 @@
     <ClCompile Include="src\objects\BaseObject.cpp" />
     <ClCompile Include="src\objects\Cylinder.cpp" />
     <ClCompile Include="src\objects\Plane.cpp" />
+    <ClCompile Include="src\objects\Triangle.cpp" />
     <ClCompile Include="src\objects\World.cpp" />
     <ClCompile Include="src\util\Color.cpp" />
     <ClCompile Include="src\util\Light.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="src\objects\BaseObject.hpp" />
     <ClInclude Include="src\objects\Cylinder.hpp" />
     <ClInclude Include="src\objects\Plane.hpp" />
+    <ClInclude Include="src\objects\Triangle.hpp" />
     <ClInclude Include="src\objects\World.hpp" />
     <ClInclude Include="src\util\Color.hpp" />
     <ClInclude Include="src\util\definitions.hpp" />

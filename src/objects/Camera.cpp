@@ -1,5 +1,6 @@
 #include "Camera.hpp"
 
+
 //up=Vetor para um ponto acima do at
 Camera::Camera(Point3f eye, Point3f at, Point3f up)
 {

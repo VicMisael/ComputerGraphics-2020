@@ -21,7 +21,7 @@ int Circle::Intersects(Ray &ray)
 	}
 	float int1 = (-b + sqrtf(delta)) / a;
 	float int2 = (-b - sqrtf(delta)) / a;
-	float t_min = (int1 > int2) ? int2 : int1;
+	t_min = (int1 > int2) ? int2 : int1;
 	return 1;
 }
 
