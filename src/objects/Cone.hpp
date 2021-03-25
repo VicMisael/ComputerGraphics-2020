@@ -1,22 +1,24 @@
-#ifndef _CYLINDER_
-#define _CYLINDER_
+#ifndef _CONE_
+#define _CONE_
 #include <cmath>
 #include "../util/Vector3f.hpp"
 #include "../util/definitions.hpp"
 #include "../util/VectorUtilities.hpp"
 #include "BaseObject.hpp"
 
-class Cylinder : public BaseObject
+// Definindo o código do cone
+class Cone : public BaseObject
 {
-    private: // center of cylinder 
-        Vector3f axis; // cylinder axis 
-        Point3f Base;
+    private:
+        Point3f center;
+        Point3f vertice;
+        Vector3f axis;
         float height;
         float radius;
-        float t_min = -INFINITY;
+        Point3f scale_aux;
+
     public:
-     
-        Cylinder(Vector3f axis, float height, float radius,Color color);
+        Cone(Point3f vertice, Vector3f axis, float height, float radius, Color c);
         int Intersects(Ray& ray);
         void ApplyTransformation();
 };

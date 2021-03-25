@@ -11,6 +11,7 @@
 #include <vector>
 #include "Camera.hpp"
 #include "Triangle.hpp"
+#include "Cone.hpp"
 class World{
      std::vector<BaseObject*> objects;
      Camera camera;

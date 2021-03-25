@@ -5,7 +5,7 @@
 Cylinder::Cylinder(Vector3f axis, float height, float radius, Color c)
 {
     this->Base = Point3f(0,0,0);
-    this->axis = axis; //eixo que "aponta" pro topo do cone
+    this->axis = axis; //eixo que "aponta" pro topo do cilindro
     this->axis.normalize();
     this->height = height;
     this->radius = radius;
