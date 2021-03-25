@@ -6,7 +6,7 @@
 class Circle : public BaseObject
 {
 private:
-    double radius;
+    float radius;
     Point3f Center;
 public:
     Circle(float radius,Color c);

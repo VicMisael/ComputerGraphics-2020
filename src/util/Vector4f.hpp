@@ -28,7 +28,7 @@ public:
     }
     Vector4f operator-(const Vector4f &v) const
     {
-        return Vector4f(v.x - x, v.y - y, v.z - z, v.w - w);
+        return Vector4f(x - v.x, y - v.y, z - v.z,w-v.w);
     }
 
 

@@ -29,8 +29,8 @@ public:
     }
     Vector3f operator-(const Vector3f &v) const
     {
-        return Vector3f(v.x - x, v.y - y, v.z - z);
-        //return Vector3f(x - v.x, v.y - y, v.z - z);
+        //return Vector3f(v.x - x, v.y - y, v.z - z);
+        return Vector3f(x - v.x, y-v.y, z-v.z);
     }
 
 

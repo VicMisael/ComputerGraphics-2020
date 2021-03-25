@@ -1,6 +1,6 @@
 #include "VectorUtilities.hpp"
 #include <iostream>
-Vector3f inline VectorUtilities::crossProduct(const Vector3f &a, const Vector3f &b)
+Vector3f  VectorUtilities::crossProduct(const Vector3f &a, const Vector3f &b)
 {
 
     return Vector3f(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);

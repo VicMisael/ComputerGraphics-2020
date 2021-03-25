@@ -19,7 +19,7 @@ int Cylinder::Intersects(Ray& ray)
     Vector3f d = ray.D;; //Vetor direção do raio;
     using namespace VectorUtilities;
     //Vectors
-    Vector3f pMBase = (Base - p0);
+    Vector3f pMBase = (p0-Base);
     Vector3f v = pMBase - axis * (dotProduct(pMBase, axis));
     Vector3f w = d - axis * (dotProduct(d, axis));
     float a = dotProduct(w, w);

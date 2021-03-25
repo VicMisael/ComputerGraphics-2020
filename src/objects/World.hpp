@@ -9,6 +9,7 @@
 #include "../util/Color.hpp"
 #include <iostream>
 #include <vector>
+#include "Camera.hpp"
 class World{
      std::vector<BaseObject*> objects;
 public:
