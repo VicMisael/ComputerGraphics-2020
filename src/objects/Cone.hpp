@@ -15,10 +15,10 @@ class Cone : public BaseObject
         Vector3f axis;
         float height;
         float radius;
-        Point3f scale_aux;
+        //Point3f scale_aux;
 
     public:
-        Cone(Point3f vertice, Vector3f axis, float height, float radius, Color c);
+        Cone( Vector3f axis, float height, float radius, Color c);
         int Intersects(Ray& ray);
         void ApplyTransformation();
 };

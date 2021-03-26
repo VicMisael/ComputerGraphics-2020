@@ -26,14 +26,15 @@ World::World()
     // c->ApplyTransformation();
     // objects.push_back(c);
 
-    // Cylinder* cyl = new Cylinder(Vector3f(0, 1, 0), 1.2, 0.2, Color(0, 120, 120));
-    // cyl->RotateX(PI/6);
-    // cyl->Translate(0, 1, 3);
-    // cyl->ApplyTransformation();
+     Cylinder* cyl = new Cylinder(Vector3f(0, 1, 0), 1.2, 0.2, Color(0, 120, 120));
+     cyl->RotateX(PI/6);
+     cyl->Translate(0, 1, 3);
+     cyl->ApplyTransformation();
     // objects.push_back(cyl);
 
-    Cone* cone = new Cone(Point3f(0,0,0), Vector3f(0,1,0),1,1,Color(0,0,0));
-    cone->Translate(0,1,9);
+     Cone* cone = new Cone(Vector3f(1.0/2, 1.0/2 , 0), 1, 1, Color(0, 0, 0));
+   //cone->Translate(0,0,3);
+   //cone->ApplyTransformation();
     objects.push_back(cone);
 
     // Triangle* t = new Triangle(Point3f(0,0,3), Point3f(1, 0, 3),Point3f(0,1,3),Color(255,0,255));

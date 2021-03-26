@@ -2,42 +2,66 @@
 #include <vector>
 #include "Plane.hpp"
 
-Cone::Cone(Point3f vertice, Vector3f axis, float height, float radius, Color c)
+Cone::Cone( Vector3f axis, float height, float radius, Color c)
 {
-    this->center = Point3f(0, 0, 0);
+    this->center = Point3f(0, 0, 3);
     // Eixo que aponta para o topo do cone.
-    this->vertice = vertice;
+    axis.normalize();
     this->axis = axis;
+    this->vertice = center+axis*height;
     this->height = height;
     this->radius = radius;
     this->c = c;
     this->axis.normalize();
 }
 
-int Cone::Intersects(Ray &ray)
+int Cone::Intersects(Ray& ray)
 {
-    float t_min = -INFINITY;
+    float t_min = INFINITY;
     Point3f Po = ray.O;
 
     Vector3f d = ray.D;
-    Vector3f n = axis;
-    Vector3f v = vertice - Po;
+    Vector3f n = Vector3f(axis);
+    Vector3f v = (Po - vertice);
+   
 
-    float cosTheta = height / (sqrtf(height * height + radius + radius));
+    float cosTheta = height / (sqrtf(height * height + radius * radius));
     using namespace VectorUtilities;
     using namespace std;
-    float a = pow(dotProduct(d, n), 2) - dotProduct(d, d) * powf(cosTheta, 2);
-    float b = dotProduct(v, d) * powf(cosTheta, 2) - dotProduct(v, n) * dotProduct(d, n);
-    float c = pow(dotProduct(v, n), 2) - dotProduct(v, v) * powf(cosTheta, 2);
+    float a = dotProduct(d, n) * dotProduct(d, n) - dotProduct(d, d) * (cosTheta * cosTheta);
+    float b = dotProduct(v, d) * cosTheta * cosTheta - dotProduct(v, n) * dotProduct(d, n);
+    float c = dotProduct(v, n) * dotProduct(v, n) - dotProduct(v, v) * (cosTheta * cosTheta);
     float delta = b * b - (a * c);
-    cout << a << endl;
-    cout << b << endl;
-    cout << c << endl;
     if (delta < 0)
     {
         return 0;
     }
-    return 1;
+    float t1 = -b - sqrt(delta) / a;
+    float t2 = -b + sqrt(delta) / a;
+    Point3f p1 = ray.getPoint(t1);
+    Point3f p2 = ray.getPoint(t2);
+    float dp1 = dotProduct(vertice - p1, n);
+    float dp2 = dotProduct(vertice - p2, n);
+    vector<float> intersections;
+    if (t1 >= 0 && (0 <= dp1 && dp1 <= height)) {
+        intersections.push_back(t1);
+    }
+    if (t2 >= 0 && (0 <= dp2 && dp2 <= height))
+    {   
+        intersections.push_back(t2);
+    }
+    if (intersections.size() == 1) {
+        Plane base(center, n, this->c);
+        if (base.Intersects(ray)) {
+           float t=base.getTmin();
+           intersections.push_back(t);
+        }
+    }
+    for(float t:intersections){
+        if (t < t_min)
+            t=t_min;
+    }
+    return intersections.size() > 0;
 }
 
 void Cone::ApplyTransformation()

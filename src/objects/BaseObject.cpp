@@ -24,6 +24,11 @@ void BaseObject::RotateZ(float angle)
 	transFMat.ConcatRotateZ(angle);
 }
 
+void BaseObject::LoadIdentity()
+{
+	transFMat.loadIdentity();
+}
+
 float BaseObject::getTmin()
 {
 	return t_min;

@@ -16,7 +16,7 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
     float vz = d;
     return Point3f(vx, vy, vz);
 }
-
+float vcup = -2;
 int main(int argc, char **argv)
 {
     SDL_DisplayMode DM;
@@ -41,6 +41,8 @@ int main(int argc, char **argv)
                 window[x+Cw/2][y+Ch/2] = world.computeColor(r,1);
             }
         }
+
+     
 
         for (int y = 0; y < 512; y++)
         {

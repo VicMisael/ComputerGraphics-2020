@@ -43,7 +43,7 @@ int Triangle::Intersects(Ray &ray)
         // The ray is nearly parallel to the triangle, or the
         // intersection lies outside the triangle or behind
         // the ray origin: "infinite" distance until intersection.
-        t_min=INFINITY;
+        t_min=-INFINITY;
         return 0;
     }
     else {

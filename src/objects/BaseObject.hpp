@@ -20,6 +20,7 @@ public:
     void RotateX(float angle);
     void RotateY(float angle);
     void RotateZ(float angle);
+    void LoadIdentity();
     float getTmin();
     virtual void ApplyTransformation()=0;
     Color getColor();
