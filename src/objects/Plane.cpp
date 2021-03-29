@@ -41,3 +41,8 @@ void Plane::ApplyTransformation()
 	n = NormalVector.toVector3f();
 	pplane = Point.toVector3f();
 }
+
+Vector3f Plane::getNormal(const Point3f p)
+{
+	return n;
+}

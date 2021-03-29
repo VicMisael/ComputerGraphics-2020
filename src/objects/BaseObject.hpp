@@ -24,6 +24,7 @@ public:
     float getTmin();
     virtual void ApplyTransformation()=0;
     virtual Color getColor();
+    virtual Vector3f getNormal(const Point3f p);
 };
 
 #endif // !1

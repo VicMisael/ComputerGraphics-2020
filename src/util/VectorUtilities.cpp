@@ -20,7 +20,7 @@ float VectorUtilities::dotProduct(const Vector3f &a, const Vector3f &b)
 #endif
     return scalar;
 }
-Vector3f VectorUtilities::normalizeCopy(const Vector3f &v)
+Vector3f  VectorUtilities::normalizeCopy(const Vector3f &v)
 {
 #ifdef _USESIMDINTRINSICS
     Vector3f vec(v.xyz);
@@ -31,13 +31,13 @@ Vector3f VectorUtilities::normalizeCopy(const Vector3f &v)
     vec.normalize();
     return vec;
 }
-float VectorUtilities::Length(const Vector3f &a, const Vector3f &b)
+float  VectorUtilities::Length(const Vector3f &a, const Vector3f &b)
 {
     return sqrt(VectorUtilities::dotProduct(a, b));
 }
 //Vector 4f
 
-float VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
+float  VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
 {
 
 #ifdef _USESSE4DOTPRODUCT
@@ -53,7 +53,7 @@ float VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
 #endif
     return scalar;
 }
-Vector4f VectorUtilities::normalizeCopy(const Vector4f &v)
+Vector4f  VectorUtilities::normalizeCopy(const Vector4f &v)
 {
 #ifdef _USESIMDINTRINSICS
     Vector4f vec(v.xyzw);
@@ -65,7 +65,7 @@ Vector4f VectorUtilities::normalizeCopy(const Vector4f &v)
     return vec;
 }
 
-float VectorUtilities::Length(const Vector4f &a, const Vector4f &b)
+float  VectorUtilities::Length(const Vector4f &a, const Vector4f &b)
 {
     return sqrt(VectorUtilities::dotProduct(a, b));
 }

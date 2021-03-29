@@ -65,3 +65,12 @@ void Triangle::ApplyTransformation()
     Vertex[2] = Vertex[0] + e23f;
 }
 
+Vector3f Triangle::getNormal(const Point3f p)
+{
+   using namespace VectorUtilities;
+   Vector3f v= Vertex[0] - Vertex[1];
+   Vector3f w=Vertex[0] - Vertex[2];
+   Vector3f N=crossProduct(v, w);
+   N.normalize();
+   return N;
+}

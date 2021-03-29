@@ -39,9 +39,7 @@ int main(int argc, char **argv)
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
                 Ray r = Ray(canvasToViewport(x, y, Cw, Ch, vcup), Point3f(0, 0, 0));
-                //std::cout << "at x:" << x + (Cw/2) << "at y:" << y+(Ch/2)<<std::endl;
-                //window[x+Cw/2][y+Ch/2] = world.computeColor(r,vcup).rgba;
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, vcup).rgba;
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 0).rgba;
             }
         }
         std::cout << (vcup += 0.01) << std::endl;

@@ -9,9 +9,9 @@ private:
     float radius;
     Point3f Center;
 public:
-    Circle(float radius,const Color c);
-  
+    Circle(float radius,const Color c);  
     int Intersects(Ray& ray);
-
     void ApplyTransformation();
+    Vector3f getNormal(const Point3f p) override;
+
 };

@@ -10,5 +10,6 @@ class Triangle:public BaseObject{
     Triangle(const Point3f Vertex1,const Point3f Vertex2,const Point3f Vertex3,const Color c);
     int Intersects(Ray& ray);
     void ApplyTransformation();
+    Vector3f getNormal(const Point3f p) override;
 };
 #endif

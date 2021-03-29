@@ -27,7 +27,11 @@ int Circle::Intersects(Ray &ray)
 	return 1;
 }
 
-
+Vector3f Circle::getNormal(const Point3f p){
+	Vector3f pMc= p-Center;
+	pMc.normalize();
+	return pMc;
+}
 
 void Circle::ApplyTransformation()
 {

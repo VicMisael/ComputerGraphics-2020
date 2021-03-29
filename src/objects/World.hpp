@@ -12,9 +12,12 @@
 #include "Camera.hpp"
 #include "Triangle.hpp"
 #include "Cone.hpp"
+#include "../util/Light.hpp"
 class World{
      std::vector<BaseObject*> objects;
+     std::vector<Light*> lights;
      Camera camera;
+     float ComputeLighting(Point3f p,Vector3f n);
 public:
     World();
     Color bgColor;

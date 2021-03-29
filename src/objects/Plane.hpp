@@ -16,6 +16,7 @@ public:
 
     int Intersects(Ray& ray);
     void ApplyTransformation();
+    Vector3f getNormal(const Point3f p) override;
 };
 
 #endif
