@@ -34,16 +34,13 @@ int Triangle::Intersects(Ray &ray)
 
     const float dist = dotProduct(e2, r) / a;
 
-    static const float epsilon = 0.0001;;
+    static const float epsilon = 0.0001;
     static const float epsilon2 = 0.0001;
 
-    if ((a <= epsilon) || (weight[0] < -epsilon2) ||
+    if ((fabs(a) <= epsilon) || (weight[0] < -epsilon2) ||
         (weight[1] < -epsilon2) || (weight[2] < -epsilon2) ||
         (dist <= 0.0f)) {
-        // The ray is nearly parallel to the triangle, or the
-        // intersection lies outside the triangle or behind
-        // the ray origin: "infinite" distance until intersection.
-        t_min=-INFINITY;
+        t_min=INFINITY;
         return 0;
     }
     else {

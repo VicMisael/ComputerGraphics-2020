@@ -7,7 +7,7 @@ Vector3f  VectorUtilities::crossProduct(const Vector3f &a, const Vector3f &b)
 }
 float VectorUtilities::dotProduct(const Vector3f &a, const Vector3f &b)
 {
-#ifdef _USESIMDINTRINSICS
+#ifdef _USESSE4DOTPRODUCT
     float scalar = 0;
     __m128 val= _mm_dp_ps(a.xyz, b.xyz, 0b01111001);
     scalar=_mm_cvtss_f32(val);
@@ -40,7 +40,7 @@ float VectorUtilities::Length(const Vector3f &a, const Vector3f &b)
 float VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
 {
 
-#ifdef _USESIMDINTRINSICS
+#ifdef _USESSE4DOTPRODUCT
     float scalar = 0;
     __m128 val= _mm_dp_ps(a.xyzw, b.xyzw, 0b11111001);
     scalar=_mm_cvtss_f32(val);

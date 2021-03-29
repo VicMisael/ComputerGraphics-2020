@@ -9,8 +9,8 @@
 class Plane : public BaseObject
 {
 private: 
-    Vector3f u;
-    Point3f kp;;
+    Vector3f n;
+    Point3f pplane;
 public:
     Plane(Vector3f u,Point3f kp, Color c);
 

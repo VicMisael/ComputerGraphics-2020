@@ -12,7 +12,7 @@ class BaseObject
 protected:
     Matrix4x4 transFMat;
     Color c;
-    float t_min=-INFINITY;
+    float t_min=INFINITY;
 public:
 
     virtual int Intersects(Ray& ray) = 0;
@@ -23,7 +23,7 @@ public:
     void LoadIdentity();
     float getTmin();
     virtual void ApplyTransformation()=0;
-    Color getColor();
+    virtual Color getColor();
 };
 
 #endif // !1

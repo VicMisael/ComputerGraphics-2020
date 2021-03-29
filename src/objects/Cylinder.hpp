@@ -13,11 +13,13 @@ class Cylinder : public BaseObject
         Point3f Base;
         float height;
         float radius;
-        float t_min = -INFINITY;
+        Color  BaseColor;
+        bool baseIntersected=false;
     public:
-     
-        Cylinder(Vector3f axis, float height, float radius,Color color);
+        Cylinder(Vector3f axis, float height, float radius, Color& color) :Cylinder(axis, height, radius, color, color) {};
+        Cylinder(Vector3f axis, float height, float radius,Color& color,Color& BaseColor);
         int Intersects(Ray& ray);
+        Color getColor() override;
         void ApplyTransformation();
 };
 
