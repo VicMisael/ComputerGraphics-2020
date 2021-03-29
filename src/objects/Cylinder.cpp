@@ -2,7 +2,7 @@
 #include <vector>
 #include "Plane.hpp"
 
-Cylinder::Cylinder(Vector3f axis, float height, float radius, Color& c, Color& basecolor)
+Cylinder::Cylinder(Vector3f axis, float height, float radius, Color c, Color basecolor)
 {
 	this->Base = Point3f(0, 0, 0);
 	this->axis = axis; //eixo que "aponta" pro topo do cilindro

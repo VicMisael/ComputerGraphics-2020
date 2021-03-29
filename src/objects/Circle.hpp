@@ -9,7 +9,7 @@ private:
     float radius;
     Point3f Center;
 public:
-    Circle(float radius,Color c);
+    Circle(float radius,const Color c);
   
     int Intersects(Ray& ray);
 

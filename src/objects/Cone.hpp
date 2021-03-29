@@ -18,7 +18,7 @@ class Cone : public BaseObject
         //Point3f scale_aux;
 
     public:
-        Cone( Vector3f axis, float height, float radius, Color c);
+        Cone( Vector3f axis, float height, float radius,const Color c);
         int Intersects(Ray& ray);
         void ApplyTransformation();
 };
