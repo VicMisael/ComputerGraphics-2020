@@ -13,7 +13,7 @@ Camera::Camera(Point3f eye, Point3f at, Point3f up)
 	Vector3f I = crossProduct( viewUp,eye);
 	I.normalize();
 	Vector3f J = crossProduct(eyeAt, I);
-	cameraToWorld=(new float[4][4]{
+	worldToCamera=(new float[4][4]{
 		{I.x, I.y, I.z, dotProduct(I,eye )},
 		{J.x, J.y, J.z, dotProduct(J,eye)},
 		{eyeAt.x, eyeAt.y, eyeAt.z, dotProduct(eyeAt, eye)},
@@ -23,9 +23,11 @@ Camera::Camera(Point3f eye, Point3f at, Point3f up)
 
 Matrix4x4 Camera::getCameraToWorld()
 {
-	return cameraToWorld;
+	return worldToCamera.Inverse();
+	
 }
 Matrix4x4 Camera::getWorldToCamera()
 {
-	return cameraToWorld.Inverse();
+	
+	return worldToCamera;
 }

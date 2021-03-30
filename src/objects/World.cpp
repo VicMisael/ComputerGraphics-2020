@@ -5,7 +5,7 @@ static uint8_t r = 135;
 static uint8_t g = 206;
 static uint8_t b = 235;
 
-inline float World::ComputeLighting(Point3f p, Vector3f n)
+float World::ComputeLighting(Point3f p, Vector3f n)
 {
     using namespace VectorUtilities;
     float intensity = 0;
@@ -28,7 +28,7 @@ inline float World::ComputeLighting(Point3f p, Vector3f n)
                 break;
             }
 
-            float n_dot_l = fabs(dotProduct(n, lVec));
+            float n_dot_l = dotProduct(n, lVec);
             if (n_dot_l > 0)
             {
                 intensity += l->getIntensity() * (n_dot_l / (n.length() * lVec.length()));
@@ -44,16 +44,12 @@ World::World()
 
     bgColor = Color(r, g, b);
 
-    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 0.1);
-    lights.push_back(l);
+    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 0);
+    //lights.push_back(l);
 
-    Light* l2 = new Light(Point3f(2, 1, 0), Vector3f(0, 0, 0), 0.6);
+    Light* l2 = new Light(Point3f(-2, 1, 0), Vector3f(0, 0, 0), 1);
     l2->SetType(point);
     lights.push_back(l2);
-
-    Light* l3 = new Light(Point3f(2, 1, 0), Point3f(2,1,0)-Point3f(0,0,4), 0.6);
-    l3->SetType(directional);
-    lights.push_back(l3);
 
     Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -1, 0), Color(255, 0, 0));
     objects.push_back(p);

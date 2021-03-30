@@ -46,13 +46,6 @@ int main(int argc, char **argv)
         if (vcup > 1) {
             vcup = -1;
         }
-        //for (int y = 0; y < 512; y++)
-        //{
-        //    for (int x = 0; x < 512; x++)
-        //    {
-        //        = window[x][y].rgba;
-        //    }
-        //}
         SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);

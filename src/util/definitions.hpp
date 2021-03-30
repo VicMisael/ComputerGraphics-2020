@@ -4,7 +4,7 @@
 #ifndef _USESIMDINTRINSICS
 #define _USESIMDINTRINSICS
 #ifndef _USESSE4DOTPRODUCT
-#define _USESSE4DOTPRODUCT
+//#define _USESSE4DOTPRODUCT
 #endif
 #endif
 #endif
