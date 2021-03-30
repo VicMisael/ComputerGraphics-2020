@@ -101,3 +101,13 @@ void Cylinder::ApplyTransformation()
 	axis = axis4.toVector3f();
 
 }
+
+Vector3f Cylinder::getNormal(const Point3f p)
+{
+	using namespace VectorUtilities;
+	Vector3f W= p-Base;
+	Vector3f N = W-axis*dotProduct(W,axis);
+	N.normalize();
+	return N;
+
+}

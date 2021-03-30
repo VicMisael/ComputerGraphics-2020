@@ -15,12 +15,14 @@ class Cone : public BaseObject
         Vector3f axis;
         float height;
         float radius;
+        float cosTheta;
         //Point3f scale_aux;
 
     public:
         Cone( Vector3f axis, float height, float radius,const Color c);
         int Intersects(Ray& ray);
         void ApplyTransformation();
+        Vector3f getNormal(const Point3f p) override;
 };
 
 #endif

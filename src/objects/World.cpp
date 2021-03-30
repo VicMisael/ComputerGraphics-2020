@@ -44,40 +44,43 @@ World::World()
 
     bgColor = Color(r, g, b);
 
-    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 0.2);
+    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 0.1);
     lights.push_back(l);
 
     Light* l2 = new Light(Point3f(2, 1, 0), Vector3f(0, 0, 0), 0.6);
     l2->SetType(point);
     lights.push_back(l2);
 
-    Light* l3 = new Light(Point3f(-2, 1, 0), Vector3f(0, 0, 0), 0.6);
-    l3->SetType(point);
+    Light* l3 = new Light(Point3f(2, 1, 0), Point3f(2,1,0)-Point3f(0,0,4), 0.6);
+    l3->SetType(directional);
     lights.push_back(l3);
 
     Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -1, 0), Color(255, 0, 0));
     objects.push_back(p);
 
+    Plane* p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, 1, 9), Color(120,120, 120));
+    objects.push_back(p2);
+
     Circle *c = new Circle(1, Color(0, 0, 255));
-    c->Translate(0, -1, 3);
+    c->Translate(0, -1, 6);
     c->ApplyTransformation();
     objects.push_back(c);
 
     Cylinder *cyl = new Cylinder(Vector3f(0, 1, 0), 1.2, 0.2, Color(0, 120, 120));
-    cyl->RotateX(PI / 3);
-    cyl->Translate(0, 0, 2);
+    //cyl->RotateX(PI / 3);
+    cyl->Translate(0, 0, 4);
     cyl->ApplyTransformation();
-    //objects.push_back(cyl);
+    objects.push_back(cyl);
 
     Cone *cone = new Cone(Vector3f(0, 1, 0), 1, 1, Color(0, 255, 0));
     cone->LoadIdentity();
-    cone->Translate(0, 0, 6.5);
+    cone->Translate(0, 0, 4);
     cone->ApplyTransformation();
-    //objects.push_back(cone);
+    objects.push_back(cone);
 
-    Triangle *t = new Triangle(Point3f(0, 0, 4), Point3f(0, 1, 3), Point3f(1, 0, 3), Color(255, 255, 255));
-    //t->RotateZ(PI / 3);
-    //t->Translate(1, 0, 1);
+    Triangle *t = new Triangle(Point3f(0, 0, 3), Point3f(0, 1, 3), Point3f(1, 0, 3), Color(255, 255, 255));
+    t->RotateZ(PI / 3);
+    t->Translate(1, 0, 1);
     t->ApplyTransformation();
     objects.push_back(t);
 }

@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     //auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
    
-    double vcup = -6;
+    double vcup = -1;
     int Cw = 512;
     int Ch = 512;
      World world;
@@ -38,11 +38,14 @@ int main(int argc, char **argv)
         {
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
-                Ray r = Ray(canvasToViewport(x, y, Cw, Ch, vcup), Point3f(0, 0, 0));
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 0).rgba;
+                Ray r = Ray(canvasToViewport(x, y, Cw, Ch, 1), Point3f(0, 0, 0));
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1).rgba;
             }
         }
         std::cout << (vcup += 0.01) << std::endl;
+        if (vcup > 1) {
+            vcup = -1;
+        }
         //for (int y = 0; y < 512; y++)
         //{
         //    for (int x = 0; x < 512; x++)

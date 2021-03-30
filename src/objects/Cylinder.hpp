@@ -21,6 +21,7 @@ class Cylinder : public BaseObject
         int Intersects(Ray& ray);
         Color getColor() override;
         void ApplyTransformation();
+        Vector3f getNormal(const Point3f p);
 };
 
 #endif

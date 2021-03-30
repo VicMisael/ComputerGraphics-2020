@@ -13,6 +13,8 @@ Cone::Cone( Vector3f axis, float height, float radius, Color c)
     this->radius = radius;
     this->c = c;
     this->axis.normalize();
+    float hipothenuse = sqrtf((radius * radius) + (height * height));
+    this->cosTheta = height / hipothenuse;
 }
 
 int Cone::Intersects(Ray& ray)
@@ -27,8 +29,7 @@ int Cone::Intersects(Ray& ray)
     using namespace VectorUtilities;
     using namespace std;
     
-    float hipothenuse=sqrtf((radius * radius)+(height*height));
-    float cosTheta = height / hipothenuse;
+
     float cos2theta = pow(cosTheta, 2);
 
     float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2theta;
@@ -82,4 +83,15 @@ void Cone::ApplyTransformation()
     center = base4.toVector3f();
     axis = axis4.toVector3f();
     vertice = vertice4.toVector3f();
+    float hipothenuse = sqrtf((radius * radius) + (height * height));
+    this->cosTheta = height / hipothenuse;
+}
+
+Vector3f Cone::getNormal(const Point3f p)
+{
+    Vector3f v = vertice - p;
+    v.normalize();
+    Vector3f Normal = axis - v*cosTheta ;
+    Normal.normalize();
+    return Normal;
 }
