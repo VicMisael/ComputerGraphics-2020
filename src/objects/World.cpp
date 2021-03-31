@@ -44,7 +44,7 @@ World::World()
 
     bgColor = Color(r, g, b);
 
-    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 0);
+    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 1);
     //lights.push_back(l);
 
     Light* l2 = new Light(Point3f(-2, 1, 0), Vector3f(0, 0, 0), 1);
@@ -79,6 +79,21 @@ World::World()
     t->Translate(1, 0, 1);
     t->ApplyTransformation();
     objects.push_back(t);
+
+    Triangle* t2 = new Triangle(Point3f(1, 0, 3), Point3f(1, 1, 3), Point3f(0, 0, 3), Color(255, 255, 255));
+    t->RotateZ(PI / 3);
+    t->Translate(1, 0, 1);
+    t->ApplyTransformation();
+    objects.push_back(t2);
+
+
+    Cube* cub = new Cube(1.2 , 1, 1, Color(0, 255, 0));
+ 
+    cub->RotateY(PI/6);
+    //cub->RotateX(PI / 16);
+    cub->Translate(1,-1, 3);
+    cub->ApplyTransformation();
+    objects.push_back(cub);
 }
 
 Color World::computeColor(Ray &ray, float vz)

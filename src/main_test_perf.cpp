@@ -20,7 +20,7 @@ int main()
     int Cw = 512;
     int Ch = 512;
     World world;
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 10; i++)
     {
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {

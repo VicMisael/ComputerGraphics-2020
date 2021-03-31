@@ -19,9 +19,10 @@ Triangle::Triangle(Point3f Vertex1, Point3f Vertex2, Point3f Vertex3, Color c)
 
 int Triangle::Intersects(Ray &ray)
 {
+
     using namespace VectorUtilities;
-    Vector3f e1 = Vertex[0] - Vertex[1];
-    Vector3f e2 = Vertex[0] - Vertex[2];
+    Vector3f e1 = Vertex[1]-Vertex[0] ;
+    Vector3f e2 = Vertex[2] - Vertex[0];
     Vector3f q = crossProduct(ray.D, e2);
     float a=dotProduct(e1,q);
 
@@ -37,7 +38,7 @@ int Triangle::Intersects(Ray &ray)
     static const float epsilon = 0.0000001;
     static const float epsilon2 = 0.000001;
 
-    if ((fabs(a) <= epsilon) || (weight[0] < -epsilon2) ||
+    if ((a <= epsilon) || (weight[0] < -epsilon2) ||
         (weight[1] < -epsilon2) || (weight[2] < -epsilon2) ||
         (dist <= 0.0f)) {
         t_min=INFINITY;
@@ -47,7 +48,6 @@ int Triangle::Intersects(Ray &ray)
         t_min = dist;
         return 1;
     }
-
 }
 
 void Triangle::ApplyTransformation()
@@ -71,8 +71,8 @@ void Triangle::ApplyTransformation()
 Vector3f Triangle::getNormal(const Point3f p)
 {
    using namespace VectorUtilities;
-   Vector3f v= Vertex[0] - Vertex[1];
-   Vector3f w= Vertex[0] - Vertex[2];
+   Vector3f v=  Vertex[1]- Vertex[0] ;
+   Vector3f w= Vertex[2]- Vertex[0]  ;
    Vector3f N=crossProduct(v, w);
    N.normalize();
    return N;

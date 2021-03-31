@@ -16,6 +16,8 @@ class Cone : public BaseObject
         float height;
         float radius;
         float cosTheta;
+        float cos2Theta;
+
         //Point3f scale_aux;
 
     public:

@@ -108,7 +108,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -141,7 +141,7 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2test.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>false</OptimizeReferences>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "C:\Dev\SDL2-2.0.14\lib\x64\SDL2.dll" "$(OutDir)"</Command>
@@ -152,7 +152,8 @@
       <CallingConvention>Cdecl</CallingConvention>
       <FloatingPointModel>Fast</FloatingPointModel>
       <Optimization>Full</Optimization>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
     <ClCompile Include="src\objects\Circle.cpp" />
     <ClCompile Include="src\objects\BaseObject.cpp" />
     <ClCompile Include="src\objects\Cone.cpp" />
+    <ClCompile Include="src\objects\Cube.cpp" />
     <ClCompile Include="src\objects\Cylinder.cpp" />
     <ClCompile Include="src\objects\Plane.cpp" />
     <ClCompile Include="src\objects\Triangle.cpp" />
@@ -179,6 +181,7 @@
     <ClInclude Include="src\objects\Circle.hpp" />
     <ClInclude Include="src\objects\BaseObject.hpp" />
     <ClInclude Include="src\objects\Cone.hpp" />
+    <ClInclude Include="src\objects\Cube.hpp" />
     <ClInclude Include="src\objects\Cylinder.hpp" />
     <ClInclude Include="src\objects\Plane.hpp" />
     <ClInclude Include="src\objects\Triangle.hpp" />

@@ -15,6 +15,7 @@ Cone::Cone( Vector3f axis, float height, float radius, Color c)
     this->axis.normalize();
     float hipothenuse = sqrtf((radius * radius) + (height * height));
     this->cosTheta = height / hipothenuse;
+    this->cos2Theta= powf(cosTheta, 2);
 }
 
 int Cone::Intersects(Ray& ray)
@@ -30,11 +31,10 @@ int Cone::Intersects(Ray& ray)
     using namespace std;
     
 
-    float cos2theta = pow(cosTheta, 2);
 
-    float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2theta;
-    float b = dotProduct(v, d) * cos2theta - dotProduct(v, n) * dotProduct(d, n);
-    float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2theta;
+    float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2Theta;
+    float b = dotProduct(v, d) * cos2Theta - dotProduct(v, n) * dotProduct(d, n);
+    float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2Theta;
     float delta = b * b - (a * c);
     vector<float> intersections;
     if (delta > 0)
