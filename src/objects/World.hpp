@@ -18,7 +18,7 @@ class World{
      std::vector<BaseObject*> objects;
      std::vector<Light*> lights;
      Camera camera;
-     float ComputeLighting(Point3f p,Vector3f n);
+     float ComputeLighting(Point3f p,Vector3f n,Vector3f V,float s);
 public:
     World();
     Color bgColor;

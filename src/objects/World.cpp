@@ -5,7 +5,8 @@ static uint8_t r = 135;
 static uint8_t g = 206;
 static uint8_t b = 235;
 
-float World::ComputeLighting(Point3f p, Vector3f n)
+//Receives the intersection point,the normal vector at the point of intersection, the Vector pointing to the camera
+float World::ComputeLighting(Point3f p, Vector3f n,Vector3f V,float s)
 {
     using namespace VectorUtilities;
     float intensity = 0;
@@ -33,6 +34,14 @@ float World::ComputeLighting(Point3f p, Vector3f n)
             {
                 intensity += l->getIntensity() * (n_dot_l / (n.length() * lVec.length()));
             }
+            if (s >=0) {
+                Vector3f R =  (n*2)* dotProduct(n, lVec) - lVec;
+                float r_dot_v = dotProduct(R, V);
+                if (r_dot_v>0) {
+                    intensity += l->getIntensity() * pow(r_dot_v / (R.length() * V.length()), s);
+                }
+            
+            }
         }
     }
     return intensity;
@@ -44,31 +53,44 @@ World::World()
 
     bgColor = Color(r, g, b);
 
-    Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 1);
+    //Light *l = new Light(Point3f(0, 0, 0), Vector3f(0, 0, 0), 1);
     //lights.push_back(l);
 
-    Light* l2 = new Light(Point3f(-2, 1, 0), Vector3f(0, 0, 0), 1);
+    //Light* l1 = new Light(Point3f(0, 1, 0), Vector3f(0, 0, 0), 1);
+    //l1->SetType(point);
+    //lights.push_back(l1);
+
+
+    Light* l2 = new Light(Point3f(2, 1, 0), Vector3f(0, 0, 0), 0.2);
     l2->SetType(point);
     lights.push_back(l2);
+    Light* l3 = new Light(Point3f(0, 3, 0), Vector3f(0, 0, 0), 1);
+    l3->SetType(point);
+    lights.push_back(l3);
 
     Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -1, 0), Color(255, 0, 0));
+    p->setSpecular(1000);
     objects.push_back(p);
 
     Plane* p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, 1, 9), Color(120,120, 120));
+    //p2->setSpecular(100);
     objects.push_back(p2);
 
     Circle *c = new Circle(1, Color(0, 0, 255));
+    c->setSpecular(500);
     c->Translate(0, -1, 6);
     c->ApplyTransformation();
     objects.push_back(c);
 
     Cylinder *cyl = new Cylinder(Vector3f(0, 1, 0), 1.2, 0.2, Color(0, 120, 120));
     //cyl->RotateX(PI / 3);
+    cyl->setSpecular(100);
     cyl->Translate(0, 0, 4);
     cyl->ApplyTransformation();
     objects.push_back(cyl);
 
     Cone *cone = new Cone(Vector3f(0, 1, 0), 1, 1, Color(0, 255, 0));
+    cone->setSpecular(1000);
     cone->LoadIdentity();
     cone->Translate(0, 0, 4);
     cone->ApplyTransformation();
@@ -113,7 +135,7 @@ Color World::computeColor(Ray &ray, float vz)
                 {
                     minimalT = t;
                     Point3f p = ray.getPoint(t);
-                    retColor = ob->getColor() * ComputeLighting(p, ob->getNormal(p));
+                    retColor = ob->getColor() * ComputeLighting(p, ob->getNormal(p),ray.D*-1,ob->getSpecular());
                 }
             }
         }

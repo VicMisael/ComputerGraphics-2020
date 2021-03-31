@@ -13,8 +13,10 @@ protected:
     Matrix4x4 transFMat;
     Color c;
     float t_min=INFINITY;
+    float specular = -1;;
 public:
-
+    void setSpecular(float specular);
+    float getSpecular();
     virtual int Intersects(Ray& ray) = 0;
     virtual void Translate(float tx, float ty, float tz) ;
     virtual void RotateX(float angle);

@@ -5,6 +5,18 @@ Color BaseObject::getColor(){
     return c;
 }
 
+
+
+void BaseObject::setSpecular(float specular)
+{
+	this->specular = specular;
+}
+
+float BaseObject::getSpecular()
+{
+	return specular;
+}
+
 void BaseObject::Translate(float x, float y, float z)
 {
 	transFMat.ConcatTranslate(x, y, z);
