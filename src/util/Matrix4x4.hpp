@@ -36,6 +36,26 @@ public:
         
 
     }
+
+    Matrix4x4 operator*(const Matrix4x4& m44) const
+    {
+        float temp[4][4];
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                float num = 0;
+                for (int k = 0; k < 4; k++)
+                {
+                    num += m44.mm44[i][k] * mm44[k][j];
+                }
+
+                temp[i][j] = num;
+            }
+        }
+
+        return Matrix4x4(temp);
+    }
     Matrix4x4 operator+(const Matrix4x4 &matrix) const
     {
         float retmm44[4][4];
@@ -60,6 +80,7 @@ public:
         }
         return Matrix4x4(retmm44);
     }
+
     void loadIdentity();
 
     void ConcatTransformation(const float _mm[4][4]);

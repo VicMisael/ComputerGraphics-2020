@@ -50,3 +50,8 @@ float BaseObject::getTmin()
 Vector3f BaseObject::getNormal(Point3f p){
 	return Vector3f(0,1,0);
 }
+
+void BaseObject::ApplyCamera(const Matrix4x4 m)
+{
+	transFMat = m * transFMat;
+}

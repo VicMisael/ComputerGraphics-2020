@@ -27,6 +27,7 @@ public:
     virtual void ApplyTransformation()=0;
     virtual Color getColor();
     virtual Vector3f getNormal(const Point3f p);
+    virtual void ApplyCamera(const Matrix4x4 m);
 };
 
 #endif // !1

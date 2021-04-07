@@ -17,10 +17,12 @@
 class World{
      std::vector<BaseObject*> objects;
      std::vector<Light*> lights;
-     Camera camera;
+     Camera *camera;
+     void init();
      float ComputeLighting(Point3f p,Vector3f n,Vector3f V,float s);
 public:
     World();
+    World(const Camera c);
     Color bgColor;
     Color computeColor(Ray &ray,float vz);
 };  
