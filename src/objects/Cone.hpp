@@ -25,6 +25,7 @@ class Cone : public BaseObject
         int Intersects(Ray& ray);
         void ApplyTransformation();
         Vector3f getNormal(const Point3f p) override;
+        void ApplyCamera(const Matrix4x4 mm44);
 };
 
 #endif

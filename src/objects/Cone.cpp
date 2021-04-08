@@ -95,3 +95,10 @@ Vector3f Cone::getNormal(const Point3f p)
     Normal.normalize();
     return Normal;
 }
+
+void Cone::ApplyCamera(const Matrix4x4 mm44)
+{
+   this->center= mm44* center;
+   this->vertice = center + (axis * height);
+  // this->vertice = mm44 * vertice;
+}

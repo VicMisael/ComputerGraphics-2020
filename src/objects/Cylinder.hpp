@@ -22,6 +22,7 @@ class Cylinder : public BaseObject
         Color getColor() override;
         void ApplyTransformation();
         Vector3f getNormal(const Point3f p);
+        void ApplyCamera(const Matrix4x4 m);
 };
 
 #endif

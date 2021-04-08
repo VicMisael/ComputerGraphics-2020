@@ -33,6 +33,11 @@ Vector3f Circle::getNormal(const Point3f p){
 	return pMc;
 }
 
+void Circle::ApplyCamera(const Matrix4x4 m)
+{
+	Center = m * Center;
+}
+
 void Circle::ApplyTransformation()
 {
 	Center = transFMat * Center;

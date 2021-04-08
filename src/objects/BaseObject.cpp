@@ -37,6 +37,11 @@ void BaseObject::RotateZ(float angle)
 	transFMat.ConcatRotateZ(angle);
 }
 
+void BaseObject::Scale(float factor)
+{
+	transFMat.ConcatScale(factor);
+}
+
 void BaseObject::LoadIdentity()
 {
 	transFMat.loadIdentity();
@@ -51,7 +56,3 @@ Vector3f BaseObject::getNormal(Point3f p){
 	return Vector3f(0,1,0);
 }
 
-void BaseObject::ApplyCamera(const Matrix4x4 m)
-{
-	transFMat = m * transFMat;
-}

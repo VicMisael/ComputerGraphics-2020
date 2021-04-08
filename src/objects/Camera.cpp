@@ -28,6 +28,6 @@ Matrix4x4 Camera::getCameraToWorld()
 }
 Matrix4x4 Camera::getWorldToCamera()
 {
-	
+	(cameraToWorld.Inverse() * cameraToWorld).printMatrix();
 	return cameraToWorld.Inverse();
 }

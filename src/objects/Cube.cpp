@@ -91,3 +91,10 @@ Vector3f Cube::getNormal(const Point3f p)
     //normal.normalize();
     //return normal;
 }
+
+void Cube::ApplyCamera(const Matrix4x4 mm)
+{
+    for (Triangle &t : triangles) {
+        t.ApplyCamera(mm);
+    }
+}

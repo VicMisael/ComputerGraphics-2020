@@ -46,3 +46,8 @@ Vector3f Plane::getNormal(const Point3f p)
 {
 	return n;
 }
+
+void Plane::ApplyCamera(const Matrix4x4 m)
+{
+	pplane = m * pplane;
+}

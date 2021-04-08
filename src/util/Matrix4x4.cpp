@@ -234,6 +234,17 @@ void Matrix4x4::ConcatTranslate(float tx, float ty, float tz)
     this->ConcatTransformation(translateMatrix);
 }
 
+void Matrix4x4::ConcatScale(float x)
+{
+    float translateMatrix[4][4] = {
+    {x, 0, 0, 0},
+    {0, x, 0, 0},
+    {0, 0, x, 0},
+    {0, 0, 0, 1},
+    };
+    this->ConcatTransformation(translateMatrix);
+}
+
 void Matrix4x4::printMatrix()
 {
     for (int i = 0; i < 4; i++)

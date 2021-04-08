@@ -22,12 +22,13 @@ public:
     virtual void RotateX(float angle);
     virtual void RotateY(float angle);
     virtual void RotateZ(float angle);
+    virtual void Scale(float factor);
     virtual void LoadIdentity();
     virtual float getTmin();
     virtual void ApplyTransformation()=0;
     virtual Color getColor();
     virtual Vector3f getNormal(const Point3f p);
-    virtual void ApplyCamera(const Matrix4x4 m);
+    virtual void ApplyCamera(const Matrix4x4 m)=0;
 };
 
 #endif // !1

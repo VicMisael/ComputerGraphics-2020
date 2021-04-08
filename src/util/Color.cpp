@@ -1,24 +1,42 @@
 #include "Color.hpp"
+#include <cmath>
 
-Color::Color(uint8_t color[4])
+
+
+Color::Color()
 {
-	for (int i = 0; i < 4; i++)
-	{
-		this->color[i] = color[i];
-	}
+	r = 0;
+	g = 0;
+	b = 0;
 }
 
-Color::Color(uint8_t r, uint8_t g, uint8_t b)
+Color::Color(uint8_t _r, uint8_t _g, uint8_t _b)
 {
-	this->r = r;
-	this->g = g;
-	this->b = b;
-	this->a = 255;
+	this->r = _r / 255.0;
+	this->g = _g / 255.0;
+	this->b = _b / 255.0;
 }
-Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+Color::Color(float _r, float _g, float _b, float nf) {
+	this->r = _r / nf;
+	this->g = _g / nf;
+	this->b = _b / nf;
+}
+uint32_t Color::rgba()
 {
-	this->r = r;
-	this->g = g;
-	this->b = b;
-	this->a = a;
+	union {
+		uint32_t rgba;
+		struct {
+			uint8_t  _r, _g, _b, _a;
+		};
+	};
+	using namespace std;
+	r = r > 1?1: r;
+	g = g > 1 ? 1 : g;
+	b = b > 1 ? 1 : b;
+
+	_r = r * 255;
+	_g = g * 255;
+	_b = b * 255;
+	_a = 255;
+	return rgba;
 }

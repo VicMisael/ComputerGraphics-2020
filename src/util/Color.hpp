@@ -3,34 +3,24 @@
 #include <cstdint>
 class Color
 {
+private:
+    Color(float _r, float _g, float _b,float normalizefactor);
 public:
-    Color() : Color(0, 0, 0){};
-    Color(uint8_t color[4]);
+    Color();
+    Color(uint8_t color[3]) :Color(color[0], color[1], color[2]) {};
     Color(uint8_t r, uint8_t g, uint8_t b);
-    Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+    uint32_t rgba();
     Color operator*(const float &a) const
-    {
-        float _r=0, _g=0, _b=0;
-        if (a > 1) {
-            _r = r+(a - 1.0f) * r;
-            _g =  g+(a - 1.0f) * g;
-            _b = b+(a - 1.0f) * b;
-        }
-        else {
-             _r = r * a, _g = g * a, _b = b * a;
-        }
-       
-       
-        return Color(_r>255?255:_r, _g>255?255:_g, _b>255?255:_b,255);
+    {  
+        return Color((float)r*a,(float)g*a,(float)b*a,1);
     }
     union
     {
-        uint8_t color[4];
+        float color[3];
         struct
         {
-            uint8_t r, g, b, a;
+            float r, g, b;
         };
-        uint32_t rgba;
     };
 };
 

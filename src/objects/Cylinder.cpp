@@ -112,3 +112,8 @@ Vector3f Cylinder::getNormal(const Point3f p)
 	return N;
 
 }
+
+void Cylinder::ApplyCamera(const Matrix4x4 m)
+{
+	Base = m * Base;
+}

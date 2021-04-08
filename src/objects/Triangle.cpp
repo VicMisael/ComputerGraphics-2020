@@ -38,7 +38,7 @@ int Triangle::Intersects(Ray &ray)
     static const float epsilon = 0.0000001;
     static const float epsilon2 = 0.000001;
 
-    if ((a <= epsilon) || (weight[0] < -epsilon2) ||
+    if ((fabs(a) <= epsilon) || (weight[0] < -epsilon2) ||
         (weight[1] < -epsilon2) || (weight[2] < -epsilon2) ||
         (dist <= 0.0f)) {
         t_min=INFINITY;
@@ -76,4 +76,11 @@ Vector3f Triangle::getNormal(const Point3f p)
    Vector3f N=crossProduct(v, w);
    N.normalize();
    return N;
+}
+
+void Triangle::ApplyCamera(const Matrix4x4 m)
+{
+    for (Point3f& v : Vertex) {
+        v = m * v;
+    }
 }
