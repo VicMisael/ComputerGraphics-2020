@@ -163,7 +163,50 @@ Matrix4x4 Matrix4x4::Transpose(const Matrix4x4 &matrix)
 Matrix4x4 Matrix4x4::Inverse()
 {
     float inverted[4][4];
-    return inverse(mm44, inverted) ? Matrix4x4(inverted) : Matrix4x4(mm44);
+    float adj2323 = mm44[2][2] * mm44[3][3] - mm44[2][3] * mm44[3][2];
+    float adj1323 = mm44[2][1] * mm44[3][3] - mm44[2][3] * mm44[3][1];
+    float adj1223 = mm44[2][1] * mm44[3][2] - mm44[2][2] * mm44[3][1];
+    float adj0323 = mm44[2][0] * mm44[3][3] - mm44[2][3] * mm44[3][0];
+    float adj0223 = mm44[2][0] * mm44[3][2] - mm44[2][2] * mm44[3][0];
+    float adj0123 = mm44[2][0] * mm44[3][1] - mm44[2][1] * mm44[3][0];
+    float adj2313 = mm44[1][2] * mm44[3][3] - mm44[1][3] * mm44[3][2];
+    float adj1313 = mm44[1][1] * mm44[3][3] - mm44[1][3] * mm44[3][1];
+    float adj1213 = mm44[1][1] * mm44[3][2] - mm44[1][2] * mm44[3][1];
+    float adj2312 = mm44[1][2] * mm44[2][3] - mm44[1][3] * mm44[2][2];
+    float adj1312 = mm44[1][1] * mm44[2][3] - mm44[1][3] * mm44[2][1];
+    float adj1212 = mm44[1][1] * mm44[2][2] - mm44[1][2] * mm44[2][1];
+    float adj0313 = mm44[1][0] * mm44[3][3] - mm44[1][3] * mm44[3][0];
+    float adj0213 = mm44[1][0] * mm44[3][2] - mm44[1][2] * mm44[3][0];
+    float adj0312 = mm44[1][0] * mm44[2][3] - mm44[1][3] * mm44[2][0];
+    float adj0212 = mm44[1][0] * mm44[2][2] - mm44[1][2] * mm44[2][0];
+    float adj0113 = mm44[1][0] * mm44[3][1] - mm44[1][1] * mm44[3][0];
+    float adj0112 = mm44[1][0] * mm44[2][1] - mm44[1][1] * mm44[2][0];
+
+    float det = mm44[0][0] * (mm44[1][1] * adj2323 - mm44[1][2] * adj1323 + mm44[1][3] * adj1223)
+        - mm44[0][1] * (mm44[1][0] * adj2323 - mm44[1][2] * adj0323 + mm44[1][3] * adj0223)
+        + mm44[0][2] * (mm44[1][0] * adj1323 - mm44[1][1] * adj0323 + mm44[1][3] * adj0123)
+        - mm44[0][3] * (mm44[1][0] * adj1223 - mm44[1][1] * adj0223 + mm44[1][2] * adj0123);
+    det = 1 / det;
+
+    inverted[0][0] = det * (mm44[1][1] * adj2323 - mm44[1][2] * adj1323 + mm44[1][3] * adj1223);
+    inverted[0][1] = det * -(mm44[0][1] * adj2323 - mm44[0][2] * adj1323 + mm44[0][3] * adj1223);
+    inverted[0][2] = det * (mm44[0][1] * adj2313 - mm44[0][2] * adj1313 + mm44[0][3] * adj1213);
+    inverted[0][3] = det * -(mm44[0][1] * adj2312 - mm44[0][2] * adj1312 + mm44[0][3] * adj1212);
+    inverted[1][0] = det * -(mm44[1][0] * adj2323 - mm44[1][2] * adj0323 + mm44[1][3] * adj0223);
+    inverted[1][1] = det * (mm44[0][0] * adj2323 - mm44[0][2] * adj0323 + mm44[0][3] * adj0223);
+    inverted[1][2] = det * -(mm44[0][0] * adj2313 - mm44[0][2] * adj0313 + mm44[0][3] * adj0213);
+    inverted[1][3] = det * (mm44[0][0] * adj2312 - mm44[0][2] * adj0312 + mm44[0][3] * adj0212);
+    inverted[2][0] = det * (mm44[1][0] * adj1323 - mm44[1][1] * adj0323 + mm44[1][3] * adj0123);
+    inverted[2][1] = det * -(mm44[0][0] * adj1323 - mm44[0][1] * adj0323 + mm44[0][3] * adj0123);
+    inverted[2][2] = det * (mm44[0][0] * adj1313 - mm44[0][1] * adj0313 + mm44[0][3] * adj0113);
+    inverted[2][3] = det * -(mm44[0][0] * adj1312 - mm44[0][1] * adj0312 + mm44[0][3] * adj0112);
+    inverted[3][0] = det * -(mm44[1][0] * adj1223 - mm44[1][1] * adj0223 + mm44[1][2] * adj0123);
+    inverted[3][1] = det * (mm44[0][0] * adj1223 - mm44[0][1] * adj0223 + mm44[0][2] * adj0123);
+    inverted[3][2] = det * -(mm44[0][0] * adj1213 - mm44[0][1] * adj0213 + mm44[0][2] * adj0113);
+    inverted[3] [3] = det * (mm44[0][0] * adj1212 - mm44[0][1] * adj0212 + mm44[0][2] * adj0112);
+
+    return Matrix4x4(inverted);
+    /*return inverse(mm44, inverted) ? Matrix4x4(inverted) : Matrix4x4(mm44);*/
 }
 float Matrix4x4::Determinant()
 {

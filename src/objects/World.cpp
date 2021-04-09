@@ -29,12 +29,12 @@ void World::init()
     l3->SetType(point);
     lights.push_back(l3);
 
-    Plane* p = new Plane(Vector3f(0, 1, 0), Point3f(0, 1, 0), Color(255, 0, 0));
+    Plane* p = new Plane(Vector3f(0, 1, 0), Point3f(0, -1, -6), Color(255, 0, 0));
     p->setSpecular(1000);
     p->ApplyCamera(camTransformation);
     objects.push_back(p);
 
-    Plane* p2 = new Plane(Vector3f(0, 0, 1), Point3f(0, 1, -6), Color(120, 120, 120));
+    Plane* p2 = new Plane(Vector3f(0, 0, 1), Point3f(0, -1, -6), Color(120, 120, 120));
 
     p2->setSpecular(100);
     p2->ApplyCamera(camTransformation);
@@ -75,7 +75,7 @@ void World::init()
 
     cub->RotateY(PI / 6);
     //cub->RotateX(PI / 16);
-    cub->Translate(1, -1, -6);
+    cub->Translate(1, 0, -6);
     cub->ApplyCamera(camTransformation);
     cub->ApplyTransformation();
     //objects.push_back(cub);
@@ -148,7 +148,7 @@ Color World::computeColor(Ray &ray, float vz)
         if (ob->Intersects(ray))
         {
             float t = ob->getTmin();
-            if (t >= vz)
+            if (t > vz)
             {
                 if (t < minimalT)
                 {

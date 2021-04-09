@@ -28,28 +28,25 @@ int main(int argc, char **argv)
     //auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
    
-    double vcup = -0.2;
+    double vcup = -2;
     int Cw = 512;
     int Ch = 512;
     
 
     while (run)
     {
-        Point3f eye = Point3f(0,vcup , 0);
-        Camera camera = Camera(eye, Point3f(0, 0, -6), Point3f(0,5 , -6));
+        Point3f eye = Point3f(vcup,0.2,0);
+        Camera camera = Camera(eye, Point3f(-1, 0, -6), Point3f(-1,5 , -6));
         World world(camera);
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
                 Ray r = Ray(canvasToViewport(x, y, Cw, Ch, -1), eye);
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, -1).rgba();
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1).rgba();
             }
         }
         std::cout << (vcup += 0.01) << std::endl;
-        if (vcup > 1) {
-            vcup = -1;
-        }
         SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
