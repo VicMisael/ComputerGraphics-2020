@@ -1,10 +1,11 @@
 #include "Ray.hpp"
 
-Ray::Ray(Point3f point, Point3f eye) {
+
+Ray::Ray(Point3f point, Vector3f D, float t)
+{
 	this->O = point;
-	this->t = 1;
-	this->D = Point3f(0, 0, 0);
-	this->D = point - eye;
+	this->D = D;
+	this->t = 0;
 	this->D.normalize();
 }
 

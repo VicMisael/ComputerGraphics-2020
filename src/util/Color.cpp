@@ -28,15 +28,15 @@ uint32_t Color::rgba()
 		struct {
 			uint8_t  _r, _g, _b, _a;
 		};
-	};
+	} rgbaCol;
 	using namespace std;
 	r = r > 1?1: r;
 	g = g > 1 ? 1 : g;
 	b = b > 1 ? 1 : b;
 
-	_r = r * 255;
-	_g = g * 255;
-	_b = b * 255;
-	_a = 255;
-	return rgba;
+	rgbaCol._r = r * 255;
+	rgbaCol._g = g * 255;
+	rgbaCol._b = b * 255;
+	rgbaCol._a = 255;
+	return rgbaCol.rgba;
 }

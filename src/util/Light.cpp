@@ -13,11 +13,15 @@ void Light::SetType(LightType lt)
 
 float Light::getIntensity()
 {
-    return intensity > 1 ? 1 : intensity;
+    return intensity;
 }
 
 Point3f Light::getDirection()
 {
     return Direction;
+}
+void Light::ApplyCamera(Matrix4x4 m)
+{
+    point = m * point;
 }
 Point3f Light::getPosition() { return point; }

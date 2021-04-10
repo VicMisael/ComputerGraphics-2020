@@ -57,13 +57,13 @@ int Cone::Intersects(Ray& ray)
      
 
     if (intersections.size() < 2 ) {
-        Plane base(center, n, this->c);
-        if (base.Intersects(ray)) {
-           float t=base.getTmin();
-           if (t > 0) {
-               intersections.push_back(t);
-           }
-           }
+        //Plane base(center, n, this->c);
+        //if (base.Intersects(ray)) {
+        //   float t=base.getTmin();
+        //   if (t > 0) {
+        //       intersections.push_back(t);
+        //   }
+        //   }
     }
     for(float t:intersections){
         if (t < t_min)
@@ -77,12 +77,13 @@ void Cone::ApplyTransformation()
     Point4f base4(center, 1);
     base4 = transFMat * base4;
     Vector4f axis4(axis, 0);
-    axis4 = transFMat * axis4;
+    //axis4 = transFMat * axis4;
     Point4f vertice4(vertice, 1);
     vertice4 = transFMat * vertice4;
     center = base4.toVector3f();
-    axis = axis4.toVector3f();
+    //axis = axis4.toVector3f();
     vertice = vertice4.toVector3f();
+    axis = vertice - center;
     float hipothenuse = sqrtf((radius * radius) + (height * height));
     this->cosTheta = height / hipothenuse;
 }
@@ -98,7 +99,7 @@ Vector3f Cone::getNormal(const Point3f p)
 
 void Cone::ApplyCamera(const Matrix4x4 mm44)
 {
-   this->center= mm44* center;
-   this->vertice = center + (axis * height);
-  // this->vertice = mm44 * vertice;
+    center = mm44 * center;
+    vertice = center + axis * height;
+    //vertice = mm44*vertice;
 }
