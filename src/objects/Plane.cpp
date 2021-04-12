@@ -50,4 +50,6 @@ Vector3f Plane::getNormal(const Point3f p)
 void Plane::ApplyCamera(const Matrix4x4 m)
 {
 	pplane = m * pplane;
+	//n = m * n;
+	//n.normalize();
 }

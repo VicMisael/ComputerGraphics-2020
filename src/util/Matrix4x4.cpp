@@ -1,104 +1,104 @@
 #include "Matrix4x4.hpp"
 #include <iostream>
-void getCofactor(float A[4][4], float temp[4][4], int p, int q, int n)
-{
-    int i = 0, j = 0;
+// void getCofactor(float A[4][4], float temp[4][4], int p, int q, int n)
+// {
+//     int i = 0, j = 0;
 
-    // Looping for each element of the matrix
-    for (int row = 0; row < n; row++)
-    {
-        for (int col = 0; col < n; col++)
-        {
-            //  Copying into temporary matrix only those element
-            //  which are not in given row and column
-            if (row != p && col != q)
-            {
-                temp[i][j++] = A[row][col];
+//     // Looping for each element of the matrix
+//     for (int row = 0; row < n; row++)
+//     {
+//         for (int col = 0; col < n; col++)
+//         {
+//             //  Copying into temporary matrix only those element
+//             //  which are not in given row and column
+//             if (row != p && col != q)
+//             {
+//                 temp[i][j++] = A[row][col];
 
-                // Row is filled, so increase row index and
-                // reset col index
-                if (j == n - 1)
-                {
-                    j = 0;
-                    i++;
-                }
-            }
-        }
-    }
-}
+//                 // Row is filled, so increase row index and
+//                 // reset col index
+//                 if (j == n - 1)
+//                 {
+//                     j = 0;
+//                     i++;
+//                 }
+//             }
+//         }
+//     }
+// }
 
-float inline determinant(float A[4][4], int n)
-{
-    float D = 0; // Initialize result
+// float inline determinant(float A[4][4], int n)
+// {
+//     float D = 0; // Initialize result
 
-    //  Base case : if matrix contains single element
-    if (n == 1)
-        return A[0][0];
+//     //  Base case : if matrix contains single element
+//     if (n == 1)
+//         return A[0][0];
 
-    float temp[4][4]; // To store cofactors
+//     float temp[4][4]; // To store cofactors
 
-    int sign = 1; // To store sign multiplier
+//     int sign = 1; // To store sign multiplier
 
-    // Iterate for each element of first row
-    for (int f = 0; f < n; f++)
-    {
-        // Getting Cofactor of A[0][f]
-        getCofactor(A, temp, 0, f, n);
-        D += sign * A[0][f] * determinant(temp, n - 1);
+//     // Iterate for each element of first row
+//     for (int f = 0; f < n; f++)
+//     {
+//         // Getting Cofactor of A[0][f]
+//         getCofactor(A, temp, 0, f, n);
+//         D += sign * A[0][f] * determinant(temp, n - 1);
 
-        // terms are to be added with alternate sign
-        sign = -sign;
-    }
+//         // terms are to be added with alternate sign
+//         sign = -sign;
+//     }
 
-    return D;
-}
+//     return D;
+// }
 
-// Function to get adjoint of A[N][N] in adj[N][N].
-void adjoint(float A[4][4], float adj[4][4])
-{
+// // Function to get adjoint of A[N][N] in adj[N][N].
+// void adjoint(float A[4][4], float adj[4][4])
+// {
 
-    // temp is used to store cofactors of A[][]
-    int sign = 1;
-    float temp[4][4];
+//     // temp is used to store cofactors of A[][]
+//     int sign = 1;
+//     float temp[4][4];
 
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            // Get cofactor of A[i][j]
-            getCofactor(A, temp, i, j, 4);
+//     for (int i = 0; i < 4; i++)
+//     {
+//         for (int j = 0; j < 4; j++)
+//         {
+//             // Get cofactor of A[i][j]
+//             getCofactor(A, temp, i, j, 4);
 
-            // sign of adj[j][i] positive if sum of row
-            // and column indexes is even.
-            sign = ((i + j) % 2 == 0) ? 1 : -1;
+//             // sign of adj[j][i] positive if sum of row
+//             // and column indexes is even.
+//             sign = ((i + j) % 2 == 0) ? 1 : -1;
 
-            // Interchanging rows and columns to get the
-            // transpose of the cofactor matrix
-            adj[j][i] = (sign) * (determinant(temp, 3));
-        }
-    }
-}
+//             // Interchanging rows and columns to get the
+//             // transpose of the cofactor matrix
+//             adj[j][i] = (sign) * (determinant(temp, 3));
+//         }
+//     }
+// }
 
 // Function to calculate and store inverse, returns false if
 // matrix is singular
-float inverse(float A[4][4], float inverse[4][4])
-{
-    // Find determinant of A[][]
-    float det = determinant(A, 4);
-    if (det == 0)
-    {
-        return false;
-    }
+// float inverse(float A[4][4], float inverse[4][4])
+// {
+//     // Find determinant of A[][]
+//     float det = determinant(A, 4);
+//     if (det == 0)
+//     {
+//         return false;
+//     }
 
-    float adj[4][4];
-    adjoint(A, adj);
+//     float adj[4][4];
+//     adjoint(A, adj);
 
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++)
-            inverse[i][j] = adj[i][j] / det;
+//     for (int i = 0; i < 4; i++)
+//         for (int j = 0; j < 4; j++)
+//             inverse[i][j] = adj[i][j] / det;
 
-    return true;
-}
+//     return true;
+// }
 void Matrix4x4::loadIdentity()
 {
     for (int i = 0; i < 4; i++)
@@ -210,7 +210,30 @@ Matrix4x4 Matrix4x4::Inverse()
 }
 float Matrix4x4::Determinant()
 {
-    return determinant(mm44, 4);
+        float adj2323 = mm44[2][2] * mm44[3][3] - mm44[2][3] * mm44[3][2];
+    float adj1323 = mm44[2][1] * mm44[3][3] - mm44[2][3] * mm44[3][1];
+    float adj1223 = mm44[2][1] * mm44[3][2] - mm44[2][2] * mm44[3][1];
+    float adj0323 = mm44[2][0] * mm44[3][3] - mm44[2][3] * mm44[3][0];
+    float adj0223 = mm44[2][0] * mm44[3][2] - mm44[2][2] * mm44[3][0];
+    float adj0123 = mm44[2][0] * mm44[3][1] - mm44[2][1] * mm44[3][0];
+    float adj2313 = mm44[1][2] * mm44[3][3] - mm44[1][3] * mm44[3][2];
+    float adj1313 = mm44[1][1] * mm44[3][3] - mm44[1][3] * mm44[3][1];
+    float adj1213 = mm44[1][1] * mm44[3][2] - mm44[1][2] * mm44[3][1];
+    float adj2312 = mm44[1][2] * mm44[2][3] - mm44[1][3] * mm44[2][2];
+    float adj1312 = mm44[1][1] * mm44[2][3] - mm44[1][3] * mm44[2][1];
+    float adj1212 = mm44[1][1] * mm44[2][2] - mm44[1][2] * mm44[2][1];
+    float adj0313 = mm44[1][0] * mm44[3][3] - mm44[1][3] * mm44[3][0];
+    float adj0213 = mm44[1][0] * mm44[3][2] - mm44[1][2] * mm44[3][0];
+    float adj0312 = mm44[1][0] * mm44[2][3] - mm44[1][3] * mm44[2][0];
+    float adj0212 = mm44[1][0] * mm44[2][2] - mm44[1][2] * mm44[2][0];
+    float adj0113 = mm44[1][0] * mm44[3][1] - mm44[1][1] * mm44[3][0];
+    float adj0112 = mm44[1][0] * mm44[2][1] - mm44[1][1] * mm44[2][0];
+
+    return (mm44[0][0] * (mm44[1][1] * adj2323 - mm44[1][2] * adj1323 + mm44[1][3] * adj1223)
+        - mm44[0][1] * (mm44[1][0] * adj2323 - mm44[1][2] * adj0323 + mm44[1][3] * adj0223)
+        + mm44[0][2] * (mm44[1][0] * adj1323 - mm44[1][1] * adj0323 + mm44[1][3] * adj0123)
+        - mm44[0][3] * (mm44[1][0] * adj1223 - mm44[1][1] * adj0223 + mm44[1][2] * adj0123));
+
 }
 void Matrix4x4::ConcatTransformation(const float _mm[4][4])
 {

@@ -28,32 +28,32 @@ int main(int argc, char **argv)
     //auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
   
-    float vcright=0;
-    float vcup = 0;
-    float vcy = 0;
+    float vcx=-0.01;
+    float vcy = 0.09;
+    float vcz = -0.94;
     int Cw = 512;
     int Ch = 512;
     
 
     while (run)
     {
-        Point3f eye = Point3f(vcright,vcup,vcy);
-        Point3f at = Point3f(0, 0, -1);
-        Point3f up = Point3f(0, 1, -1);
+        Point3f eye = Point3f(vcx,vcy,vcz);
+        Point3f at = Point3f(0, 0, 1);
+        Point3f up = Point3f(0, 2, 0);
         Camera camera = Camera(eye, at, up);
         World world(camera);
+        Point3f canvasEye = camera.getWorldToCamera() * eye;
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
-                // Ray r = Ray(canvasToViewport(eye.x + x, eye.y + y, Cw, Ch, -(eye.z + 1)), eye);
-                Ray r = Ray(canvasToViewport(x, y, Cw, Ch, -1),eye);
+                
+                //Ray r = Ray(canvasToViewport(x, y, Cw, Ch,-1),canvasEye);
+                Ray r = Ray(canvasToViewport(canvasEye.x+x, canvasEye.y+y, Cw, Ch, -1),canvasEye);
                 rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1).rgba();
             }
         }
-        std::cout <<"UP:"<< (vcup) << std::endl;
-        std::cout <<"RIGHT:"<< (vcright) << std::endl;
-        std::cout <<"Z:"<< (vcy) << std::endl;
+        std::cout <<"X: "<< (vcx)<<"Y: "<<vcy<<"Z: "<<vcz << std::endl;
         SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
@@ -65,22 +65,22 @@ int main(int argc, char **argv)
             {
             case SDL_KEYDOWN:
             if(e.key.keysym.scancode==SDL_SCANCODE_UP){
-                    vcup+=0.1;
+                    vcx+=0.01;
             }
             if(e.key.keysym.scancode==SDL_SCANCODE_DOWN){
-                    vcup-=0.1;
+                    vcx-=0.01;
             }
             if(e.key.keysym.scancode==SDL_SCANCODE_LEFT){
-                    vcright-=0.1;
+                    vcz-=0.01;
             }
             if(e.key.keysym.scancode==SDL_SCANCODE_RIGHT){
-                    vcright+=0.1;
+                    vcz+=0.01;
             }
             if(e.key.keysym.sym==SDLK_a){
-                vcy-=0.1;
+                vcy-=0.01;
             }
             if(e.key.keysym.sym==SDLK_d){
-                vcy+=0.1;
+                vcy+=0.01;
             }
                 break;
             case SDL_QUIT:

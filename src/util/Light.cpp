@@ -20,7 +20,7 @@ Point3f Light::getDirection()
 {
     return Direction;
 }
-void Light::ApplyCamera(Matrix4x4 m)
+void Light::ApplyCamera(const Matrix4x4 m)
 {
     point = m * point;
 }

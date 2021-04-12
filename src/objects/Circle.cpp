@@ -35,10 +35,17 @@ Vector3f Circle::getNormal(const Point3f p){
 
 void Circle::ApplyCamera(const Matrix4x4 m)
 {
-	Center=m*Center;
+	Vector4f Center4f(Center, 1);
+	Center4f=m* Center4f;
+	Center = Center4f.toVector3f();
+	std::cout << "Ball vector" << std::endl;
+
 }
 
 void Circle::ApplyTransformation()
 {
-	Center = transFMat * Center;
+	Vector4f Center4f(Center, 1);
+	Center4f = transFMat * Center4f;
+	Center= Center4f.toVector3f();
+
 }

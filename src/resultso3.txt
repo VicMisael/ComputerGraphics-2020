@@ -1,0 +1,745 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ns/call  ns/call  name    
+ 27.12      0.39     0.39 40044066     9.62     9.99  VectorUtilities::crossProduct(Vector3f const&, Vector3f const&)
+ 24.65      0.74     0.35 19458396    17.99    43.06  Triangle::Intersects(Ray&)
+  9.86      0.88     0.14  8254623    16.96    16.96  Vector3f::normalize()
+  8.10      0.99     0.12 115823538     0.99     0.99  VectorUtilities::dotProduct(Vector3f const&, Vector3f const&)
+  3.87      1.05     0.06 147957777     0.37     0.37  Vector3f::Vector3f(float, float, float)
+  2.82      1.09     0.04  3910773    10.23    12.59  Plane::Intersects(Ray&)
+  2.82      1.13     0.04  1621533    24.67   541.37  Cube::Intersects(Ray&)
+  2.82      1.17     0.04                             World::computeColor(Ray&, float)
+  2.47      1.20     0.04  5609802     6.24     7.09  Ray::Ray(Vector3f, Vector3f, float)
+  2.47      1.24     0.04  1699608    20.60    23.70  Circle::Intersects(Ray&)
+  2.11      1.27     0.03  3591210     8.36     9.10  Ray::getPoint(float)
+  2.11      1.30     0.03  1666539    18.01    31.64  Cylinder::Intersects(Ray&)
+  2.11      1.33     0.03  1659129    18.09    40.55  Cone::Intersects(Ray&)
+  2.11      1.36     0.03  1081194    27.75   701.90  World::ComputeLighting(Vector3f, Vector3f, Vector3f, float)
+  1.41      1.38     0.02    93939   212.96   673.61  Cube::getNormal(Vector3f)
+  0.70      1.39     0.01  1127268     8.87    36.57  Triangle::getNormal(Vector3f)
+  0.70      1.40     0.01  1081194     9.25     9.25  Light::getPosition()
+  0.70      1.41     0.01                             Color::rgba()
+  0.35      1.41     0.01    38955   128.39   145.73  Circle::getNormal(Vector3f)
+  0.35      1.42     0.01                             Ray::getDirectionInVector4f()
+  0.35      1.42     0.01                             Matrix4x4::printMatrix()
+  0.00      1.42     0.00  3462087     0.00     0.00  BaseObject::getTmin()
+  0.00      1.42     0.00  2835927     0.00     0.00  Vector3f::length()
+  0.00      1.42     0.00  1900263     0.00     0.00  Light::getIntensity()
+  0.00      1.42     0.00  1081194     0.00     0.00  BaseObject::getSpecular()
+  0.00      1.42     0.00  1081194     0.00     0.00  Color::Color(float, float, float, float)
+  0.00      1.42     0.00  1065180     0.00     0.00  BaseObject::getColor()
+  0.00      1.42     0.00   903168     0.00     0.00  Plane::getNormal(Vector3f)
+  0.00      1.42     0.00   278124     0.00     0.00  void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&)
+  0.00      1.42     0.00   229428     0.00     0.00  Color::Color()
+  0.00      1.42     0.00   229320     0.00     0.00  Matrix4x4::Matrix4x4()
+  0.00      1.42     0.00   229194     0.00    17.71  Plane::Plane(Vector3f, Vector3f, Color)
+  0.00      1.42     0.00    29118     0.00    35.05  Cone::getNormal(Vector3f)
+  0.00      1.42     0.00    16014     0.00     0.00  Cylinder::getColor()
+  0.00      1.42     0.00    16014     0.00    19.07  Cylinder::getNormal(Vector3f)
+  0.00      1.42     0.00     1470     0.00     0.00  void std::vector<float, std::allocator<float> >::_M_realloc_insert<float>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float&&)
+  0.00      1.42     0.00      108     0.00     1.12  Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color)
+  0.00      1.42     0.00       36     0.00     1.12  Triangle::ApplyCamera(Matrix4x4)
+  0.00      1.42     0.00       21     0.00     0.00  Color::Color(unsigned char, unsigned char, unsigned char)
+  0.00      1.42     0.00       21     0.00     0.00  Vector4f::Vector4f(Vector3f, int)
+  0.00      1.42     0.00       18     0.00     0.37  Vector4f::toVector3f()
+  0.00      1.42     0.00       18     0.00     0.00  Vector4f::Vector4f(float, float, float, float)
+  0.00      1.42     0.00       12     0.00     0.00  BaseObject::setSpecular(float)
+  0.00      1.42     0.00       12     0.00     0.00  BaseObject::Translate(float, float, float)
+  0.00      1.42     0.00       12     0.00     0.00  Matrix4x4::ConcatTranslate(float, float, float)
+  0.00      1.42     0.00       12     0.00     0.00  void std::vector<BaseObject*, std::allocator<BaseObject*> >::_M_realloc_insert<BaseObject*>(__gnu_cxx::__normal_iterator<BaseObject**, std::vector<BaseObject*, std::allocator<BaseObject*> > >, BaseObject*&&)
+  0.00      1.42     0.00        6     0.00    13.39  Cube::CalculateTriangles()
+  0.00      1.42     0.00        6     0.00     0.74  Light::Light(Vector3f, Vector3f, float)
+  0.00      1.42     0.00        6     0.00     0.37  Plane::ApplyCamera(Matrix4x4)
+  0.00      1.42     0.00        6     0.00     0.00  Matrix4x4::Inverse()
+  0.00      1.42     0.00        6     0.00     0.00  void std::vector<Light*, std::allocator<Light*> >::_M_realloc_insert<Light* const&>(__gnu_cxx::__normal_iterator<Light**, std::vector<Light*, std::allocator<Light*> > >, Light* const&)
+  0.00      1.42     0.00        3     0.00     0.00  BaseObject::LoadIdentity()
+  0.00      1.42     0.00        3     0.00     0.00  BaseObject::RotateY(float)
+  0.00      1.42     0.00        3     0.00     1.12  Cone::ApplyCamera(Matrix4x4)
+  0.00      1.42     0.00        3     0.00     1.12  Cone::ApplyTransformation()
+  0.00      1.42     0.00        3     0.00    36.16  Cone::Cone(Vector3f, float, float, Color)
+  0.00      1.42     0.00        3     0.00    13.39  Cube::ApplyCamera(Matrix4x4)
+  0.00      1.42     0.00        3     0.00     2.97  Cube::ApplyTransformation()
+  0.00      1.42     0.00        3     0.00    50.57  Cube::Cube(float, float, float, Color)
+  0.00      1.42     0.00        3     0.00     0.00  Light::SetType(LightType)
+  0.00      1.42     0.00        3     0.00   181.87  World::init()
+  0.00      1.42     0.00        3     0.00     0.00  Camera::getWorldToCamera()
+  0.00      1.42     0.00        3     0.00     0.37  Circle::ApplyCamera(Matrix4x4)
+  0.00      1.42     0.00        3     0.00     0.37  Circle::ApplyTransformation()
+  0.00      1.42     0.00        3     0.00     0.74  Circle::Circle(float, Color)
+  0.00      1.42     0.00        3     0.00     1.49  Cylinder::ApplyCamera(Matrix4x4)
+  0.00      1.42     0.00        3     0.00     0.74  Cylinder::ApplyTransformation()
+  0.00      1.42     0.00        3     0.00    18.08  Cylinder::Cylinder(Vector3f, float, float, Color, Color)
+  0.00      1.42     0.00        3     0.00     0.00  Matrix4x4::loadIdentity()
+  0.00      1.42     0.00        3     0.00     0.00  Matrix4x4::ConcatRotateY(float)
+  0.00      1.42     0.00        3     0.00     0.00  Matrix4x4::Matrix4x4(float (*) [4])
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z11getCofactorPA3_fS0_iii
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN10BaseObject8getColorEv
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN15VectorUtilities12crossProductERK8Vector3fS2_
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4ConeC2E8Vector3fff5Color
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4CubeC2Efff5Color
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN5PlaneC2E8Vector3fS0_5Color
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN5World4initEv
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN6CircleC2Ef5Color
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8CylinderC2E8Vector3fff5ColorS1_
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN8TriangleC2EP8Vector3f5Color
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN9Matrix4x412loadIdentityEv
+  0.00      1.42     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.70% of 1.42 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     98.6    0.04    1.36                 World::computeColor(Ray&, float) [1]
+                0.03    0.73 1081194/1081194     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+                0.02    0.41  786432/1621533     Cube::Intersects(Ray&) [2]
+                0.02    0.04   93939/93939       Cube::getNormal(Vector3f) [9]
+                0.01    0.02  786432/1659129     Cone::Intersects(Ray&) [8]
+                0.01    0.01  786432/1666539     Cylinder::Intersects(Ray&) [11]
+                0.02    0.00 1572864/3910773     Plane::Intersects(Ray&) [12]
+                0.02    0.00  786432/1699608     Circle::Intersects(Ray&) [14]
+                0.01    0.00 1081194/3591210     Ray::getPoint(float) [16]
+                0.01    0.00   38955/38955       Circle::getNormal(Vector3f) [19]
+                0.00    0.00   29118/29118       Cone::getNormal(Vector3f) [23]
+                0.00    0.00 1081194/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00   16014/16014       Cylinder::getNormal(Vector3f) [24]
+                0.00    0.00 1469208/3462087     BaseObject::getTmin() [53]
+                0.00    0.00 1081194/1081194     BaseObject::getSpecular() [56]
+                0.00    0.00 1081194/1081194     Color::Color(float, float, float, float) [57]
+                0.00    0.00 1065180/1065180     BaseObject::getColor() [58]
+                0.00    0.00  903168/903168      Plane::getNormal(Vector3f) [59]
+                0.00    0.00   16014/16014       Cylinder::getColor() [63]
+-----------------------------------------------
+                0.02    0.41  786432/1621533     World::computeColor(Ray&, float) [1]
+                0.02    0.43  835101/1621533     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[2]     61.8    0.04    0.84 1621533         Cube::Intersects(Ray&) [2]
+                0.35    0.49 19458396/19458396     Triangle::Intersects(Ray&) [3]
+                0.00    0.00  578142/3462087     BaseObject::getTmin() [53]
+-----------------------------------------------
+                0.35    0.49 19458396/19458396     Cube::Intersects(Ray&) [2]
+[3]     59.0    0.35    0.49 19458396         Triangle::Intersects(Ray&) [3]
+                0.37    0.01 38916792/40044066     VectorUtilities::crossProduct(Vector3f const&, Vector3f const&) [5]
+                0.08    0.00 77833584/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.02    0.00 58375188/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.03    0.73 1081194/1081194     World::computeColor(Ray&, float) [1]
+[4]     53.4    0.03    0.73 1081194         World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+                0.02    0.43  835101/1621533     Cube::Intersects(Ray&) [2]
+                0.11    0.00 6690996/8254623     Vector3f::normalize() [6]
+                0.04    0.00 5609802/5609802     Ray::Ray(Vector3f, Vector3f, float) [15]
+                0.02    0.02  872697/1659129     Cone::Intersects(Ray&) [8]
+                0.02    0.01  880107/1666539     Cylinder::Intersects(Ray&) [11]
+                0.02    0.00 2108721/3910773     Plane::Intersects(Ray&) [12]
+                0.02    0.00  913176/1699608     Circle::Intersects(Ray&) [14]
+                0.01    0.00 1081194/1081194     Light::getPosition() [17]
+                0.00    0.00 1094889/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.00    0.00 2632557/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00 2719332/2835927     Vector3f::length() [54]
+                0.00    0.00 1900263/1900263     Light::getIntensity() [55]
+                0.00    0.00 1298145/3462087     BaseObject::getTmin() [53]
+-----------------------------------------------
+                0.00    0.00       6/40044066     Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+                0.01    0.00 1127268/40044066     Triangle::getNormal(Vector3f) [13]
+                0.37    0.01 38916792/40044066     Triangle::Intersects(Ray&) [3]
+[5]     28.2    0.39    0.01 40044066         VectorUtilities::crossProduct(Vector3f const&, Vector3f const&) [5]
+                0.01    0.00 40044066/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/8254623     Cylinder::Cylinder(Vector3f, float, float, Color, Color) [32]
+                0.00    0.00       6/8254623     Cone::Cone(Vector3f, float, float, Color) [30]
+                0.00    0.00      12/8254623     Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+                0.00    0.00   16014/8254623     Cylinder::getNormal(Vector3f) [24]
+                0.00    0.00   38955/8254623     Circle::getNormal(Vector3f) [19]
+                0.00    0.00   58236/8254623     Cone::getNormal(Vector3f) [23]
+                0.00    0.00   93939/8254623     Cube::getNormal(Vector3f) [9]
+                0.00    0.00  229194/8254623     Plane::Plane(Vector3f, Vector3f, Color) [22]
+                0.02    0.00 1127268/8254623     Triangle::getNormal(Vector3f) [13]
+                0.11    0.00 6690996/8254623     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[6]      9.9    0.14    0.00 8254623         Vector3f::normalize() [6]
+-----------------------------------------------
+                0.00    0.00       9/115823538     Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+                0.00    0.00   16014/115823538     Cylinder::getNormal(Vector3f) [24]
+                0.00    0.00 1094889/115823538     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+                0.00    0.00 3399216/115823538     Circle::Intersects(Ray&) [14]
+                0.01    0.00 7821546/115823538     Plane::Intersects(Ray&) [12]
+                0.01    0.00 8640009/115823538     Cylinder::Intersects(Ray&) [11]
+                0.02    0.00 17018271/115823538     Cone::Intersects(Ray&) [8]
+                0.08    0.00 77833584/115823538     Triangle::Intersects(Ray&) [3]
+[7]      8.1    0.12    0.00 115823538         VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+-----------------------------------------------
+                0.01    0.02  786432/1659129     World::computeColor(Ray&, float) [1]
+                0.02    0.02  872697/1659129     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[8]      4.7    0.03    0.04 1659129         Cone::Intersects(Ray&) [8]
+                0.02    0.00 2086110/3591210     Ray::getPoint(float) [16]
+                0.02    0.00 17018271/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.00    0.00 3745239/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00  193620/278124      void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&) [60]
+-----------------------------------------------
+                0.02    0.04   93939/93939       World::computeColor(Ray&, float) [1]
+[9]      4.5    0.02    0.04   93939         Cube::getNormal(Vector3f) [9]
+                0.01    0.03 1127268/1127268     Triangle::getNormal(Vector3f) [13]
+                0.00    0.00   93939/8254623     Vector3f::normalize() [6]
+                0.00    0.00 1221207/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/147957777     Cone::ApplyTransformation() [40]
+                0.00    0.00       6/147957777     Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+                0.00    0.00       6/147957777     Circle::Circle(float, Color) [42]
+                0.00    0.00       6/147957777     Plane::ApplyCamera(Matrix4x4) [41]
+                0.00    0.00       9/147957777     Cone::ApplyCamera(Matrix4x4) [39]
+                0.00    0.00       9/147957777     Cylinder::Cylinder(Vector3f, float, float, Color, Color) [32]
+                0.00    0.00      12/147957777     Light::Light(Vector3f, Vector3f, float) [37]
+                0.00    0.00      12/147957777     Cylinder::ApplyCamera(Matrix4x4) [38]
+                0.00    0.00      18/147957777     Vector4f::toVector3f() [36]
+                0.00    0.00      18/147957777     Cone::Cone(Vector3f, float, float, Color) [30]
+                0.00    0.00      24/147957777     Cube::ApplyTransformation() [35]
+                0.00    0.00      30/147957777     World::init() [25]
+                0.00    0.00     108/147957777     Triangle::ApplyCamera(Matrix4x4) [33]
+                0.00    0.00     192/147957777     Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00     324/147957777     Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color) [29]
+                0.00    0.00   38955/147957777     Circle::getNormal(Vector3f) [19]
+                0.00    0.00   48042/147957777     Cylinder::getNormal(Vector3f) [24]
+                0.00    0.00   87354/147957777     Cone::getNormal(Vector3f) [23]
+                0.00    0.00  458388/147957777     Plane::Plane(Vector3f, Vector3f, Color) [22]
+                0.00    0.00 1081194/147957777     World::computeColor(Ray&, float) [1]
+                0.00    0.00 1221207/147957777     Cube::getNormal(Vector3f) [9]
+                0.00    0.00 2254536/147957777     Triangle::getNormal(Vector3f) [13]
+                0.00    0.00 2632557/147957777     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+                0.00    0.00 3745239/147957777     Cone::Intersects(Ray&) [8]
+                0.00    0.00 3910773/147957777     Plane::Intersects(Ray&) [12]
+                0.00    0.00 5098824/147957777     Circle::Intersects(Ray&) [14]
+                0.00    0.00 7182420/147957777     Ray::getPoint(float) [16]
+                0.00    0.00 8985789/147957777     Cylinder::Intersects(Ray&) [11]
+                0.00    0.00 12792468/147957777     Ray::Ray(Vector3f, Vector3f, float) [15]
+                0.01    0.00 40044066/147957777     VectorUtilities::crossProduct(Vector3f const&, Vector3f const&) [5]
+                0.02    0.00 58375188/147957777     Triangle::Intersects(Ray&) [3]
+[10]     3.9    0.06    0.00 147957777         Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.01    0.01  786432/1666539     World::computeColor(Ray&, float) [1]
+                0.02    0.01  880107/1666539     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[11]     3.7    0.03    0.02 1666539         Cylinder::Intersects(Ray&) [11]
+                0.01    0.00 8640009/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.00    0.00  229188/229194      Plane::Plane(Vector3f, Vector3f, Color) [22]
+                0.00    0.00  423906/3591210     Ray::getPoint(float) [16]
+                0.00    0.00 8985789/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00  229188/3910773     Plane::Intersects(Ray&) [12]
+                0.00    0.00  116592/3462087     BaseObject::getTmin() [53]
+                0.00    0.00  116592/2835927     Vector3f::length() [54]
+                0.00    0.00   84504/278124      void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&) [60]
+                0.00    0.00    1470/1470        void std::vector<float, std::allocator<float> >::_M_realloc_insert<float>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float&&) [64]
+-----------------------------------------------
+                0.00    0.00  229188/3910773     Cylinder::Intersects(Ray&) [11]
+                0.02    0.00 1572864/3910773     World::computeColor(Ray&, float) [1]
+                0.02    0.00 2108721/3910773     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[12]     3.5    0.04    0.01 3910773         Plane::Intersects(Ray&) [12]
+                0.01    0.00 7821546/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.00    0.00 3910773/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.01    0.03 1127268/1127268     Cube::getNormal(Vector3f) [9]
+[13]     2.9    0.01    0.03 1127268         Triangle::getNormal(Vector3f) [13]
+                0.02    0.00 1127268/8254623     Vector3f::normalize() [6]
+                0.01    0.00 1127268/40044066     VectorUtilities::crossProduct(Vector3f const&, Vector3f const&) [5]
+                0.00    0.00 2254536/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.02    0.00  786432/1699608     World::computeColor(Ray&, float) [1]
+                0.02    0.00  913176/1699608     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[14]     2.8    0.04    0.01 1699608         Circle::Intersects(Ray&) [14]
+                0.00    0.00 3399216/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.00    0.00 5098824/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.04    0.00 5609802/5609802     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[15]     2.8    0.04    0.00 5609802         Ray::Ray(Vector3f, Vector3f, float) [15]
+                0.00    0.00 12792468/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00  423906/3591210     Cylinder::Intersects(Ray&) [11]
+                0.01    0.00 1081194/3591210     World::computeColor(Ray&, float) [1]
+                0.02    0.00 2086110/3591210     Cone::Intersects(Ray&) [8]
+[16]     2.3    0.03    0.00 3591210         Ray::getPoint(float) [16]
+                0.00    0.00 7182420/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.01    0.00 1081194/1081194     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[17]     0.7    0.01    0.00 1081194         Light::getPosition() [17]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     0.7    0.01    0.00                 Color::rgba() [18]
+-----------------------------------------------
+                0.01    0.00   38955/38955       World::computeColor(Ray&, float) [1]
+[19]     0.4    0.01    0.00   38955         Circle::getNormal(Vector3f) [19]
+                0.00    0.00   38955/8254623     Vector3f::normalize() [6]
+                0.00    0.00   38955/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     0.4    0.01    0.00                 Ray::getDirectionInVector4f() [20]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     0.4    0.01    0.00                 Matrix4x4::printMatrix() [21]
+-----------------------------------------------
+                0.00    0.00       6/229194      World::init() [25]
+                0.00    0.00  229188/229194      Cylinder::Intersects(Ray&) [11]
+[22]     0.3    0.00    0.00  229194         Plane::Plane(Vector3f, Vector3f, Color) [22]
+                0.00    0.00  229194/8254623     Vector3f::normalize() [6]
+                0.00    0.00  458388/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00  229194/229320      Matrix4x4::Matrix4x4() [62]
+                0.00    0.00  229194/229428      Color::Color() [61]
+-----------------------------------------------
+                0.00    0.00   29118/29118       World::computeColor(Ray&, float) [1]
+[23]     0.1    0.00    0.00   29118         Cone::getNormal(Vector3f) [23]
+                0.00    0.00   58236/8254623     Vector3f::normalize() [6]
+                0.00    0.00   87354/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00   16014/16014       World::computeColor(Ray&, float) [1]
+[24]     0.0    0.00    0.00   16014         Cylinder::getNormal(Vector3f) [24]
+                0.00    0.00   16014/8254623     Vector3f::normalize() [6]
+                0.00    0.00   48042/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00   16014/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+-----------------------------------------------
+                0.00    0.00       3/3           World::World(Camera) [26]
+[25]     0.0    0.00    0.00       3         World::init() [25]
+                0.00    0.00       3/3           Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00       3/3           Cone::Cone(Vector3f, float, float, Color) [30]
+                0.00    0.00       6/229194      Plane::Plane(Vector3f, Vector3f, Color) [22]
+                0.00    0.00       3/3           Cylinder::Cylinder(Vector3f, float, float, Color, Color) [32]
+                0.00    0.00       3/6           Cube::CalculateTriangles() [31]
+                0.00    0.00       3/3           Cube::ApplyCamera(Matrix4x4) [34]
+                0.00    0.00      30/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       3/3           Cube::ApplyTransformation() [35]
+                0.00    0.00       6/6           Light::Light(Vector3f, Vector3f, float) [37]
+                0.00    0.00       3/3           Cylinder::ApplyCamera(Matrix4x4) [38]
+                0.00    0.00       3/3           Cone::ApplyTransformation() [40]
+                0.00    0.00       3/3           Cone::ApplyCamera(Matrix4x4) [39]
+                0.00    0.00       6/6           Plane::ApplyCamera(Matrix4x4) [41]
+                0.00    0.00       3/3           Circle::Circle(float, Color) [42]
+                0.00    0.00       3/3           Cylinder::ApplyTransformation() [43]
+                0.00    0.00       3/3           Circle::ApplyTransformation() [45]
+                0.00    0.00       3/3           Circle::ApplyCamera(Matrix4x4) [44]
+                0.00    0.00      21/21          Color::Color(unsigned char, unsigned char, unsigned char) [65]
+                0.00    0.00      12/12          BaseObject::setSpecular(float) [68]
+                0.00    0.00      12/12          Matrix4x4::ConcatTranslate(float, float, float) [70]
+                0.00    0.00      12/12          BaseObject::Translate(float, float, float) [69]
+                0.00    0.00      12/12          void std::vector<BaseObject*, std::allocator<BaseObject*> >::_M_realloc_insert<BaseObject*>(__gnu_cxx::__normal_iterator<BaseObject**, std::vector<BaseObject*, std::allocator<BaseObject*> > >, BaseObject*&&) [71]
+                0.00    0.00       6/6           void std::vector<Light*, std::allocator<Light*> >::_M_realloc_insert<Light* const&>(__gnu_cxx::__normal_iterator<Light**, std::vector<Light*, std::allocator<Light*> > >, Light* const&) [73]
+                0.00    0.00       3/229320      Matrix4x4::Matrix4x4() [62]
+                0.00    0.00       3/3           Camera::getWorldToCamera() [77]
+                0.00    0.00       3/3           Light::SetType(LightType) [76]
+                0.00    0.00       3/3           Matrix4x4::loadIdentity() [78]
+                0.00    0.00       3/3           BaseObject::LoadIdentity() [74]
+                0.00    0.00       3/3           Matrix4x4::ConcatRotateY(float) [79]
+                0.00    0.00       3/3           BaseObject::RotateY(float) [75]
+-----------------------------------------------
+                                                 <spontaneous>
+[26]     0.0    0.00    0.00                 World::World(Camera) [26]
+                0.00    0.00       3/3           World::init() [25]
+                0.00    0.00       3/229428      Color::Color() [61]
+-----------------------------------------------
+                                                 <spontaneous>
+[27]     0.0    0.00    0.00                 Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+                0.00    0.00      12/8254623     Vector3f::normalize() [6]
+                0.00    0.00       6/40044066     VectorUtilities::crossProduct(Vector3f const&, Vector3f const&) [5]
+                0.00    0.00       9/115823538     VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [7]
+                0.00    0.00       6/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       3/229320      Matrix4x4::Matrix4x4() [62]
+                0.00    0.00       3/3           Matrix4x4::Matrix4x4(float (*) [4]) [80]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[28]     0.0    0.00    0.00       3         Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00     192/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00      36/108         Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color) [29]
+                0.00    0.00       3/6           Cube::CalculateTriangles() [31]
+                0.00    0.00      39/229428      Color::Color() [61]
+                0.00    0.00       3/229320      Matrix4x4::Matrix4x4() [62]
+-----------------------------------------------
+                0.00    0.00      36/108         Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00      72/108         Cube::CalculateTriangles() [31]
+[29]     0.0    0.00    0.00     108         Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color) [29]
+                0.00    0.00     324/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00     108/229428      Color::Color() [61]
+                0.00    0.00     108/229320      Matrix4x4::Matrix4x4() [62]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[30]     0.0    0.00    0.00       3         Cone::Cone(Vector3f, float, float, Color) [30]
+                0.00    0.00       6/8254623     Vector3f::normalize() [6]
+                0.00    0.00      18/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       3/229428      Color::Color() [61]
+                0.00    0.00       3/229320      Matrix4x4::Matrix4x4() [62]
+-----------------------------------------------
+                0.00    0.00       3/6           Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00       3/6           World::init() [25]
+[31]     0.0    0.00    0.00       6         Cube::CalculateTriangles() [31]
+                0.00    0.00      72/108         Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color) [29]
+                0.00    0.00      72/229428      Color::Color() [61]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[32]     0.0    0.00    0.00       3         Cylinder::Cylinder(Vector3f, float, float, Color, Color) [32]
+                0.00    0.00       3/8254623     Vector3f::normalize() [6]
+                0.00    0.00       9/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       6/229428      Color::Color() [61]
+                0.00    0.00       3/229320      Matrix4x4::Matrix4x4() [62]
+-----------------------------------------------
+                0.00    0.00      36/36          Cube::ApplyCamera(Matrix4x4) [34]
+[33]     0.0    0.00    0.00      36         Triangle::ApplyCamera(Matrix4x4) [33]
+                0.00    0.00     108/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[34]     0.0    0.00    0.00       3         Cube::ApplyCamera(Matrix4x4) [34]
+                0.00    0.00      36/36          Triangle::ApplyCamera(Matrix4x4) [33]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[35]     0.0    0.00    0.00       3         Cube::ApplyTransformation() [35]
+                0.00    0.00      24/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/18          Circle::ApplyCamera(Matrix4x4) [44]
+                0.00    0.00       3/18          Circle::ApplyTransformation() [45]
+                0.00    0.00       6/18          Cone::ApplyTransformation() [40]
+                0.00    0.00       6/18          Cylinder::ApplyTransformation() [43]
+[36]     0.0    0.00    0.00      18         Vector4f::toVector3f() [36]
+                0.00    0.00      18/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       6/6           World::init() [25]
+[37]     0.0    0.00    0.00       6         Light::Light(Vector3f, Vector3f, float) [37]
+                0.00    0.00      12/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[38]     0.0    0.00    0.00       3         Cylinder::ApplyCamera(Matrix4x4) [38]
+                0.00    0.00      12/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       3/2835927     Vector3f::length() [54]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[39]     0.0    0.00    0.00       3         Cone::ApplyCamera(Matrix4x4) [39]
+                0.00    0.00       9/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[40]     0.0    0.00    0.00       3         Cone::ApplyTransformation() [40]
+                0.00    0.00       6/18          Vector4f::toVector3f() [36]
+                0.00    0.00       3/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       9/21          Vector4f::Vector4f(Vector3f, int) [66]
+                0.00    0.00       6/18          Vector4f::Vector4f(float, float, float, float) [67]
+-----------------------------------------------
+                0.00    0.00       6/6           World::init() [25]
+[41]     0.0    0.00    0.00       6         Plane::ApplyCamera(Matrix4x4) [41]
+                0.00    0.00       6/147957777     Vector3f::Vector3f(float, float, float) [10]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[42]     0.0    0.00    0.00       3         Circle::Circle(float, Color) [42]
+                0.00    0.00       6/147957777     Vector3f::Vector3f(float, float, float) [10]
+                0.00    0.00       3/229428      Color::Color() [61]
+                0.00    0.00       3/229320      Matrix4x4::Matrix4x4() [62]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[43]     0.0    0.00    0.00       3         Cylinder::ApplyTransformation() [43]
+                0.00    0.00       6/18          Vector4f::toVector3f() [36]
+                0.00    0.00       6/21          Vector4f::Vector4f(Vector3f, int) [66]
+                0.00    0.00       6/18          Vector4f::Vector4f(float, float, float, float) [67]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[44]     0.0    0.00    0.00       3         Circle::ApplyCamera(Matrix4x4) [44]
+                0.00    0.00       3/18          Vector4f::toVector3f() [36]
+                0.00    0.00       3/21          Vector4f::Vector4f(Vector3f, int) [66]
+                0.00    0.00       3/18          Vector4f::Vector4f(float, float, float, float) [67]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[45]     0.0    0.00    0.00       3         Circle::ApplyTransformation() [45]
+                0.00    0.00       3/18          Vector4f::toVector3f() [36]
+                0.00    0.00       3/21          Vector4f::Vector4f(Vector3f, int) [66]
+                0.00    0.00       3/18          Vector4f::Vector4f(float, float, float, float) [67]
+-----------------------------------------------
+                0.00    0.00  116592/3462087     Cylinder::Intersects(Ray&) [11]
+                0.00    0.00  578142/3462087     Cube::Intersects(Ray&) [2]
+                0.00    0.00 1298145/3462087     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+                0.00    0.00 1469208/3462087     World::computeColor(Ray&, float) [1]
+[53]     0.0    0.00    0.00 3462087         BaseObject::getTmin() [53]
+-----------------------------------------------
+                0.00    0.00       3/2835927     Cylinder::ApplyCamera(Matrix4x4) [38]
+                0.00    0.00  116592/2835927     Cylinder::Intersects(Ray&) [11]
+                0.00    0.00 2719332/2835927     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[54]     0.0    0.00    0.00 2835927         Vector3f::length() [54]
+-----------------------------------------------
+                0.00    0.00 1900263/1900263     World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [4]
+[55]     0.0    0.00    0.00 1900263         Light::getIntensity() [55]
+-----------------------------------------------
+                0.00    0.00 1081194/1081194     World::computeColor(Ray&, float) [1]
+[56]     0.0    0.00    0.00 1081194         BaseObject::getSpecular() [56]
+-----------------------------------------------
+                0.00    0.00 1081194/1081194     World::computeColor(Ray&, float) [1]
+[57]     0.0    0.00    0.00 1081194         Color::Color(float, float, float, float) [57]
+-----------------------------------------------
+                0.00    0.00 1065180/1065180     World::computeColor(Ray&, float) [1]
+[58]     0.0    0.00    0.00 1065180         BaseObject::getColor() [58]
+-----------------------------------------------
+                0.00    0.00  903168/903168      World::computeColor(Ray&, float) [1]
+[59]     0.0    0.00    0.00  903168         Plane::getNormal(Vector3f) [59]
+-----------------------------------------------
+                0.00    0.00   84504/278124      Cylinder::Intersects(Ray&) [11]
+                0.00    0.00  193620/278124      Cone::Intersects(Ray&) [8]
+[60]     0.0    0.00    0.00  278124         void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&) [60]
+-----------------------------------------------
+                0.00    0.00       3/229428      Circle::Circle(float, Color) [42]
+                0.00    0.00       3/229428      Cone::Cone(Vector3f, float, float, Color) [30]
+                0.00    0.00       3/229428      World::World(Camera) [26]
+                0.00    0.00       6/229428      Cylinder::Cylinder(Vector3f, float, float, Color, Color) [32]
+                0.00    0.00      39/229428      Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00      72/229428      Cube::CalculateTriangles() [31]
+                0.00    0.00     108/229428      Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color) [29]
+                0.00    0.00  229194/229428      Plane::Plane(Vector3f, Vector3f, Color) [22]
+[61]     0.0    0.00    0.00  229428         Color::Color() [61]
+-----------------------------------------------
+                0.00    0.00       3/229320      Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+                0.00    0.00       3/229320      Circle::Circle(float, Color) [42]
+                0.00    0.00       3/229320      Cone::Cone(Vector3f, float, float, Color) [30]
+                0.00    0.00       3/229320      Cube::Cube(float, float, float, Color) [28]
+                0.00    0.00       3/229320      Cylinder::Cylinder(Vector3f, float, float, Color, Color) [32]
+                0.00    0.00       3/229320      World::init() [25]
+                0.00    0.00     108/229320      Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color) [29]
+                0.00    0.00  229194/229320      Plane::Plane(Vector3f, Vector3f, Color) [22]
+[62]     0.0    0.00    0.00  229320         Matrix4x4::Matrix4x4() [62]
+-----------------------------------------------
+                0.00    0.00   16014/16014       World::computeColor(Ray&, float) [1]
+[63]     0.0    0.00    0.00   16014         Cylinder::getColor() [63]
+-----------------------------------------------
+                0.00    0.00    1470/1470        Cylinder::Intersects(Ray&) [11]
+[64]     0.0    0.00    0.00    1470         void std::vector<float, std::allocator<float> >::_M_realloc_insert<float>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float&&) [64]
+-----------------------------------------------
+                0.00    0.00      21/21          World::init() [25]
+[65]     0.0    0.00    0.00      21         Color::Color(unsigned char, unsigned char, unsigned char) [65]
+-----------------------------------------------
+                0.00    0.00       3/21          Circle::ApplyCamera(Matrix4x4) [44]
+                0.00    0.00       3/21          Circle::ApplyTransformation() [45]
+                0.00    0.00       6/21          Cylinder::ApplyTransformation() [43]
+                0.00    0.00       9/21          Cone::ApplyTransformation() [40]
+[66]     0.0    0.00    0.00      21         Vector4f::Vector4f(Vector3f, int) [66]
+-----------------------------------------------
+                0.00    0.00       3/18          Circle::ApplyCamera(Matrix4x4) [44]
+                0.00    0.00       3/18          Circle::ApplyTransformation() [45]
+                0.00    0.00       6/18          Cone::ApplyTransformation() [40]
+                0.00    0.00       6/18          Cylinder::ApplyTransformation() [43]
+[67]     0.0    0.00    0.00      18         Vector4f::Vector4f(float, float, float, float) [67]
+-----------------------------------------------
+                0.00    0.00      12/12          World::init() [25]
+[68]     0.0    0.00    0.00      12         BaseObject::setSpecular(float) [68]
+-----------------------------------------------
+                0.00    0.00      12/12          World::init() [25]
+[69]     0.0    0.00    0.00      12         BaseObject::Translate(float, float, float) [69]
+-----------------------------------------------
+                0.00    0.00      12/12          World::init() [25]
+[70]     0.0    0.00    0.00      12         Matrix4x4::ConcatTranslate(float, float, float) [70]
+-----------------------------------------------
+                0.00    0.00      12/12          World::init() [25]
+[71]     0.0    0.00    0.00      12         void std::vector<BaseObject*, std::allocator<BaseObject*> >::_M_realloc_insert<BaseObject*>(__gnu_cxx::__normal_iterator<BaseObject**, std::vector<BaseObject*, std::allocator<BaseObject*> > >, BaseObject*&&) [71]
+-----------------------------------------------
+                0.00    0.00       6/6           Camera::getWorldToCamera() [77]
+[72]     0.0    0.00    0.00       6         Matrix4x4::Inverse() [72]
+-----------------------------------------------
+                0.00    0.00       6/6           World::init() [25]
+[73]     0.0    0.00    0.00       6         void std::vector<Light*, std::allocator<Light*> >::_M_realloc_insert<Light* const&>(__gnu_cxx::__normal_iterator<Light**, std::vector<Light*, std::allocator<Light*> > >, Light* const&) [73]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[74]     0.0    0.00    0.00       3         BaseObject::LoadIdentity() [74]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[75]     0.0    0.00    0.00       3         BaseObject::RotateY(float) [75]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[76]     0.0    0.00    0.00       3         Light::SetType(LightType) [76]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[77]     0.0    0.00    0.00       3         Camera::getWorldToCamera() [77]
+                0.00    0.00       6/6           Matrix4x4::Inverse() [72]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[78]     0.0    0.00    0.00       3         Matrix4x4::loadIdentity() [78]
+-----------------------------------------------
+                0.00    0.00       3/3           World::init() [25]
+[79]     0.0    0.00    0.00       3         Matrix4x4::ConcatRotateY(float) [79]
+-----------------------------------------------
+                0.00    0.00       3/3           Camera::Camera(Vector3f, Vector3f, Vector3f) [27]
+[80]     0.0    0.00    0.00       3         Matrix4x4::Matrix4x4(float (*) [4]) [80]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[81]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z11getCofactorPA3_fS0_iii [81]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[82]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN10BaseObject8getColorEv [82]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[83]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN15VectorUtilities12crossProductERK8Vector3fS2_ [83]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[84]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4ConeC2E8Vector3fff5Color [84]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[85]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4CubeC2Efff5Color [85]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[86]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN5PlaneC2E8Vector3fS0_5Color [86]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[87]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN5World4initEv [87]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[88]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN6CircleC2Ef5Color [88]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[89]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN8CylinderC2E8Vector3fff5ColorS1_ [89]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[90]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN8TriangleC2EP8Vector3f5Color [90]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[91]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN9Matrix4x412loadIdentityEv [91]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [144]
+[92]     0.0    0.00    0.00       1         _GLOBAL__sub_I_main [92]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [81] _GLOBAL__sub_I__Z11getCofactorPA3_fS0_iii [30] Cone::Cone(Vector3f, float, float, Color) [11] Cylinder::Intersects(Ray&)
+  [82] _GLOBAL__sub_I__ZN10BaseObject8getColorEv [2] Cube::Intersects(Ray&) [38] Cylinder::ApplyCamera(Matrix4x4)
+  [83] _GLOBAL__sub_I__ZN15VectorUtilities12crossProductERK8Vector3fS2_ [34] Cube::ApplyCamera(Matrix4x4) [43] Cylinder::ApplyTransformation()
+  [84] _GLOBAL__sub_I__ZN4ConeC2E8Vector3fff5Color [31] Cube::CalculateTriangles() [63] Cylinder::getColor()
+  [85] _GLOBAL__sub_I__ZN4CubeC2Efff5Color [35] Cube::ApplyTransformation() [24] Cylinder::getNormal(Vector3f)
+  [86] _GLOBAL__sub_I__ZN5PlaneC2E8Vector3fS0_5Color [9] Cube::getNormal(Vector3f) [32] Cylinder::Cylinder(Vector3f, float, float, Color, Color)
+  [87] _GLOBAL__sub_I__ZN5World4initEv [28] Cube::Cube(float, float, float, Color) [3] Triangle::Intersects(Ray&)
+  [88] _GLOBAL__sub_I__ZN6CircleC2Ef5Color [18] Color::rgba() [33] Triangle::ApplyCamera(Matrix4x4)
+  [89] _GLOBAL__sub_I__ZN8CylinderC2E8Vector3fff5ColorS1_ [57] Color::Color(float, float, float, float) [13] Triangle::getNormal(Vector3f)
+  [90] _GLOBAL__sub_I__ZN8TriangleC2EP8Vector3f5Color [65] Color::Color(unsigned char, unsigned char, unsigned char) [29] Triangle::Triangle(Vector3f, Vector3f, Vector3f, Color)
+  [91] _GLOBAL__sub_I__ZN9Matrix4x412loadIdentityEv [61] Color::Color() [54] Vector3f::length()
+  [92] _GLOBAL__sub_I_main    [17] Light::getPosition()    [6] Vector3f::normalize()
+  [56] BaseObject::getSpecular() [55] Light::getIntensity() [10] Vector3f::Vector3f(float, float, float)
+  [68] BaseObject::setSpecular(float) [76] Light::SetType(LightType) [36] Vector4f::toVector3f()
+  [74] BaseObject::LoadIdentity() [37] Light::Light(Vector3f, Vector3f, float) [66] Vector4f::Vector4f(Vector3f, int)
+  [75] BaseObject::RotateY(float) [12] Plane::Intersects(Ray&) [67] Vector4f::Vector4f(float, float, float, float)
+  [53] BaseObject::getTmin()  [41] Plane::ApplyCamera(Matrix4x4) [21] Matrix4x4::printMatrix()
+  [58] BaseObject::getColor() [59] Plane::getNormal(Vector3f) [78] Matrix4x4::loadIdentity()
+  [69] BaseObject::Translate(float, float, float) [22] Plane::Plane(Vector3f, Vector3f, Color) [79] Matrix4x4::ConcatRotateY(float)
+   [7] VectorUtilities::dotProduct(Vector3f const&, Vector3f const&) [1] World::computeColor(Ray&, float) [70] Matrix4x4::ConcatTranslate(float, float, float)
+   [5] VectorUtilities::crossProduct(Vector3f const&, Vector3f const&) [4] World::ComputeLighting(Vector3f, Vector3f, Vector3f, float) [72] Matrix4x4::Inverse()
+  [20] Ray::getDirectionInVector4f() [25] World::init()   [80] Matrix4x4::Matrix4x4(float (*) [4])
+  [16] Ray::getPoint(float)   [77] Camera::getWorldToCamera() [62] Matrix4x4::Matrix4x4()
+  [15] Ray::Ray(Vector3f, Vector3f, float) [14] Circle::Intersects(Ray&) [71] void std::vector<BaseObject*, std::allocator<BaseObject*> >::_M_realloc_insert<BaseObject*>(__gnu_cxx::__normal_iterator<BaseObject**, std::vector<BaseObject*, std::allocator<BaseObject*> > >, BaseObject*&&)
+   [8] Cone::Intersects(Ray&) [44] Circle::ApplyCamera(Matrix4x4) [73] void std::vector<Light*, std::allocator<Light*> >::_M_realloc_insert<Light* const&>(__gnu_cxx::__normal_iterator<Light**, std::vector<Light*, std::allocator<Light*> > >, Light* const&)
+  [39] Cone::ApplyCamera(Matrix4x4) [45] Circle::ApplyTransformation() [60] void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&)
+  [40] Cone::ApplyTransformation() [19] Circle::getNormal(Vector3f) [64] void std::vector<float, std::allocator<float> >::_M_realloc_insert<float>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float&&)
+  [23] Cone::getNormal(Vector3f) [42] Circle::Circle(float, Color)

@@ -23,10 +23,11 @@ Vector4f::Vector4f(Vector3f vec, int _w)
     w = _w;
 }
 Vector3f Vector4f::toVector3f() {
-    if (w > 0 || w==1) {
-        return Point3f(x / w, y / w, z / w);
+    const float Epsilon = 10e-10;
+    if (fabs(w)<=Epsilon) {
+        return Point3f(x , y , z);
     }
-    return Vector3f(x, y, z);
+    return Vector3f(x/w , y/w, z/w);
 
 }
 #ifdef _USESIMDINTRINSICS
