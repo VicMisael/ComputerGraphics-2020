@@ -38,7 +38,7 @@ void Circle::ApplyCamera(const Matrix4x4 m)
 	Vector4f Center4f(Center, 1);
 	Center4f=m* Center4f;
 	Center = Center4f.toVector3f();
-	std::cout << "Ball vector" << std::endl;
+	//std::cout << "Ball vector" << std::endl;
 
 }
 

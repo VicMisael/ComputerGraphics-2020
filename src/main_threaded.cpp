@@ -18,14 +18,14 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
     return Point3f(vx, vy, vz);
 }
 uint32_t *rgba = new uint32_t[512 * 512];
-void paint(int ystart, int yend, int xstart, int xend, int Cw, int Ch, World world, float vcup)
+void inline paint(int ystart, int yend, int xstart, int xend, int Cw, int Ch, World  world, Point3f eye)
 {
     for (int y = ystart; y < yend; y++)
     {
         for (int x = xstart; x < xend; x++)
         {
-            Ray r = Ray(canvasToViewport(x, y, Cw, Ch, vcup), Point3f(0, 0, 0));
-            rgba[(y + Ch / 2) * Ch + (x + Cw / 2)] = world.computeColor(r, vcup).rgba;
+            Ray r = Ray(canvasToViewport(eye.x + x, eye.y + y, Cw, Ch, -1), eye);
+            rgba[(y + Ch / 2) * Ch + (x + Cw / 2)] = world.computeColor(r, -1).rgba();
         }
     }
 }
@@ -38,33 +38,36 @@ int main(int argc, char **argv)
     SDL_Texture *framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 512, 512);
     bool run = true;
     //auto window = new Color[512][512];
-
-    double vcup = -1;
+    float vcx = -0.01;
+    float vcy = 0.09;
+    float vcz = -0.94;
     int Cw = 512;
     int Ch = 512;
-    World world;
 
     while (run)
     {
 
+        Point3f eye = Point3f(vcx, vcy, vcz);
+        Point3f at = Point3f(0, 0, 1);
+        Point3f up = Point3f(0, 2, 0);
+        Camera camera = Camera(eye, at, up);
+        World world(camera);
+        Point3f canvasEye = camera.getWorldToCamera() * eye;
         //Section1 y:-Ch/2->0 x: -Cw/2->0,First quarter
-        std::thread t1(paint, -Ch / 2, 0, -Cw / 2, 0, Cw, Ch, world, vcup);
+        std::thread t1(paint, -Ch / 2, 0, -Cw / 2, 0, Cw, Ch, world, canvasEye);
         //Section2:y:-Ch/2->0 x: 0->Cw/2,Second Quarter
-        std::thread t2(paint, -Ch / 2, 0, 0, Cw / 2, Cw, Ch, world, vcup);
+        std::thread t2(paint, -Ch / 2, 0, 0, Cw / 2, Cw, Ch, world, canvasEye);
         //Section3 y:0->Ch/2 x: -Cw/2->0,First quarter
-        std::thread t3(paint, 0, Ch / 2, -Cw / 2, 0, Cw, Ch, world, vcup);
+        std::thread t3(paint, 0, Ch / 2, -Cw / 2, 0, Cw, Ch, world, canvasEye);
         //Section4:y:0->Ch/2 x: 0->Cw/2,Second Quarter
-        std::thread t4(paint, 0, Ch / 2, 0, Cw / 2, Cw, Ch, world, vcup);
+        std::thread t4(paint, 0, Ch / 2, 0, Cw / 2, Cw, Ch, world, canvasEye);
         //Teste
         t1.join();
         t2.join();
         t3.join();
         t4.join();
-        std::cout << (vcup += 0.01) << std::endl;
-        if (vcup > 1)
-        {
-            vcup = 0;
-        }
+
+        std::cout << "X: " << (vcx) << "Y: " << vcy << "Z: " << vcz << std::endl;
         SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
@@ -74,6 +77,32 @@ int main(int argc, char **argv)
         {
             switch (e.type)
             {
+            case SDL_KEYDOWN:
+                if (e.key.keysym.scancode == SDL_SCANCODE_UP)
+                {
+                    vcx += 0.01;
+                }
+                if (e.key.keysym.scancode == SDL_SCANCODE_DOWN)
+                {
+                    vcx -= 0.01;
+                }
+                if (e.key.keysym.scancode == SDL_SCANCODE_LEFT)
+                {
+                    vcz -= 0.01;
+                }
+                if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+                {
+                    vcz += 0.01;
+                }
+                if (e.key.keysym.sym == SDLK_a)
+                {
+                    vcy -= 0.01;
+                }
+                if (e.key.keysym.sym == SDLK_d)
+                {
+                    vcy += 0.01;
+                }
+                break;
             case SDL_QUIT:
                 //std::cout<<"Sai pora"<<std::endl;
                 SDL_RenderClear(renderer);

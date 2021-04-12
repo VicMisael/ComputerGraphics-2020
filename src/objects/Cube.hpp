@@ -9,6 +9,7 @@ class Cube : public BaseObject
     Point3f face[4];
     Point3f face2[4];
     Triangle triangles[12];
+    Vector3f Normal;
     void CalculateTriangles();
 public:
     Cube(float height, float width, float depth, Color c);

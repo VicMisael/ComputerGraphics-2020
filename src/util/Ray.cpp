@@ -5,7 +5,7 @@ Ray::Ray(Point3f point, Vector3f D, float t)
 {
 	this->O = point;
 	this->D = D;
-	this->t = 0;
+	this->t = t;
 	this->D.normalize();
 }
 

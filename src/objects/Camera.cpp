@@ -21,7 +21,7 @@ Camera::Camera(Point3f eye, Point3f at, Point3f up)
 		{k.x, k.y, k.z,-1.0f*dotProduct(k,eye)},
 		{0, 0, 0, 1},
 	});
-	// cameraToWorld.printMatrix();
+	//cameraToWorld.printMatrix();
 
 }
 

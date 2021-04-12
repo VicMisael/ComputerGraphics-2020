@@ -117,7 +117,5 @@ void Cylinder::ApplyCamera(const Matrix4x4 m)
 {
 	Base = m * Base;
 	Point3f top = Base + axis * height;
-	std::cout << (Base - top).length() << std::endl;
-	std::cout << height << std::endl;
 	
 }

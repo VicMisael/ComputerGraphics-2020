@@ -54,6 +54,7 @@ int Cube::Intersects(Ray &ray)
             if (t.getTmin() < t_min)
             {
                 t_min = t.getTmin();
+                this->Normal = t.getNormal(ray.getPoint(t_min));
             }
             intersectionCount++;
         }
@@ -76,12 +77,13 @@ void Cube::ApplyTransformation()
 
 Vector3f Cube::getNormal(const Point3f p)
 {
-    Vector3f normal;
-    for (Triangle& t : triangles) {
-        normal = normal + t.getNormal(p);
-    }
-    normal.normalize();
-    return normal;
+    return Normal;
+    //Vector3f normal;
+    //for (Triangle& t : triangles) {
+    //    normal = normal + t.getNormal(p);
+    //}
+    //normal.normalize();
+    //return normal;
 
 
     //Vector3f normal;
