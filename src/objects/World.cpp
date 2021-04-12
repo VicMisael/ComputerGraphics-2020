@@ -15,8 +15,8 @@ void World::init()
     bgColor = Color(r, g, b);
 
 
-    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.5);
-    lights.push_back(lambient);
+ /*   Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.5);
+    lights.push_back(lambient);*/
     
     Light* l2 = new Light(Point3f(1, 3, 2), Point3f(0, 0, 0), 0.9);
     l2->SetType(point);
