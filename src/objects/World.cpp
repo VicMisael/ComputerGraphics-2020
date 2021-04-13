@@ -60,9 +60,9 @@ void World::init()
     cube->Translate(-1, -1, 2);
     objects.push_back(cube);
 
-    //for (Light* l : lights) {
-    //   l->ApplyCamera(camTransformation);
-    //}
+    for (Light* l : lights) {
+       l->ApplyCamera(camTransformation);
+    }
     for (BaseObject* ob : objects) {
         ob->ApplyTransformation();
         ob->ApplyCamera(camTransformation);
