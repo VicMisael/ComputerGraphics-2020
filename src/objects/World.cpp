@@ -1,9 +1,9 @@
 #include "World.hpp"
 #include <iostream>
 
-static uint8_t r = 135;
-static uint8_t g = 206;
-static uint8_t b = 235;
+static uint8_t r = 203;
+static uint8_t g = 224;
+static uint8_t b = 233;
 
 void World::init()
 {
@@ -18,47 +18,60 @@ void World::init()
     Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.2);
     lights.push_back(lambient);
     
-    Light* l2 = new Light(Point3f(-1,1,0), Point3f(0, 0, 0), 1.0/3);
+    Light* l2 = new Light(Point3f(1,0,-0.7), Point3f(0, 0, 0), 1);
     l2->SetType(point);
-    lights.push_back(l2);
+    //lights.push_back(l2);
 
-    //Light* l3 = new Light(Point3f(0, 0, 0), Point3f(2, 2, 1), 0.6);
-    //l3->SetType(directional);
-    //lights.push_back(l3);
+    Light* l3 = new Light(Point3f(0, 0, 0), Point3f(0, 1, 0), 1);
+    l3->SetType(directional);
+    lights.push_back(l3);
 
-    Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(0,244,0));
+    Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
     objects.push_back(p);
-    Plane* p2 = new Plane(Vector3f(0, 0, 1), Point3f(0, -1, 6), Color(120, 120, 120));
-    objects.push_back(p2);
 
-    Circle* c = new Circle(.6, Color(0, 0, 255));
+    Circle* c = new Circle(.2, Color(255, 255, 255));
     c->setSpecular(500);
-    c->Translate(0, 1, 4);
-   // c->ApplyTransformation();
-
+    c->Translate(1, 0, -1);
     objects.push_back(c);
 
-    Cylinder* cyl = new Cylinder(Vector3f(0, 1, 0), 1.2, 0.2, Color(0, 120, 120));
-    cyl->setSpecular(100);
-    cyl->Translate(0, 0,4);
-    //cyl->ApplyTransformation();
-
+//Cilindro
+    Cylinder* cyl = new Cylinder(Vector3f(0, 1, 0), 1.5, 0.3, Color(100, 120, 120));
+    cyl->setSpecular(900);
+    cyl->Translate(1.4, 0.5,2);
     objects.push_back(cyl);
 
-    Cone* cone = new Cone(Vector3f(0, 1, 0), 1, 1, Color(0, 255, 0));
+    Cylinder* cyl2 = new Cylinder(Vector3f(0, 1, 0), 1.5, 0.3, Color(0, 120, 120));
+    cyl2->setSpecular(900);
+    cyl2->Translate(1.8, 0.5,2.3);
+    objects.push_back(cyl2);
+
+    Cone* cone2 = new Cone(Vector3f(0, 1, 0), 0.7, 0.8, Color(189, 236, 182));
+    cone2->setSpecular(1000);
+    cone2->LoadIdentity();
+    //cone->RotateX(PI / 6);
+    cone2->Translate(1.3, 0.5, 2);
+    //cone->ApplyTransformation();
+    objects.push_back(cone2);
+//Cubo
+    Cone* cone = new Cone(Vector3f(0, 1, 0), 0.7, 0.8, Color(204, 169, 221));
     cone->setSpecular(1000);
     cone->LoadIdentity();
     //cone->RotateX(PI / 6);
-    cone->Translate(0, 0, 3);
+    cone->Translate(-1, 0.5, 2);
     //cone->ApplyTransformation();
     objects.push_back(cone);
     
-    Cube* cube = new Cube(1, 1, 1, Color(0, 0, 255));
-    cube->setSpecular(600);
-    cube->Scale(1.2);
-    cube->RotateY(-PI / 3);
-    cube->Translate(-1, -1, 2);
+    Cube* cube = new Cube(1.5, 0.5, 0.5, Color(249, 234, 195));
+    cube->setSpecular(10000);
+    cube->RotateY(-PI/4);
+    cube->Translate(-1.5, -1, 2);
     objects.push_back(cube);
+
+    Cube* cube2 = new Cube(1.5, 0.5, 0.5, Color(249, 234, 195));
+    cube2->setSpecular(10000);
+    cube2->RotateY(PI/4);
+    cube2->Translate(-0.9, -1, 2);
+    objects.push_back(cube2);
 
     for (Light* l : lights) {
        l->ApplyCamera(camTransformation);
@@ -102,7 +115,7 @@ float World::ComputeLighting(Point3f p, Vector3f n,Vector3f V,float s)
                     Ray r = Ray(p, lVec, 0);
                     if (ob->Intersects(r)) {
                         float t_min = ob->getTmin();
-                        if (t_min > 0.1 && t_min < lveclength) {
+                        if (t_min > 0.1) {
                             return intensity;
                         }
                     }

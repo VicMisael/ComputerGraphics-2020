@@ -10,7 +10,7 @@
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = Cx * (1.0 / vpw);
+    float vx = -Cx * (1.0 / vpw);
     float vy = -Cy * (1.0 / vph);
     float vz = d;
     return Point3f(vx, vy, vz);
@@ -26,9 +26,9 @@ int main(int argc, char **argv)
     //auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
   
-    float vcx=-0.01;
-    float vcy = 0.09;
-    float vcz = -0.94;
+    float vcx=0;
+    float vcy = 0.05;
+    float vcz = -4.16;
     int Cw = 512;
     int Ch = 512;
     
@@ -36,8 +36,8 @@ int main(int argc, char **argv)
     while (run)
     {
         Point3f eye = Point3f(vcx,vcy,vcz);
-        Point3f at = Point3f(0, 0, 1);
-        Point3f up = Point3f(0, 2, 1);
+        Point3f at = Point3f(0, 0, 2);
+        Point3f up = Point3f(0, 2, 2);
         Camera camera = Camera(eye, at, up);
         World world(camera);
         world.SetShadowsOn(shadows);

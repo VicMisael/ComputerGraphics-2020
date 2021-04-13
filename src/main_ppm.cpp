@@ -15,12 +15,6 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 int main(int argc, char **argv)
 {
 
-    SDL_DisplayMode DM;
-    SDL_Window *win = NULL;
-    win = SDL_CreateWindow("RayCaster", 1920 / 2, 1080 / 2, 512, 512, 0);
-    SDL_Renderer *renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Texture *framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 512, 512);
-    bool run = true;
     //auto window = new Color[512][512];
     uint32_t *rgba = new uint32_t[512 * 512];
    
