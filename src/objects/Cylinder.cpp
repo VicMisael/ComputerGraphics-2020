@@ -94,12 +94,11 @@ Color Cylinder::getColor()
 
 void Cylinder::ApplyTransformation()
 {
-	Point4f base4(Base, 1);
-	base4 = transFMat * base4;
-	Vector4f axis4(axis, 0);
-	axis4 = transFMat * axis4;
-	Base = base4.toVector3f();
-	axis = axis4.toVector3f();
+	Point3f top = transFMat * (Base + axis * height);
+	Base = transFMat * Base;
+	Vector3f eixo = (top - Base);
+	eixo.normalize();
+	axis = eixo;
 
 }
 

@@ -2,15 +2,18 @@
 #define _DEFINITIONSHEADER
 #if defined _M_AMD64 || __x86_64__ || _M_IX86 || __i386__
 #ifndef _USESIMDINTRINSICS
-//#define _USESIMDINTRINSICS
+#define _USESIMDINTRINSICS
 #ifndef _USESSE4DOTPRODUCT
-//#define _USESSE4DOTPRODUCT
+#define _USESSE4DOTPRODUCT
 #endif
 #endif
 #endif
 
 #ifndef _RENDERWITHSHADOWS_
 #define _RENDERWITHSHADOWS_
+#endif
+#ifndef _RENDERWITHREFLECTIONS_
+#define _RENDERWITHREFLECTIONS_
 #endif
 #define PI 3.14159265358979323846
 #endif

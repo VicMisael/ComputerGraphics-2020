@@ -14,9 +14,13 @@ protected:
     Color c;
     float t_min=INFINITY;
     float specular = -1;;
+    float reflectiveness=-1;
 public:
+    BaseObject();
     void setSpecular(float specular);
     float getSpecular();
+    float getReflectivness();
+    void setReflectivness(float r);
     virtual int Intersects(Ray& ray) = 0;
     virtual void Translate(float tx, float ty, float tz) ;
     virtual void RotateX(float angle);

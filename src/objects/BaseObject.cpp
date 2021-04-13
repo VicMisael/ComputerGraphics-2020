@@ -7,6 +7,11 @@ Color BaseObject::getColor(){
 
 
 
+BaseObject::BaseObject()
+{
+	//Null Object
+}
+
 void BaseObject::setSpecular(float specular)
 {
 	this->specular = specular;
@@ -16,6 +21,18 @@ float BaseObject::getSpecular()
 {
 	return specular;
 }
+
+float BaseObject::getReflectivness()
+{
+	return reflectiveness<=1?reflectiveness:1;
+}
+
+void BaseObject::setReflectivness(float r)
+{
+	this->reflectiveness=r;
+}
+
+
 
 void BaseObject::Translate(float x, float y, float z)
 {
