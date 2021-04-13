@@ -115,7 +115,14 @@ Vector3f Cylinder::getNormal(const Point3f p)
 
 void Cylinder::ApplyCamera(const Matrix4x4 m)
 {
-	Base = m * Base;
-	Point3f top = Base + axis * height;
+	Point3f top =m*(Base + axis * height);
+	Base = m*Base;
+	Vector3f eixo = (top - Base);
+	eixo.normalize();
+	axis = eixo;
 	
+	
+	//
+	//axis=m* top-Base;
+	//axis.normalize();
 }

@@ -100,6 +100,10 @@ Vector3f Cone::getNormal(const Point3f p)
 void Cone::ApplyCamera(const Matrix4x4 mm44)
 {
     center = mm44 * center;
-    vertice = center + axis * height;
+    vertice = mm44 * vertice;
+    Vector3f eixo=vertice - center;
+    eixo.normalize();
+    this->axis = eixo;
+    //std::cout << axis.length()<<std::endl;
     //vertice = mm44*vertice;
 }

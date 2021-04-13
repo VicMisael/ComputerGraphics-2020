@@ -18,7 +18,7 @@ void World::init()
     Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.2);
     lights.push_back(lambient);
     
-    Light* l2 = new Light(camera->getEyePosition(), Point3f(0, 0, 0), 1.0/3);
+    Light* l2 = new Light(Point3f(-1,1,0), Point3f(0, 0, 0), 1.0/3);
     l2->SetType(point);
     lights.push_back(l2);
 
@@ -55,7 +55,7 @@ void World::init()
     
     Cube* cube = new Cube(1, 1, 1, Color(0, 0, 255));
     cube->setSpecular(600);
-    //cube->Scale(1.2);
+    cube->Scale(1.2);
     cube->RotateY(-PI / 3);
     cube->Translate(-1, -1, 2);
     objects.push_back(cube);
@@ -96,6 +96,7 @@ float World::ComputeLighting(Point3f p, Vector3f n,Vector3f V,float s)
             }
             float lveclength = lVec.length();
             lVec.normalize();
+#ifdef _RENDERWITHSHADOWS_
             if (renderShadows) {
                 for (BaseObject* ob : objects) {
                     Ray r = Ray(p, lVec, 0);
@@ -107,7 +108,7 @@ float World::ComputeLighting(Point3f p, Vector3f n,Vector3f V,float s)
                     }
                 }
             }
-
+#endif
          
 
             float n_dot_l = dotProduct(n, lVec);

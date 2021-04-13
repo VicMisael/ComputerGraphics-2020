@@ -10,7 +10,7 @@
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = -Cx * (1.0 / vpw);
+    float vx = Cx * (1.0 / vpw);
     float vy = -Cy * (1.0 / vph);
     float vz = d;
     return Point3f(vx, vy, vz);
@@ -44,10 +44,10 @@ int main(int argc, char **argv)
         Point3f canvasEye = camera.getWorldToCamera() * eye;
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {
-          
+
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
-               
+
                 Ray r = Ray(canvasToViewport(canvasEye.x+x, canvasEye.y+y, Cw, Ch, -1),canvasEye);
                 rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, -1).rgba();
             }
