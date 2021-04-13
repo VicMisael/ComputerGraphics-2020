@@ -19,10 +19,12 @@ class World{
      std::vector<Light*> lights;
      Camera *camera;
      void init();
+     bool renderShadows;
      float ComputeLighting(Point3f p,Vector3f n,Vector3f V,float s);
 public:
     World();
     World(const Camera c);
+    void SetShadowsOn(bool shadows);
     Color bgColor;
     Color computeColor(Ray &ray,float vz);
 };  

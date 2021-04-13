@@ -20,9 +20,9 @@ class Cylinder : public BaseObject
         Cylinder(Vector3f axis, float height, float radius,const Color color,const Color BaseColor);
         int Intersects(Ray& ray);
         Color getColor() override;
-        void ApplyTransformation();
-        Vector3f getNormal(const Point3f p);
-        void ApplyCamera(const Matrix4x4 m);
+        void ApplyTransformation() override;
+        Vector3f getNormal(const Point3f p) override;
+        void ApplyCamera(const Matrix4x4 m) override;
 };
 
 #endif

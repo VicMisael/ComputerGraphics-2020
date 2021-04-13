@@ -22,10 +22,10 @@ class Cone : public BaseObject
 
     public:
         Cone( Vector3f axis, float height, float radius,const Color c);
-        int Intersects(Ray& ray);
-        void ApplyTransformation();
+        int Intersects(Ray& ray) override;
+        void ApplyTransformation() override;
         Vector3f getNormal(const Point3f p) override;
-        void ApplyCamera(const Matrix4x4 mm44);
+        void ApplyCamera(const Matrix4x4 mm44) override;
 };
 
 #endif

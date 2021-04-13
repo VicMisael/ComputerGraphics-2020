@@ -8,9 +8,11 @@ Cube::Cube(float height, float width, float depth, Color c)
     Vector3f forward(0, 0, 1);
     //Colocando as faces em sentido horario
     face[0] = p0;
-    face[1] = p0 + up * height;
+    face[1] = p0 + right * width;
     face[2] = p0 + up * height + right * width,
-    face[3] = p0 + right * width;
+    face[3] = p0 + up * height;
+
+
 
     face2[0] = face[0] + forward * depth;
     face2[1] = face[1] + forward * depth;
@@ -24,40 +26,50 @@ void Cube::CalculateTriangles()
 {
     int i = 0;
     //Interseção na face frontal
-    triangles[i++] = Triangle(face[0], face[1], face[2]);
-    triangles[i++] = Triangle(face[2], face[3], face[0]);
+    triangles[i++] = Triangle(face[2], face[1], face[0]);
+    triangles[i++] = Triangle(face[0], face[3], face[2]);
     //Interseção face traseira
-    triangles[i++] = Triangle(face2[0], face2[1], face2[2]);
+	triangles[i++] = Triangle(face2[0], face2[1], face2[2]);
     triangles[i++] = Triangle(face2[2], face2[3], face2[0]);
-    //Interseção na lateral 1
-    triangles[i++] = Triangle(face[0], face2[0], face[1]);
-    triangles[i++] = Triangle(face2[0], face2[1], face[1]);
-    //Interseção da lateral 2
+    //topo
     triangles[i++] = Triangle(face[2], face[3], face2[3]);
     triangles[i++] = Triangle(face2[3], face2[2], face[2]);
-    //Topo
-    triangles[i++] = Triangle(face[1], face[2], face2[2]);
-    triangles[i++] = Triangle(face2[2], face2[1], face[1]);
     //Base
-    triangles[i++] = Triangle(face[0], face[3], face2[3]);
-    triangles[i] = Triangle(face2[3], face2[0], face[0]);
+    triangles[i++] = Triangle(face[0], face[1], face2[0]);
+    triangles[i++] = Triangle(face2[1], face2[0], face[1]);
+    //Interseção na lateral 2
+    triangles[i++] = Triangle(face2[0], face[3], face[0]);
+    triangles[i++] = Triangle(face[3], face2[0], face2[3]);
+    //Interseção na Lateral 1
+    triangles[i++] = Triangle(face[1], face[2], face2[1]);
+    triangles[i] = Triangle(face[2], face2[2], face2[1]);
+
+
+
 }
 
-int Cube::Intersects(Ray &ray)
+int Cube::Intersects(Ray& ray)
 {
     t_min = INFINITY;
     int intersectionCount = 0;
+    //Triangle* tInt = &triangles[0];
+    using namespace VectorUtilities;
     for (Triangle t : triangles)
     {
-        if (t.Intersects(ray))
-        {
-            if (t.getTmin() < t_min)
+        if (dotProduct( ray.D, t.getNormal(Point3f(0, 0, 0))) < 0) {
+            if (t.Intersects(ray))
             {
-                t_min = t.getTmin();
-                this->Normal = t.getNormal(ray.getPoint(t_min));
+                if (t.getTmin() < t_min)
+                {
+                    t_min = t.getTmin();
+                    //c=t.getColor();
+                    this->Normal = t.getNormal(ray.getPoint(t_min));
+                }
+                intersectionCount++;
             }
-            intersectionCount++;
         }
+
+
     }
     return intersectionCount > 0;
 }
@@ -77,6 +89,7 @@ void Cube::ApplyTransformation()
 
 Vector3f Cube::getNormal(const Point3f p)
 {
+    Normal.normalize();
     return Normal;
     //Vector3f normal;
     //for (Triangle& t : triangles) {

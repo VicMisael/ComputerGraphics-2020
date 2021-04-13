@@ -38,7 +38,7 @@ int Triangle::Intersects(Ray &ray)
     static const float epsilon = 0.0000001;
     static const float epsilon2 = 0.000001;
 
-    if ((fabs(a) <= epsilon) || (weight[0] < -epsilon2) ||
+    if ((a <= epsilon) || (weight[0] < -epsilon2) ||
         (weight[1] < -epsilon2) || (weight[2] < -epsilon2) ||
         (dist <= 0.0f)) {
         t_min=INFINITY;

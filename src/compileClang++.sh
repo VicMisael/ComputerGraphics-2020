@@ -1,0 +1,1 @@
+ clang++ util/*.cpp objects/*.cpp main.cpp -flto -O3 -pipe `pkg-config --libs --cflags sdl2`-o main

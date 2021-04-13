@@ -10,8 +10,8 @@ private:
     Point3f Center;
 public:
     Circle(float radius,const Color c);  
-    int Intersects(Ray& ray);
-    void ApplyTransformation();
+    int Intersects(Ray& ray) override;
+    void ApplyTransformation() override;
     Vector3f getNormal(const Point3f p) override;
-    void ApplyCamera(const Matrix4x4 m);
+    void ApplyCamera(const Matrix4x4 m) override;
 };

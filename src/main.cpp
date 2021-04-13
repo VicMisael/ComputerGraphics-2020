@@ -10,7 +10,7 @@
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = Cx * (1.0 / vpw);
+    float vx = -Cx * (1.0 / vpw);
     float vy = -Cy * (1.0 / vph);
     float vz = d;
     return Point3f(vx, vy, vz);
@@ -32,19 +32,22 @@ int main(int argc, char **argv)
     int Cw = 512;
     int Ch = 512;
     
-
+    bool shadows = true;
     while (run)
     {
         Point3f eye = Point3f(vcx,vcy,vcz);
         Point3f at = Point3f(0, 0, 1);
-        Point3f up = Point3f(0, 2, 0);
+        Point3f up = Point3f(0, 2, 1);
         Camera camera = Camera(eye, at, up);
         World world(camera);
+        world.SetShadowsOn(shadows);
         Point3f canvasEye = camera.getWorldToCamera() * eye;
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {
+          
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
+               
                 Ray r = Ray(canvasToViewport(canvasEye.x+x, canvasEye.y+y, Cw, Ch, -1),canvasEye);
                 rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, -1).rgba();
             }
@@ -77,6 +80,9 @@ int main(int argc, char **argv)
             }
             if(e.key.keysym.sym==SDLK_d){
                 vcy+=0.01;
+            }
+            if (e.key.keysym.sym == SDLK_s) {
+                shadows = !shadows;
             }
                 break;
             case SDL_QUIT:

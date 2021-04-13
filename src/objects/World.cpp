@@ -15,16 +15,16 @@ void World::init()
     bgColor = Color(r, g, b);
 
 
- /*   Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.5);
-    lights.push_back(lambient);*/
+    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.2);
+    lights.push_back(lambient);
     
-    Light* l2 = new Light(Point3f(1, 3, 2), Point3f(0, 0, 0), 0.9);
+    Light* l2 = new Light(camera->getEyePosition(), Point3f(0, 0, 0), 1.0/3);
     l2->SetType(point);
     lights.push_back(l2);
 
-    Light* l3 = new Light(Point3f(0, 0, 0), Point3f(2, 2, 1), 0.59);
-    l3->SetType(directional);
-    lights.push_back(l3);
+    //Light* l3 = new Light(Point3f(0, 0, 0), Point3f(2, 2, 1), 0.6);
+    //l3->SetType(directional);
+    //lights.push_back(l3);
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(0,244,0));
     objects.push_back(p);
@@ -48,14 +48,16 @@ void World::init()
     Cone* cone = new Cone(Vector3f(0, 1, 0), 1, 1, Color(0, 255, 0));
     cone->setSpecular(1000);
     cone->LoadIdentity();
-    //cone->RotateX(PI / 4);
-    cone->Translate(0, 0, 4);
+    //cone->RotateX(PI / 6);
+    cone->Translate(0, 0, 3);
     //cone->ApplyTransformation();
     objects.push_back(cone);
     
     Cube* cube = new Cube(1, 1, 1, Color(0, 0, 255));
     cube->setSpecular(600);
-    cube->Translate(0, -1, 2);
+    //cube->Scale(1.2);
+    cube->RotateY(-PI / 3);
+    cube->Translate(-1, -1, 2);
     objects.push_back(cube);
 
     //for (Light* l : lights) {
@@ -94,17 +96,18 @@ float World::ComputeLighting(Point3f p, Vector3f n,Vector3f V,float s)
             }
             float lveclength = lVec.length();
             lVec.normalize();
-#ifdef _RENDERWITHSHADOWS_
-            for (BaseObject* ob : objects) {
-                Ray r = Ray(p, lVec, 0);
-                if (ob->Intersects(r)) {
-                    float t_min = ob->getTmin();
-                    if (t_min>0.1&&t_min < lveclength) {
-                        return intensity;
+            if (renderShadows) {
+                for (BaseObject* ob : objects) {
+                    Ray r = Ray(p, lVec, 0);
+                    if (ob->Intersects(r)) {
+                        float t_min = ob->getTmin();
+                        if (t_min > 0.1 && t_min < lveclength) {
+                            return intensity;
+                        }
                     }
                 }
             }
-#endif
+
          
 
             float n_dot_l = dotProduct(n, lVec);
@@ -136,6 +139,11 @@ World::World(Camera c)
 {
     camera = &c;
     init();
+}
+
+void World::SetShadowsOn(bool shadows)
+{
+    this->renderShadows = shadows;
 }
 
 Color World::computeColor(Ray &ray, float vz)

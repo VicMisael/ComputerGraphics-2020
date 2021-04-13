@@ -13,8 +13,8 @@ class Cube : public BaseObject
     void CalculateTriangles();
 public:
     Cube(float height, float width, float depth, Color c);
-    int Intersects(Ray &ray);
-    void ApplyTransformation();
+    int Intersects(Ray &ray) override;
+    void ApplyTransformation() override;
     Vector3f getNormal(const Point3f p) override;
     void ApplyCamera(const Matrix4x4 mm) override;
 };

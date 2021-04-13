@@ -154,10 +154,11 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <CallingConvention>Cdecl</CallingConvention>
       <FloatingPointModel>Strict</FloatingPointModel>
-      <Optimization>Full</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <WarningLevel>EnableAllWarnings</WarningLevel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

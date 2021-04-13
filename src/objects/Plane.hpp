@@ -14,8 +14,8 @@ private:
 public:
     Plane(Vector3f u,Point3f kp, Color c);
 
-    int Intersects(Ray& ray);
-    void ApplyTransformation();
+    int Intersects(Ray& ray) override;
+    void ApplyTransformation() override;
     Vector3f getNormal(const Point3f p) override;
     void ApplyCamera(const Matrix4x4 m) override;
 };
