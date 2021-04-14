@@ -27,6 +27,11 @@ public:
     virtual void RotateY(float angle);
     virtual void RotateZ(float angle);
     virtual void Scale(float factor);
+    virtual void Scale(float x, float y, float z);
+    virtual void Shearx(float Shy, float Shz);
+    virtual void Sheary(float Shx, float Shz);
+    virtual void Shearz(float Shx, float Shy);
+    virtual void Reflect(bool x, bool y, bool z);
     virtual void LoadIdentity();
     virtual float getTmin();
     virtual void ApplyTransformation()=0;

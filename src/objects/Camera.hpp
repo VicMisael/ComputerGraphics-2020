@@ -5,6 +5,7 @@
 class Camera{
     private:
     Matrix4x4 cameraToWorld;
+    Point3f *at = NULL;
     Point3f *Eye=NULL;
     public:
         Camera() :Camera(Point3f(0, 0, 0), Point3f(0, 0, 0), Point3f(0, 0, 0)) {};
@@ -12,5 +13,6 @@ class Camera{
         Matrix4x4 getCameraToWorld();
         Matrix4x4 getWorldToCamera();
         Point3f getEyePosition();
+        Point3f getAt();
 };
 #endif

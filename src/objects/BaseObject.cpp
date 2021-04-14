@@ -59,6 +59,31 @@ void BaseObject::Scale(float factor)
 	transFMat.ConcatScale(factor);
 }
 
+void BaseObject::Scale(float x, float y, float z)
+{
+	transFMat.ConcatScale(x,y,z);
+}
+
+void BaseObject::Shearx(float Shy, float Shz)
+{
+	transFMat.ConcatShearx(Shy, Shz);
+}
+
+void BaseObject::Sheary(float Shx, float Shz)
+{
+	transFMat.ConcatSheary(Shx, Shz);
+}
+
+void BaseObject::Shearz(float Shx, float Shy)
+{
+	transFMat.ConcatShearz(Shx, Shy);
+}
+
+void BaseObject::Reflect(bool x, bool y, bool z)
+{
+	transFMat.ConcatReflect(x, y, z);
+}
+
 void BaseObject::LoadIdentity()
 {
 	transFMat.loadIdentity();

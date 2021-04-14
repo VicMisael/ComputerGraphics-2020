@@ -90,9 +90,11 @@ public:
     void ConcatRotateZ(float angle);
     void ConcatTranslate(float tx, float ty, float tz);
     void ConcatScale(float x);
-    void ConcatShearx(float x);
-    void ConcatSheary(float y);
-    void ConcatShearz(float z);
+    void ConcatScale(float x, float y, float z);
+    void ConcatShearx(float Shy,float Shz);
+    void ConcatSheary(float Shx,float Shz);
+    void ConcatShearz(float Shx,float Shy);
+    void ConcatReflect(bool x,bool y,bool z);
     Matrix4x4 Transpose();
     float Determinant();
     //Returns a new Transposed index of this matrix

@@ -291,14 +291,75 @@ void Matrix4x4::ConcatTranslate(float tx, float ty, float tz)
 
 void Matrix4x4::ConcatScale(float x)
 {
-    float translateMatrix[4][4] = {
+    float scaleMatrix[4][4] = {
     {x, 0, 0, 0},
     {0, x, 0, 0},
     {0, 0, x, 0},
     {0, 0, 0, 1},
     };
-    this->ConcatTransformation(translateMatrix);
+    this->ConcatTransformation(scaleMatrix);
 }
+
+void Matrix4x4::ConcatScale(float x, float y, float z)
+{
+    float scaleMatrix[4][4] = {
+        {x, 0, 0, 0},
+        {0, y, 0, 0},
+        {0, 0, z, 0},
+        {0, 0, 0, 1},
+    };
+    this->ConcatTransformation(scaleMatrix);
+
+}
+
+void Matrix4x4::ConcatShearx(float Shy, float Shz)
+{
+    float shearMatrix[4][4] = {
+        {1, 0, 0, 0},
+        {Shy, 1, 0, 0},
+        {Shz, 0, 1, 0},
+        {0, 0, 0, 1},
+    };
+    this->ConcatTransformation(shearMatrix);
+}
+
+void Matrix4x4::ConcatSheary(float Shx, float Shz)
+{
+    float shearMatrix[4][4] = {
+        {1, Shx, 0, 0},
+        {0, 1, 0, 0},
+        {0, Shz, 1, 0},
+        {0, 0, 0, 1},
+    };
+    this->ConcatTransformation(shearMatrix);
+}
+
+void Matrix4x4::ConcatShearz(float Shx, float Shy)
+{
+    float shearMatrix[4][4] = {
+        {1, 0, Shx, 0},
+        {0, 1, Shy, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1},
+    };
+    this->ConcatTransformation(shearMatrix);
+
+}
+
+void Matrix4x4::ConcatReflect(bool xS, bool yS, bool zS)
+{
+    float x = xS ? -1 : 1;
+    float y = yS ? -1 : 1;
+    float z = zS ? -1 : 1;
+    float reflectMatrix[4][4] = {
+        {x, 0, 0, 0},
+        {0, y, 0, 0},
+        {0, 0, z, 0},
+        {0, 0, 0, 1},
+    };
+    this->ConcatTransformation(reflectMatrix);
+}
+
 
 void Matrix4x4::printMatrix()
 {

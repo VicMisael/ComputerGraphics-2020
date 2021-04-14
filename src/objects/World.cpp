@@ -79,8 +79,8 @@ void inline World::init()
     bgColor = Color(r, g, b);
 
 
-    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.3);
-    //lights.push_back(lambient);
+    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.2);
+    lights.push_back(lambient);
     
     Light* l2 = new Light(Point3f(-1,2,0), Point3f(0, 0, 0), 0.35);
     l2->SetType(point);
@@ -95,12 +95,28 @@ void inline World::init()
     //p->setReflectivness(1);
     objects.push_back(p);
 
+    Cube* building = new Cube(1, 1, 1, Color(169, 169, 169));
+    building->Scale(2, 4, 1);
+    //cubeShear->Sheary(1, 1.5);
+    building->RotateY(PI / 4);
+    building->Translate(-1, -0.5, 6);
+    building->setReflectivness(.4);
+    objects.push_back(building);
+
+    Cube* buildin2 = new Cube(1, 1, 1, Color(169,169,169));
+    buildin2->Scale(2, 4, 1);
+    //cubeShear->Sheary(1, 1.5);
+    buildin2->Translate(1.5, -0.5, 6);
+    buildin2->setReflectivness(.2);
+    objects.push_back(buildin2);
+    
     //Objetos extras
     Circle* cBola = new Circle(0.6 , WHITE);
     cBola->setSpecular(1000);
     cBola->Translate(1,-1,2);
     cBola->setReflectivness(0.5);
     objects.push_back(cBola);
+
     //Snowman
     //Diferen�a do raio do primeiro pro 0
     float radiusDiff=-0.6;

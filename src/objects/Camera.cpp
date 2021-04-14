@@ -6,6 +6,7 @@ Camera::Camera(Point3f eye, Point3f at, Point3f up)
 {
 	using namespace VectorUtilities;
 	this->Eye = &eye;
+	this->at = &at;
 	//Klinha
 	Vector3f k = eye - at;
 	k.normalize();
@@ -39,5 +40,10 @@ Matrix4x4 Camera::getWorldToCamera()
 Point3f Camera::getEyePosition()
 {
 	return *Eye;
+}
+
+Point3f Camera::getAt()
+{
+	return *at;
 }
 
