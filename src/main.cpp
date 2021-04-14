@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     float vcx=0;
     float vcy = 0.05;
     float vcz = -4.16;
-    int reflectionDepth=0;
+    int reflectionDepth=3;
     int Cw = 800;
     int Ch = 800;
     
