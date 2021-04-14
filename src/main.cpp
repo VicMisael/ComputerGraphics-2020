@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     float vcx=0;
     float vcy = 0.05;
     float vcz = -4.16;
-    int reflectionDepth=3;
+    int reflectionDepth=1;
     int Cw = 800;
     int Ch = 800;
     
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
             }
             if(e.key.keysym.sym==SDLK_r){
                 reflectionDepth++;
-                if(reflectionDepth>3){
+                if(reflectionDepth>1){
                     reflectionDepth=0;
                 }
             }

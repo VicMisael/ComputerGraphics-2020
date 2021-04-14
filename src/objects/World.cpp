@@ -200,48 +200,6 @@ void World::SetShadowsOn(bool shadows)
     this->renderShadows = shadows;
 }
 
-Color World::ComputeReflectionColor(Ray &ray,int rd){
-
-    Color retColor = bgColor;
-    Vector3f Normal;
-    BaseObject* ClosestIntersected=NULL;
-    float minimalT = INFINITY;
-    bool isReflective = false;
-    float reflectT;
-    for (BaseObject *ob : objects)
-    {
-
-        if (ob->Intersects(ray))
-        {
-            float t = ob->getTmin();
-                if (t < minimalT)
-                {
-                    minimalT = t;
-                    Point3f point =ray.getPoint(t);
-                    Normal = ob->getNormal(point);
-                    Vector3f invdir=ray.D * -1;
-                    retColor = ob->getColor() * ComputeLighting(point,Normal,invdir ,ob->getSpecular());
-                    if(isReflective=ob->getReflectivness()>0);{
-                        ClosestIntersected = ob;
-                        reflectT=t;
-                    }
-                }
-        
-        }
-    }
-    if (isReflective&&rd>0) {
-        const float rindex = ClosestIntersected->getReflectivness();
-        const Vector3f Normal=ClosestIntersected->getNormal(ray.getPoint(reflectT));
-        Vector3f dir=ray.D;
-        Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, Normal), 1);
-        Color refCol = ComputeReflectionColor(reflected_ray, rd - 1);
-        retColor= retColor * (1 - rindex) + refCol * rindex;
-        
-    }
-    return retColor;
-
- }
-
 Color World::computeColor(Ray &ray, float vz,int rd)
 {   
  
@@ -290,3 +248,47 @@ Color World::computeColor(Ray &ray, float vz,int rd)
 #endif
     return retColor;
 }
+
+#ifdef _RENDERWITHREFLECTIONS_
+Color World::ComputeReflectionColor(Ray &ray,int rd){
+
+    Color retColor = bgColor;
+    Vector3f Normal;
+    BaseObject* ClosestIntersected=NULL;
+    float minimalT = INFINITY;
+    bool isReflective = false;
+    float reflectT;
+    for (BaseObject *ob : objects)
+    {
+
+        if (ob->Intersects(ray))
+        {
+            float t = ob->getTmin();
+                if (t < minimalT)
+                {
+                    minimalT = t;
+                    Point3f point =ray.getPoint(t);
+                    Normal = ob->getNormal(point);
+                    Vector3f invdir=ray.D * -1;
+                    retColor = ob->getColor() * ComputeLighting(point,Normal,invdir ,ob->getSpecular());
+                    if(isReflective=ob->getReflectivness()>0);{
+                        ClosestIntersected = ob;
+                        reflectT=t;
+                    }
+                }
+        
+        }
+    }
+    if (isReflective&&rd>0) {
+        const float rindex = ClosestIntersected->getReflectivness();
+        const Vector3f Normal=ClosestIntersected->getNormal(ray.getPoint(reflectT));
+        Vector3f dir=ray.D;
+        Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, Normal), 1);
+        Color refCol = ComputeReflectionColor(reflected_ray, rd - 1);
+        retColor= retColor * (1 - rindex) + refCol * rindex;
+        
+    }
+    return retColor;
+
+ }
+ #endif
