@@ -29,6 +29,7 @@ int main(int argc, char **argv)
     float vcx=0;
     float vcy = 0.05;
     float vcz = -4.16;
+    int reflectionDepth=0;
     int Cw = 800;
     int Ch = 800;
     
@@ -49,7 +50,7 @@ int main(int argc, char **argv)
             {
 
                 Ray r = Ray(canvasToViewport(canvasEye.x+x, canvasEye.y+y, Cw, Ch, -1),canvasEye);
-                rgba[(y + Ch / 2) * 800 + (x + Cw / 2)] = world.computeColor(r, -1,3).rgba();
+                rgba[(y + Ch / 2) * 800 + (x + Cw / 2)] = world.computeColor(r, -1,reflectionDepth).rgba();
             }
         }
         std::cout <<"X: "<< (vcx)<<"Y: "<<vcy<<"Z: "<<vcz << std::endl;
@@ -83,6 +84,12 @@ int main(int argc, char **argv)
             }
             if (e.key.keysym.sym == SDLK_s) {
                 shadows = !shadows;
+            }
+            if(e.key.keysym.sym==SDLK_r){
+                reflectionDepth++;
+                if(reflectionDepth>3){
+                    reflectionDepth=0;
+                }
             }
                 break;
             case SDL_QUIT:

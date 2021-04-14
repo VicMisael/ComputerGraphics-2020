@@ -14,6 +14,13 @@
 #include "Cone.hpp"
 #include "Cube.hpp"
 #include "../util/Light.hpp"
+
+
+#define WHITE Color(255,255,255)
+#define RED Color(255,0,0)
+#define GREEN Color(0,255,0)
+#define BLUE Color(0,0,255)
+
 class World{
      std::vector<BaseObject*> objects;
      std::vector<Light*> lights;
@@ -27,5 +34,6 @@ public:
     void SetShadowsOn(bool shadows);
     Color bgColor;
     Color computeColor(Ray &ray,float vz,int recursionDepth);
+    Color ComputeReflectionColor(Ray &ray,int recursionDepth);
 };  
 #endif
