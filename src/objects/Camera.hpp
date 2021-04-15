@@ -4,7 +4,7 @@
 #include "../util/VectorUtilities.hpp"
 class Camera{
     private:
-    Matrix4x4 cameraToWorld;
+    Matrix4x4 worldToCamera;
     Point3f *at = NULL;
     Point3f *Eye=NULL;
     public:

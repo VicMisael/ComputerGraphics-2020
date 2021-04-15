@@ -10,9 +10,9 @@
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = -Cx * (1.0 / vpw);
-    float vy = -Cy * (1.0 / vph);
-    float vz = -d;
+    float vx = -Cx * (1.0/ vpw);
+    float vy = -Cy * (1.0/ vph);
+    float vz = d;
     return Point3f(vx, vy, vz);
 }
 int main(int argc, char **argv)
@@ -27,8 +27,8 @@ int main(int argc, char **argv)
     uint32_t *rgba = new uint32_t[800 * 800];
   
     float vcx=0;
-    float vcy = 0;
-    float vcz = -5;
+    float vcy = 7;
+    float vcz = -6;
     int reflectionDepth=1;
     int Cw = 800;
     int Ch = 800;
@@ -37,27 +37,26 @@ int main(int argc, char **argv)
     while (run)
     {
         Point3f eye = Point3f(vcx,vcy,vcz);
-        Point3f at = Point3f(0, 0, 5);
-        Point3f up = Point3f(0, 1, 5);
+        Point3f at = Point3f(0, 0 , 5);
+        Point3f up = Point3f(0, 6,5);
         Camera camera = Camera(eye, at, up);
         World world(camera);
         world.SetShadowsOn(shadows);
-        Point3f canvasEye = camera.getWorldToCamera() * eye;
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {
 
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
                 //Orthographic
-                //Ray r = Ray(canvasToViewport(canvasEye.x + x, canvasEye.y + y, Cw, Ch, -1),camera.getWorldToCamera()*Vector3f(0,0,1),1);
+                //Ray r = Ray(Point3f(0,0,0),Vector3f(0,0,-1),1);
                 //Perspective
                 //CanvasEye=Ray origin
-                Ray r = Ray(canvasEye,canvasToViewport(canvasEye.x + x, canvasEye.y + y, Cw, Ch, 1));
+                Ray r = Ray(Point3f(0,0,0),canvasToViewport(x, y, Cw, Ch, -1));
                 rgba[(y + Ch / 2) * 800 + (x + Cw / 2)] = world.computeColor(r, 1,reflectionDepth).rgba();
             }
         }
         std::cout <<"X: "<< (vcx)<<"Y: "<<vcy<<"Z: "<<vcz << std::endl;
-        //vcz-=0.1;
+        vcz+=2;
         SDL_UpdateTexture(framebuffer, NULL, rgba, 800 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
@@ -106,7 +105,7 @@ int main(int argc, char **argv)
                 break;
             }
         }
-
+        //return 1;
     }
     return 0;
 };

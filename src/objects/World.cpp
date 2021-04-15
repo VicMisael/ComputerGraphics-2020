@@ -80,7 +80,7 @@ void inline World::init()
     bgColor = Color(r, g, b);
 
 
-    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.2);
+    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.7);
     lights.push_back(lambient);
     
     //Light* l2 = new Light(Point3f(0,3,1), Point3f(0, 0, 0), 0.35);
@@ -91,13 +91,12 @@ void inline World::init()
     l3->SetType(point);
     lights.push_back(l3);
 
-    Light* l4 = new Light(Point3f(0,0,0), Point3f(1, 1, -1), 0.6);
+    Light* l4 = new Light(Point3f(0,0,0), Point3f(1, 1, -1), 0.35);
     l4->SetType(directional);
     lights.push_back(l4);
 
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
-    // p->setReflectivness(1);
     objects.push_back(p);
 
     Cube* building = new Cube(1, 1, 1, Color(169, 169, 169));
@@ -118,9 +117,9 @@ void inline World::init()
 
     Cube* buildin3 = new Cube(1, 1, 1, Color(255, 255, 255));
     buildin3->Scale(1, 3, 1);
-    //cubeShear->Sheary(1, 1.5);
+    buildin3->Shearx(1, 1);
     buildin3->RotateY(PI / 6);
-    buildin3->Translate(-2, -0.5, 2);
+    buildin3->Translate(-2, -0.5, 3);
     buildin3->setReflectivness(.07);
     objects.push_back(buildin3);
     
@@ -170,7 +169,7 @@ void inline World::init()
     cyl2->Translate(1.8, 0.5,2.3);
     objects.push_back(cyl2);
 
-    Cone* cone2 = new Cone(Vector3f(0, 1, 0), 0.7, 0.8, Color(189, 236, 182));
+    Cone* cone2 = new Cone(Vector3f(0, 1, 0), 0.7, 0.8, Color(173, 216, 230));
     cone2->setSpecular(1000);
     cone2->LoadIdentity();
     //cone->RotateX(PI / 6);
