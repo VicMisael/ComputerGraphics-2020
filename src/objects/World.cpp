@@ -52,6 +52,7 @@ float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float 
 
 
             float n_dot_l = dotProduct(n, lVec);
+            lVec.normalize();
             if (n_dot_l > 0)
             {
                 intensity += l->getIntensity() * (n_dot_l / (n.length() * lVec.length()));
@@ -82,13 +83,17 @@ void inline World::init()
     Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.2);
     lights.push_back(lambient);
     
-    Light* l2 = new Light(Point3f(-1,2,0), Point3f(0, 0, 0), 0.35);
-    l2->SetType(point);
-    lights.push_back(l2);
+    //Light* l2 = new Light(Point3f(0,3,1), Point3f(0, 0, 0), 0.35);
+    //l2->SetType(point);
+    //lights.push_back(l2);
 
-    Light* l3 = new Light(Point3f(0, 1.2, 0), Point3f(0, 0, 0), 1);
+    Light* l3 = new Light(Point3f(3, 1.2, 0), Point3f(0, 0, 0), 0.6);
     l3->SetType(point);
     lights.push_back(l3);
+
+    Light* l4 = new Light(Point3f(0,0,0), Point3f(1, 1, -1), 0.6);
+    l4->SetType(directional);
+    lights.push_back(l4);
 
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));

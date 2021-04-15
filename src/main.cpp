@@ -10,8 +10,8 @@
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = -Cx * (1.0 / vpw);
-    float vy = -Cy * (1.0 / vph);
+    float vx = Cx * (1.0 / vpw);
+    float vy = Cy * (1.0 / vph);
     float vz = d;
     return Point3f(vx, vy, vz);
 }
@@ -27,8 +27,8 @@ int main(int argc, char **argv)
     uint32_t *rgba = new uint32_t[512 * 512];
   
     float vcx=0;
-    float vcy = 0.05;
-    float vcz = -10;
+    float vcy = 0;
+    float vcz = -5;
     int reflectionDepth=1;
     int Cw = 512;
     int Ch = 512;
@@ -37,8 +37,8 @@ int main(int argc, char **argv)
     while (run)
     {
         Point3f eye = Point3f(vcx,vcy,vcz);
-        Point3f at = Point3f(0, 0, 2);
-        Point3f up = Point3f(0, 2, 2);
+        Point3f at = Point3f(0, 0, 5);
+        Point3f up = Point3f(0, 1, 5);
         Camera camera = Camera(eye, at, up);
         World world(camera);
         world.SetShadowsOn(shadows);
@@ -49,13 +49,15 @@ int main(int argc, char **argv)
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
                 //Orthographic
-                //Ray r = Ray(canvasToViewport(canvasEye.x + x, canvasEye.y + y, Cw, Ch, -1), camera.getAt() - camera.getEyePosition());
+                //Ray r = Ray(canvasToViewport(canvasEye.x + x, canvasEye.y + y, Cw, Ch, -1),camera.getWorldToCamera()*Vector3f(0,0,1),1);
                 //Perspective
-                Ray r = Ray(canvasToViewport(canvasEye.x+x, canvasEye.y+y, Cw, Ch, -1),canvasEye);
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, -1,reflectionDepth).rgba();
+                //CanvasEye=Ray origin
+                Ray r = Ray(canvasEye,canvasEye- canvasToViewport(canvasEye.x + x, canvasEye.y + y, Cw, Ch, 1),0);
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1,reflectionDepth).rgba();
             }
         }
         std::cout <<"X: "<< (vcx)<<"Y: "<<vcy<<"Z: "<<vcz << std::endl;
+        //vcz--;
         SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);

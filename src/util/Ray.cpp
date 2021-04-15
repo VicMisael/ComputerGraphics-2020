@@ -1,9 +1,9 @@
 #include "Ray.hpp"
 
 
-Ray::Ray(Point3f point, Vector3f D, float t)
+Ray::Ray(Point3f origin, Vector3f D, float t)
 {
-	this->O = point;
+	this->O = origin;
 	this->D = D;
 	this->t = t;
 	this->D.normalize();
