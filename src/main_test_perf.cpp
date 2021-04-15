@@ -27,7 +27,7 @@ int main()
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
                 Ray r = Ray(canvasToViewport(x, y, Cw, Ch, 1), Point3f(0, 0, 0));
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1).rgba;
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1).rgba();
             }
         }
     }

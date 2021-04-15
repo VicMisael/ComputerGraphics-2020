@@ -17,6 +17,7 @@ float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float 
     using namespace VectorUtilities;
     float intensity = 0;
     Vector3f lVec;
+    float distanceFactor=1;
     for (Light* l : lights)
     {
         if (l->lt == ambient)
@@ -29,6 +30,7 @@ float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float 
             {
             case point:
                 lVec = ((l->getPosition()) - p);
+                distanceFactor=1/sqrtf(fabs(lVec.length()));
                 break;
             case directional:
                 lVec = l->getDirection();
@@ -50,12 +52,10 @@ float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float 
             }
 #endif
 
-
             float n_dot_l = dotProduct(n, lVec);
-            lVec.normalize();
             if (n_dot_l > 0)
             {
-                intensity += l->getIntensity() * (n_dot_l / (n.length() * lVec.length()));
+                intensity += (l->getIntensity()* distanceFactor)*(n_dot_l / (n.length() * lVec.length()));
             }
             if (s >= 0) {
                 Vector3f R = ReflectRay(lVec, n);
@@ -80,18 +80,18 @@ void inline World::init()
     bgColor = Color(r, g, b);
 
 
-    // Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.7);
-    // lights.push_back(lambient);
+    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.25);
+    //lights.push_back(lambient);
     
-    Light* l2 = new Light(Point3f(1,7,5), Point3f(0, 0, 0), 0.7);
+    Light* l2 = new Light(Point3f(0,7,0), Point3f(0, 0, 0), 1);
     l2->SetType(point);
     lights.push_back(l2);
 
-    Light* l3 = new Light(Point3f(3, 1.2, 0), Point3f(0, 0, 0), 0.35);
+    Light* l3 = new Light(Point3f(3, 1.2, 0), Point3f(0, 0, 0), 1);
     l3->SetType(point);
     lights.push_back(l3);
 
-    Light* l4 = new Light(Point3f(0,0,0), Point3f(1, 1, -1), 0.35);
+    Light* l4 = new Light(Point3f(0,0,0), Point3f(0, 1,0 ), 0.1);
     l4->SetType(directional);
     lights.push_back(l4);
 
@@ -260,7 +260,7 @@ Color World::computeColor(Ray &ray, float vz,int rd)
                     
                     Vector3f invdir=ray.D * -1;
                     retColor = ob->getColor() * ComputeLighting(point,Normal,invdir ,ob->getSpecular());
-                    if(isReflective=ob->getReflectivness()>0);{
+                    if(isReflective=(ob->getReflectivness()>0)){
                         ClosestIntersected = ob;
                         reflectT=t;
                     }
@@ -304,7 +304,7 @@ Color World::ComputeReflectionColor(Ray &ray,int rd){
                     Normal = ob->getNormal(point);
                     Vector3f invdir=ray.D * -1;
                     retColor = ob->getColor() * ComputeLighting(point,Normal,invdir ,ob->getSpecular());
-                    if(isReflective=ob->getReflectivness()>0);{
+                    if(isReflective=(ob->getReflectivness()>0)){
                         ClosestIntersected = ob;
                         reflectT=t;
                     }

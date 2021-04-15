@@ -18,7 +18,7 @@ class Cylinder : public BaseObject
     public:
         Cylinder(Vector3f axis, float height, float radius, const Color color) :Cylinder(axis, height, radius, color, color) {};
         Cylinder(Vector3f axis, float height, float radius,const Color color,const Color BaseColor);
-        int Intersects(Ray& ray);
+        int Intersects(Ray& ray) override;
         Color getColor() override;
         void ApplyTransformation() override;
         Vector3f getNormal(const Point3f p) override;
