@@ -30,13 +30,13 @@ uint32_t Color::rgba()
 		};
 	} rgbaCol;
 	using namespace std;
-	r = r > 1?1: r;
-	g = g > 1 ? 1 : g;
-	b = b > 1 ? 1 : b;
+	
+	
+	
 
-	rgbaCol._r = r * 255;
-	rgbaCol._g = g * 255;
-	rgbaCol._b = b * 255;
+	rgbaCol._r = (r > 1 ? 1 : r) * 255;
+	rgbaCol._g = (g > 1 ? 1 : g) * 255;
+	rgbaCol._b = (b > 1 ? 1 : b) * 255;
 	rgbaCol._a = 255;
 	return rgbaCol.rgba;
 }

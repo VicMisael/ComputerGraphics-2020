@@ -143,22 +143,23 @@
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2test.lib;SDL2main.lib;SDL2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OptimizeReferences>false</OptimizeReferences>
+      <OptimizeReferences>true</OptimizeReferences>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "C:\Dev\SDL2-2.0.14\lib\x64\SDL2.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <ClCompile>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <CallingConvention>Cdecl</CallingConvention>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <Optimization>MaxSpeed</Optimization>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <Optimization>Full</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <WarningLevel>Level1</WarningLevel>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ static uint8_t r = 203;
 static uint8_t g = 224;
 static uint8_t b = 233;
 
-Vector3f inline ReflectRay(Vector3f R, Vector3f N) {
+Vector3f inline ReflectRay(const Vector3f R,const Vector3f N) {
     using namespace VectorUtilities;
     return ((N * 2) * dotProduct(N, R) - R);
 }
@@ -97,7 +97,7 @@ void inline World::init()
 
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
-    //p->setReflectivness(1);
+    // p->setReflectivness(1);
     objects.push_back(p);
 
     Cube* building = new Cube(1, 1, 1, Color(169, 169, 169));
@@ -105,15 +105,24 @@ void inline World::init()
     //cubeShear->Sheary(1, 1.5);
     building->RotateY(PI / 4);
     building->Translate(-1, -0.5, 6);
-    building->setReflectivness(.4);
+    building->setReflectivness(.7);
     objects.push_back(building);
 
     Cube* buildin2 = new Cube(1, 1, 1, Color(169,169,169));
     buildin2->Scale(2, 4, 1);
     //cubeShear->Sheary(1, 1.5);
+    buildin2->RotateY(PI / 6);
     buildin2->Translate(1.5, -0.5, 6);
-    buildin2->setReflectivness(.2);
+    buildin2->setReflectivness(.7);
     objects.push_back(buildin2);
+
+    Cube* buildin3 = new Cube(1, 1, 1, Color(255, 255, 255));
+    buildin3->Scale(1, 3, 1);
+    //cubeShear->Sheary(1, 1.5);
+    buildin3->RotateY(PI / 6);
+    buildin3->Translate(-2, -0.5, 2);
+    buildin3->setReflectivness(.07);
+    objects.push_back(buildin3);
     
     //Objetos extras
     Circle* cBola = new Circle(0.6 , WHITE);
@@ -127,7 +136,7 @@ void inline World::init()
     float radiusDiff=-0.6;
     Circle* c = new Circle(0.6 , Color(255, 255, 255));
     c->setSpecular(1000);
-    //c->setReflectivness(0.5);
+    //c->setReflectivness(1);
     c->Translate(1,radiusDiff,5);
     objects.push_back(c);
     c = new Circle(0.4, Color(255, 255, 255));
@@ -143,6 +152,7 @@ void inline World::init()
     nose->Translate(1, radiusDiff+1.4, 5);
     objects.push_back(nose);
     Cone* snowManHat = new Cone(Vector3f(0, 1, 0), 0.6, 0.30, Color(18, 10, 143));
+    snowManHat->setReflectivness(0.5);
     snowManHat->Translate(1, radiusDiff + 1.6, 5);
     snowManHat->setSpecular(900);
     objects.push_back(snowManHat);
@@ -185,6 +195,7 @@ void inline World::init()
 
     Cube* cube2 = new Cube(1.5, 0.5, 0.5, Color(249, 234, 195));
     cube2->setSpecular(10000);
+    cube2->setReflectivness(0.1);
     cube2->RotateY(PI/4);
     cube2->Translate(-0.9, -1, 2);
     objects.push_back(cube2);
@@ -303,7 +314,7 @@ Color World::ComputeReflectionColor(Ray &ray,int rd){
     if (isReflective&&rd>0) {
         const float rindex = ClosestIntersected->getReflectivness();
         const Vector3f Normal=ClosestIntersected->getNormal(ray.getPoint(reflectT));
-        Vector3f dir=ray.D;
+        Vector3f dir=ray.D*-1;
         Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, Normal), 1);
         Color refCol = ComputeReflectionColor(reflected_ray, rd - 1);
         retColor= retColor * (1 - rindex) + refCol * rindex;
