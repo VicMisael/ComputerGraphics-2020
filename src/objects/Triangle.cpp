@@ -1,5 +1,7 @@
 #include "Triangle.hpp"
 
+
+
 Triangle::Triangle(Point3f Vertexes[3],Color c)
 {
     for (int i = 0; i < 3; i++)
@@ -7,6 +9,7 @@ Triangle::Triangle(Point3f Vertexes[3],Color c)
         Vertex[i] = Vertexes[i];
     }
     this->c = c;
+    CalculateNormal();
 }
 
 Triangle::Triangle(Point3f Vertex1, Point3f Vertex2, Point3f Vertex3, Color c)
@@ -15,6 +18,15 @@ Triangle::Triangle(Point3f Vertex1, Point3f Vertex2, Point3f Vertex3, Color c)
     Vertex[1]= Vertex2;
     Vertex[2]= Vertex3;
     this->c = c;
+    CalculateNormal();
+}
+
+void Triangle::CalculateNormal(){
+    using namespace VectorUtilities;
+    Vector3f v=  Vertex[1]- Vertex[0] ;
+    Vector3f w= Vertex[2]- Vertex[0]  ;
+    Normal=crossProduct(v, w);
+    Normal.normalize();
 }
 
 int Triangle::Intersects(Ray &ray)
@@ -66,16 +78,17 @@ void Triangle::ApplyTransformation()
     for (Point3f& p : Vertex) {
         p=transFMat*p;
     }
+    CalculateNormal();
 }
 
 Vector3f Triangle::getNormal(const Point3f p)
 {
-   using namespace VectorUtilities;
-   Vector3f v=  Vertex[1]- Vertex[0] ;
-   Vector3f w= Vertex[2]- Vertex[0]  ;
-   Vector3f N=crossProduct(v, w);
-   N.normalize();
-   return N;
+//    using namespace VectorUtilities;
+//    Vector3f v=  Vertex[1]- Vertex[0] ;
+//    Vector3f w= Vertex[2]- Vertex[0]  ;
+//    Vector3f N=crossProduct(v, w);
+//    N.normalize();
+   return this->Normal;
 }
 
 void Triangle::ApplyCamera(const Matrix4x4 m)
@@ -83,4 +96,6 @@ void Triangle::ApplyCamera(const Matrix4x4 m)
     for (Point3f& v : Vertex) {
         v = m * v;
     }
+    CalculateNormal();
+    
 }

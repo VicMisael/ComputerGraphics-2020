@@ -19,19 +19,18 @@ int main(int argc, char **argv)
 {
 
     SDL_Window *win = NULL;
-    win = SDL_CreateWindow("RayCaster", 100, 100, 800, 800, 0);
+    win = SDL_CreateWindow("RayCaster", 100, 100, 512, 512, 0);
     SDL_Renderer *renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Texture *framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 800, 800);
+    SDL_Texture *framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 512, 512);
     bool run = true;
-    //auto window = new Color[800][800];
-    uint32_t *rgba = new uint32_t[800 * 800];
+    //auto window = new Color[512][512];
+    uint32_t *rgba = new uint32_t[512 * 512];
   
     float vcx=0;
     float vcy = 7;
     float vcz = -6;
-    int reflectionDepth=1;
-    int Cw = 800;
-    int Ch = 800;
+    int Cw = 512;
+    int Ch = 512;
     
     bool shadows = true;
     while (run)
@@ -51,13 +50,25 @@ int main(int argc, char **argv)
                 //Ray r = Ray(Point3f(0,0,0),Vector3f(0,0,-1),1);
                 //Perspective
                 //CanvasEye=Ray origin
+                #ifndef _SUPERSAMPLE_
                 Ray r = Ray(Point3f(0,0,0),canvasToViewport(x, y, Cw, Ch, -1));
-                rgba[(y + Ch / 2) * 800 + (x + Cw / 2)] = world.computeColor(r, 1,reflectionDepth).rgba();
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1,2).rgba();
+                #else
+                float r,g,b;
+                r=g=b=0;
+                for(int i=0;i<SSRate;i++){
+                    Ray ray = Ray(Point3f(0,0,0),canvasToViewport(x+((float)i/SSRate), y+((float)i/SSRate), Cw, Ch, -1));
+                    r+=world.computeColor(ray, 1,reflectionDepth).r;
+                    g+=world.computeColor(ray, 1,reflectionDepth).g;
+                    b+=world.computeColor(ray, 1,reflectionDepth).b;
+                }
+                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] =Color(r,g,b,SSRate).rgba();
+                #endif
             }
         }
         std::cout <<"X: "<< (vcx)<<"Y: "<<vcy<<"Z: "<<vcz << std::endl;
-        vcz+=2;
-        SDL_UpdateTexture(framebuffer, NULL, rgba, 800 * sizeof(uint32_t));
+        vcz+=0.1;
+        SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
         SDL_RenderPresent(renderer);
@@ -87,12 +98,6 @@ int main(int argc, char **argv)
             }
             if (e.key.keysym.sym == SDLK_s) {
                 shadows = !shadows;
-            }
-            if(e.key.keysym.sym==SDLK_r){
-                reflectionDepth++;
-                if(reflectionDepth>1){
-                    reflectionDepth=0;
-                }
             }
                 break;
             case SDL_QUIT:

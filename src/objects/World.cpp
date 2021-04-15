@@ -80,14 +80,14 @@ void inline World::init()
     bgColor = Color(r, g, b);
 
 
-    Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.7);
-    lights.push_back(lambient);
+    // Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.7);
+    // lights.push_back(lambient);
     
-    //Light* l2 = new Light(Point3f(0,3,1), Point3f(0, 0, 0), 0.35);
-    //l2->SetType(point);
-    //lights.push_back(l2);
+    Light* l2 = new Light(Point3f(1,7,5), Point3f(0, 0, 0), 0.7);
+    l2->SetType(point);
+    lights.push_back(l2);
 
-    Light* l3 = new Light(Point3f(3, 1.2, 0), Point3f(0, 0, 0), 0.6);
+    Light* l3 = new Light(Point3f(3, 1.2, 0), Point3f(0, 0, 0), 0.35);
     l3->SetType(point);
     lights.push_back(l3);
 
@@ -97,7 +97,9 @@ void inline World::init()
 
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
+    p->setSpecular(1000);
     objects.push_back(p);
+
 
     Cube* building = new Cube(1, 1, 1, Color(169, 169, 169));
     building->Scale(2, 4, 1);

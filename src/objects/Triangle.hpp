@@ -6,7 +6,8 @@ class Triangle : public BaseObject
 {
 private:
     Point3f Vertex[3];
-
+    Vector3f Normal;
+    void CalculateNormal();
 public:
     Triangle() : Triangle(Point3f(0, 0, 0), Point3f(0, 0, 0), Point3f(0, 0, 0)) {}
     Triangle(Point3f Vertexes[3], Color c);

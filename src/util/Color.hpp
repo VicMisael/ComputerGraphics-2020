@@ -4,9 +4,10 @@
 class Color
 {
 private:
-    Color(float _r, float _g, float _b,float normalizefactor);
+    
 public:
     Color();
+    Color(float _r, float _g, float _b,float normalizefactor);
     Color(uint8_t color[3]) :Color(color[0], color[1], color[2]) {};
     Color(uint8_t r, uint8_t g, uint8_t b);
     uint32_t rgba();
