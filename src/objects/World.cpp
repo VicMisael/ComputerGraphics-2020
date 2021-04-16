@@ -44,8 +44,9 @@ float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float 
                     Ray r = Ray(p, lVec, 0);
                     if (ob->Intersects(r)) {
                         float t_min = ob->getTmin();
-                        if (t_min > 0.1) {
+                        if (t_min>0.01&&t_min <=lveclength) {
                             return intensity;
+
                         }
                     }
                 }
@@ -98,9 +99,13 @@ void inline World::init()
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
     p->setSpecular(1000);
-    //p->setReflectivness(1);
     objects.push_back(p);
 
+
+    Plane* p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, -1, 19), WHITE);
+    p2->setSpecular(300);
+
+    objects.push_back(p2);
 
     Cube* building = new Cube(1, 1, 1, Color(169, 169, 169));
     building->Scale(2, 4, 1);

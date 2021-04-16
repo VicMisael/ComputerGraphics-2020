@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #endif
 
-#define screenwidthheight 800
+#define screenwidthheight 640
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {

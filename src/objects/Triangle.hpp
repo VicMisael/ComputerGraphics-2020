@@ -5,10 +5,11 @@
 class Triangle : public BaseObject
 {
 private:
-    Point3f Vertex[3];
+    
     Vector3f Normal;
     void CalculateNormal();
 public:
+    Point3f Vertex[3];
     Triangle() : Triangle(Point3f(0, 0, 0), Point3f(0, 0, 0), Point3f(0, 0, 0)) {}
     Triangle(Point3f Vertexes[3], Color c);
     Triangle(const Point3f Vertex1, const Point3f Vertex2, const Point3f Vertex3, const Color c);
