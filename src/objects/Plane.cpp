@@ -53,5 +53,5 @@ void Plane::ApplyCamera(const Matrix4x4 m)
 	Vector4f normal = Vector4f(n,0);
 	normal=m* normal;
 	n=normal.toVector3f();
-	n.normalize();
+	//n.normalize();
 }

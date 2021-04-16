@@ -8,6 +8,8 @@
 #include <SDL2/SDL.h>
 #endif
 
+#define screenwidthheight 800
+
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
     float vx = -Cx * (1.0/ vpw);
@@ -19,18 +21,18 @@ int main(int argc, char **argv)
 {
 
     SDL_Window *win = NULL;
-    win = SDL_CreateWindow("RayCaster", 100, 100, 512, 512, 0);
+    win = SDL_CreateWindow("RayCaster", 100, 100, screenwidthheight, screenwidthheight, 0);
     SDL_Renderer *renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Texture *framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 512, 512);
+    SDL_Texture *framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, screenwidthheight, screenwidthheight);
     bool run = true;
-    //auto window = new Color[512][512];
-    uint32_t *rgba = new uint32_t[512 * 512];
-  
+    //auto window = new Color[screenwidthheight][screenwidthheight];
+    uint32_t *rgba = new uint32_t[screenwidthheight * screenwidthheight];
+    int reflectionDepth=1;
     float vcx=0;
-    float vcy = 7;
+    float vcy = 0;
     float vcz = -6;
-    int Cw = 512;
-    int Ch = 512;
+    int Cw = screenwidthheight;
+    int Ch = screenwidthheight;
     
     bool shadows = true;
     while (run)
@@ -52,7 +54,7 @@ int main(int argc, char **argv)
                 //CanvasEye=Ray origin
                 #ifndef _SUPERSAMPLE_
                 Ray r = Ray(Point3f(0,0,0),canvasToViewport(x, y, Cw, Ch, -1));
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] = world.computeColor(r, 1,2).rgba();
+                rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] = world.computeColor(r, 1,1).rgba();
                 #else
                 float r,g,b;
                 r=g=b=0;
@@ -62,13 +64,22 @@ int main(int argc, char **argv)
                     g+=world.computeColor(ray, 1,reflectionDepth).g;
                     b+=world.computeColor(ray, 1,reflectionDepth).b;
                 }
-                rgba[(y + Ch / 2) * 512 + (x + Cw / 2)] =Color(r,g,b,SSRate).rgba();
+                rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] =Color(r,g,b,SSRate).rgba();
                 #endif
             }
         }
         std::cout <<"X: "<< (vcx)<<"Y: "<<vcy<<"Z: "<<vcz << std::endl;
+        if (vcx < 7) {
+            vcx += 0.3;
+        }
+        if (vcy < 15) {
+            vcy += 0.5;
+        }
         vcz+=0.1;
-        SDL_UpdateTexture(framebuffer, NULL, rgba, 512 * sizeof(uint32_t));
+        if (vcz > 10) {
+            vcz = -12;
+        }
+        SDL_UpdateTexture(framebuffer, NULL, rgba, screenwidthheight * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
         SDL_RenderPresent(renderer);

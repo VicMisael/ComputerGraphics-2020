@@ -83,7 +83,7 @@ void inline World::init()
     Light* lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.25);
     //lights.push_back(lambient);
     
-    Light* l2 = new Light(Point3f(0,7,0), Point3f(0, 0, 0), 1);
+    Light* l2 = new Light(Point3f(0,7,-3), Point3f(0, 0, 0), 3);
     l2->SetType(point);
     lights.push_back(l2);
 
@@ -98,6 +98,7 @@ void inline World::init()
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
     p->setSpecular(1000);
+    //p->setReflectivness(1);
     objects.push_back(p);
 
 
@@ -176,6 +177,7 @@ void inline World::init()
     cone2->LoadIdentity();
     //cone->RotateX(PI / 6);
     cone2->Translate(1.6, 0.5, 2);
+    //cone2->setReflectivness(1);
     //cone->ApplyTransformation();
     objects.push_back(cone2);
 //Cubo
