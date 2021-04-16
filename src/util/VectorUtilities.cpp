@@ -12,14 +12,14 @@ float VectorUtilities::dotProduct(const Vector3f &a, const Vector3f &b)
     __m128 val= _mm_dp_ps(a.xyz, b.xyz, 0b01111001);
    return _mm_cvtss_f32(val);
 #else
-    float scalar = 0;
-    for (int i = 0; i < 3; i++)
-    {
-        scalar += a.vec[i] * b.vec[i];
-    }
-    return scalar
+    // float scalar = 0;
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     scalar += a.vec[i] * b.vec[i];
+    // }
+    // return scalar
+    return (a.x*b.x+a.y*b.y+a.z*b.z);
 #endif
-;
 }
 Vector3f  VectorUtilities::normalizeCopy(const Vector3f &v)
 {
@@ -45,12 +45,13 @@ float  VectorUtilities::dotProduct(const Vector4f &a, const Vector4f &b)
     __m128 val= _mm_dp_ps(a.xyzw, b.xyzw, 0b11111001);
   return _mm_cvtss_f32(val);
 #else
-    float scalar = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        scalar += a.vec[i] * b.vec[i];
-    }
-    return scalar;
+    // float scalar = 0;
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     scalar += a.vec[i] * b.vec[i];
+    // }
+    // return scalar;
+      return (a.x*b.x+a.y*b.y+a.z*b.z+a.w*b.w);
 #endif
 
 }
