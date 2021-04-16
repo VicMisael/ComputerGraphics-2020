@@ -190,6 +190,7 @@ void inline World::init()
     cone->setSpecular(1000);
     cone->LoadIdentity();
     //cone->RotateX(PI / 6);
+    cone->setReflectivness(0.99);
     cone->Translate(-1, 0.5, 2);
     //cone->ApplyTransformation();
     objects.push_back(cone);
@@ -208,6 +209,17 @@ void inline World::init()
     cube2->Translate(-0.9, -1, 2);
     objects.push_back(cube2);
 
+    //Mirror
+    Triangle* t1 = new Triangle(Point3f(0,1,0),Point3f(1,0,0),Point3f(0,0,0),Color(0,0,255));
+    objects.push_back(t1);
+    Triangle* t2 = new Triangle(Point3f(1, 1, 0), Point3f(1, 0, 0), Point3f(0, 1, 0), Color(0, 0, 255));
+    objects.push_back(t2);
+    t2->Scale(5, 2, 1);
+    t1->Scale(5, 2, 1);
+    t2->Translate(0,-1,9);
+    t1->Translate(0, -1, 9);
+    t1->setReflectivness(1);
+    t2->setReflectivness(1);
     for (Light* l : lights) {
        l->ApplyCamera(camTransformation);
     }

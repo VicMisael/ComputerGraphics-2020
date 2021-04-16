@@ -9,7 +9,7 @@
 #include <SDL2/SDL.h>
 #endif
 
-#define screenwidthheight 512
+#define screenwidthheight 600
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
@@ -30,8 +30,8 @@ int main(int argc, char **argv)
     uint32_t *rgba = new uint32_t[screenwidthheight * screenwidthheight];
     int reflectionDepth = 3;
     float vcx = 0;
-    float vcy = 0;
-    float vcz = -6;
+    float vcy = 7;
+    float vcz = -3;
     int Cw = screenwidthheight;
     int Ch = screenwidthheight;
 
@@ -39,23 +39,36 @@ int main(int argc, char **argv)
     while (run)
     {
         Point3f eye = Point3f(vcx, vcy, vcz);
-        Point3f at = Point3f(0, 0, 5);
+        Point3f at = Point3f(0, -1, 5);
         Point3f up = Point3f(0, 6, 5);
         Camera camera = Camera(eye, at, up);
         World world(camera);
         world.SetShadowsOn(shadows);
         //Get timings
         auto t1 = std::chrono::high_resolution_clock::now();
+        uint32_t temprgba=0;
 
         for (int y = -Ch / 2; y < Ch / 2; y++)
         {
 
             for (int x = -Cw / 2; x < Cw / 2; x++)
             {
-#ifndef _SUPERSAMPLE_
+#if !defined(_SUPERSAMPLE_) && !defined(_SUBSAMPLE_)
                 Ray r = Ray(Point3f(0, 0, 0), canvasToViewport(x, y, Cw, Ch, -1));
                 rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] = world.computeColor(r, 1, reflectionDepth).rgba();
-#else
+#endif
+#ifdef _SUBSAMPLE_
+                //First iteration
+                if (x == -Cw / 2||(x % SubSSampleRate == 0)) {
+                    Ray r = Ray(Point3f(0, 0, 0), canvasToViewport(x, y, Cw, Ch, -1));
+                    temprgba = world.computeColor(r, 1, reflectionDepth).rgba();
+                    rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)]=temprgba;
+                }
+                else {
+                    rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] = temprgba;
+                }
+#endif
+#ifdef _SUPERSAMPLE_
                 float r, g, b;
                 r = g = b = 0;
                 for (int i = 0; i < SSRate; i++)
