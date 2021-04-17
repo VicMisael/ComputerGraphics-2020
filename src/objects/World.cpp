@@ -98,11 +98,13 @@ void inline World::init()
 
 
     Plane* p = new Plane(Vector3f(0,1,0),Point3f(0,-1,0),Color(255,226,198));
+    p->setReflectivness(0.1);
     p->setSpecular(1000);
     objects.push_back(p);
 
 
     Plane* p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, -1, 19), WHITE);
+    //p2->setReflectivness(0.3);
     p2->setSpecular(300);
 
     objects.push_back(p2);

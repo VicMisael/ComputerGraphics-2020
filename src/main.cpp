@@ -9,7 +9,7 @@
 #include <SDL2/SDL.h>
 #endif
 
-#define screenwidthheight 600
+#define screenwidthheight 512
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
@@ -30,8 +30,8 @@ int main(int argc, char **argv)
     uint32_t *rgba = new uint32_t[screenwidthheight * screenwidthheight];
     int reflectionDepth = 3;
     float vcx = 0;
-    float vcy = 7;
-    float vcz = -3;
+    float vcy = 3;
+    float vcz = -4;
     int Cw = screenwidthheight;
     int Ch = screenwidthheight;
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
     while (run)
     {
         Point3f eye = Point3f(vcx, vcy, vcz);
-        Point3f at = Point3f(0, -1, 5);
+        Point3f at = Point3f(0, 0, 5);
         Point3f up = Point3f(0, 6, 5);
         Camera camera = Camera(eye, at, up);
         World world(camera);
