@@ -17,12 +17,12 @@
 #endif
 #ifndef _SUPERSAMPLE_
 //#define _SUPERSAMPLE_
-#define SSRate 2
+#define SSRate 6
 #endif
 
 #ifndef _SUBSAMPLE_
-//#define _SUBSAMPLE_
-#define SubSSampleRate 4
+#define _SUBSAMPLE_
+#define SubSSampleRate 2
 #endif
 
 #if defined(_SUBSAMPLE_) && defined (_SUPERSAMPLE_)

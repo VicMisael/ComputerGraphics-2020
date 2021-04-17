@@ -37,7 +37,7 @@ int Triangle::Intersects(Ray &ray)
     Vector3f e2 = Vertex[2] - Vertex[0];
     Vector3f q = crossProduct(ray.D, e2);
     float a=dotProduct(e1,q);
-
+   
     Vector3f s = ray.O - Vertex[0];
     Vector3f r = crossProduct(s, e1);
     float weight[3];
