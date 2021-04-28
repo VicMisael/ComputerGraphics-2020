@@ -1,5 +1,5 @@
 #include "Vector3f.hpp"
-#define inverseSquare(_x)  1/sqrt(_x);
+
 
 // float Q_rsqrt( float number )
 // {

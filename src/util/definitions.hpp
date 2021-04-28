@@ -17,13 +17,15 @@
 #endif
 #ifndef _SUPERSAMPLE_
 //#define _SUPERSAMPLE_
-#define SSRate 6
+#define SSRate 2
 #endif
 
 #ifndef _SUBSAMPLE_
-#define _SUBSAMPLE_
+//#define _SUBSAMPLE_
 #define SubSSampleRate 2
 #endif
+
+#define inverseSquare(_x)  1/sqrt(_x);
 
 #if defined(_SUBSAMPLE_) && defined (_SUPERSAMPLE_)
 #error "it's not possible to subsample and supersample"

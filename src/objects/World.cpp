@@ -12,7 +12,7 @@ Vector3f inline ReflectRay(const Vector3f R,const Vector3f N) {
     return ((N * 2) * dotProduct(N, R) - R);
 }
 
-float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float s)
+float  World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float s)
 {
     using namespace VectorUtilities;
     float intensity = 0;
@@ -30,7 +30,7 @@ float inline World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float 
             {
             case point:
                 lVec = ((l->getPosition()) - p);
-                distanceFactor=1/sqrtf(fabs(lVec.length()));
+                distanceFactor = inverseSquare(lVec.length());
                 break;
             case directional:
                 lVec = l->getDirection();
@@ -103,11 +103,15 @@ void inline World::init()
     objects.push_back(p);
 
 
-    Plane* p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, -1, 19), WHITE);
+    Plane* p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, -1, 100), WHITE);
     //p2->setReflectivness(0.3);
     p2->setSpecular(300);
-
     objects.push_back(p2);
+
+    Plane* p3 = new Plane(Vector3f(1, 0, 0), Point3f(-3, 0,0), WHITE);
+    p3->setReflectivness(0.3);
+    p3->setSpecular(300);
+    //objects.push_back(p3);
 
     Cube* building = new Cube(1, 1, 1, Color(169, 169, 169));
     building->Scale(2, 4, 1);

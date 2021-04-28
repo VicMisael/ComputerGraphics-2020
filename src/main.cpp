@@ -85,15 +85,17 @@ int main(int argc, char **argv)
         auto t2 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> ms_double = t2 - t1;
         std::cout << ms_double.count() << "ms"<<std::endl;
-        if (vcy < 7)
-            vcy += 0.1;
-        else
-            vcy = 0;
-        if(vcz<4)
-            vcz += 0.1;
-        else
-            vcz = -6;
+
+        //if (vcy < 7)
+        //    vcy += 0.1;
+        //else
+        //    vcy = 0;
+        //if(vcz<4)
+        //    vcz += 0.1;
+        //else
+        //    vcz -= 6;
                
+
         SDL_UpdateTexture(framebuffer, NULL, rgba, screenwidthheight * sizeof(uint32_t));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
