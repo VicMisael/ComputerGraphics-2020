@@ -261,9 +261,8 @@ void World::SetShadowsOn(bool shadows)
 
 Color World::computeColor(Ray &ray, float vz,int rd)
 {   
- 
-    Color retColor = bgColor;
-    
+  
+    Color retColor = bgColor;    
     BaseObject* ClosestIntersected=NULL;
     float minimalT = INFINITY;
     bool isReflective = false;

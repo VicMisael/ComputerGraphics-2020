@@ -12,9 +12,7 @@
 #ifndef _RENDERWITHSHADOWS_
 #define _RENDERWITHSHADOWS_
 #endif
-//#ifndef _RENDERWITHREFLECTIONS_
-//#define _RENDERWITHREFLECTIONS_
-//#endif
+
 #ifndef _SUPERSAMPLE_
 //#define _SUPERSAMPLE_
 #define SSRate 2
