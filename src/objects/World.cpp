@@ -35,6 +35,8 @@ float  World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float s)
             case directional:
                 lVec = l->getDirection();
                 break;
+            default :
+                break;
             }
             float lveclength = lVec.length();
             lVec.normalize();
@@ -46,7 +48,6 @@ float  World::ComputeLighting(Point3f& p, Vector3f& n, Vector3f& V, float s)
                         float t_min = ob->getTmin();
                         if (t_min>0.01&&t_min <=lveclength) {
                             return intensity;
-
                         }
                     }
                 }
@@ -293,16 +294,13 @@ Color World::computeColor(Ray &ray, float vz,int rd)
             }           
         }
     }
-#ifdef _RENDERWITHREFLECTIONS_
     if (rd>0&&isReflective) {
         const float rindex = ClosestIntersected->getReflectivness();
         const Vector3f Normal=ClosestIntersected->getNormal(ray.getPoint(reflectT));
         Vector3f dir=ray.D*-1;
         Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, Normal), 0);
-        Color refCol = computeColor(reflected_ray,vz ,rd - 1);
-        retColor= retColor * (1 - rindex) + refCol * rindex;
-       
+        retColor= retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;  
     }
-#endif
+
     return retColor;
 }

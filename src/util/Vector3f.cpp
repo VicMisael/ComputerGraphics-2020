@@ -20,7 +20,6 @@ Vector3f::Vector3f(float _x, float _y, float _z)
     x = _x;
     y = _y;
     z = _z;
-    //this->xyz.m128_u32[3] = 0;
 }
 Vector3f::Vector3f(float _vec[3])
 {
@@ -28,7 +27,6 @@ Vector3f::Vector3f(float _vec[3])
     {
         vec[i] = _vec[i];
     }
-    //this->xyz.m128_u32[3] = 0;
 }
 #ifdef _USESIMDINTRINSICS
 Vector3f::Vector3f(__m128 _xyz)
