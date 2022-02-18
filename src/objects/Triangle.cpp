@@ -26,40 +26,46 @@ void Triangle::CalculateNormal(){
     Vector3f v=  Vertex[1]- Vertex[0] ;
     Vector3f w= Vertex[2]- Vertex[0]  ;
     Normal=crossProduct(v, w);
-    Normal.normalize();
+    //Normal.normalize();
 }
 
 int Triangle::Intersects(Ray &ray)
 {
+	static const float epsilon = 0.0000001;
+	static const float epsilon2 = 0.000001;
 
-    using namespace VectorUtilities;
-    Vector3f e1 = Vertex[1]-Vertex[0] ;
-    Vector3f e2 = Vertex[2] - Vertex[0];
-    Vector3f q = crossProduct(ray.D, e2);
-    float a=dotProduct(e1,q);
-   
-    Vector3f s = ray.O - Vertex[0];
-    Vector3f r = crossProduct(s, e1);
-    float weight[3];
-    weight[1] = dotProduct(s,q) / a;
-    weight[2] = dotProduct(ray.D,r) / a;
-    weight[0] = 1.0f - (weight[1] + weight[2]);
+	using namespace VectorUtilities;
+	Vector3f e1 = Vertex[1] - Vertex[0];
+	Vector3f e2 = Vertex[2] - Vertex[0];
+	Vector3f q = crossProduct(ray.D, e2);
+	float a = dotProduct(e1, q);
+	if (a <= epsilon) {
+		t_min = INFINITY;
+		return 0;
+	}
+	Vector3f s = ray.O - Vertex[0];
+	Vector3f r = crossProduct(s, e1);
+	float weight[3];
+	weight[1] = dotProduct(s, q) / a;
+	weight[2] = dotProduct(ray.D, r) / a;
+	weight[0] = 1.0f - (weight[1] + weight[2]);
 
-    const float dist = dotProduct(e2, r) / a;
+	if ((weight[0] < -epsilon2) || (weight[1] < -epsilon2) || (weight[2] < -epsilon2)) {
+		t_min = INFINITY;
+		return 0;
+	}
 
-    static const float epsilon = 0.0000001;
-    static const float epsilon2 = 0.000001;
+	const float dist = dotProduct(e2, r) / a;
+	if (dist <= epsilon) {
+		t_min = INFINITY;
+		return 0;
+	}
 
-    if ((a <= epsilon) || (weight[0] < -epsilon2) ||
-        (weight[1] < -epsilon2) || (weight[2] < -epsilon2) ||
-        (dist <= 0.0f)) {
-        t_min=INFINITY;
-        return 0;
-    }
-    else {
-        t_min = dist;
-        return 1;
-    }
+
+
+	t_min = dist;
+    return 1;
+
 }
 
 void Triangle::ApplyTransformation()

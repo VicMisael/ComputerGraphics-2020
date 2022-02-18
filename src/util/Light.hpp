@@ -1,7 +1,7 @@
 #ifndef _LIGHT_
 #include "Vector3f.hpp"
 #include "Matrix4x4.hpp"
-enum LightType
+enum class LightType
 {
     ambient,
     point,
@@ -17,7 +17,7 @@ class Light
     float intensity;
 
 public:
-    LightType lt = ambient;
+    LightType lt = LightType::ambient;
     Light(const Point3f point, const Vector3f Direction, float intensity);
     void SetType(LightType lt);
     float getIntensity();

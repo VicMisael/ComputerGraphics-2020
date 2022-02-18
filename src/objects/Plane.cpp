@@ -25,8 +25,6 @@ int Plane::Intersects(Ray& ray)
 		return 0;
 	}
 	t_min = intersection;
-	//std::cout << "plane intPoint x: " << ray.getPoint(t_min).x << " y: " << ray.getPoint(t_min).y << " z: " << ray.getPoint(t_min).z << std::endl;
-	//std::cout<<"X:"<<IP.x<<"Y:"<<IP.y<<"Z:"<<IP.z<<std::endl;
 	return 1;
 
 }

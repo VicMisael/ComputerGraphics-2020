@@ -24,7 +24,6 @@ int Circle::Intersects(Ray &ray)
 	float int2 = (-b - sqrt(delta)) / a;
 	//get the smallest
 	t_min = (int1 > int2) ? int2 : int1;
-
 	return 1;
 }
 

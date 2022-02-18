@@ -41,19 +41,16 @@ void Vector4f::normalize()
     float length = this->length();
     if (length != 0)
     { //Using Inntrinsics for SIMD
-#ifdef _USESIMDINTRINSICS
-        const __m128 scalar = _mm_set1_ps(length);
-        xyzw = _mm_div_ps(xyzw, scalar);
-#else
+
         x *= 1 / length;
         y *= 1 / length;
         z *= 1 / length;
         w *= 1 / length;
-#endif
+
     }
 }
 
 float Vector4f::length()
 {
-    return sqrt(x * x + y * y + z * z + w * w);
+    return sqrtf(x * x + y * y + z * z + w * w);
 }

@@ -53,7 +53,6 @@ public:
                 temp[i][j] = num;
             }
         }
-
         return Matrix4x4(temp);
     }
     Matrix4x4 operator+(const Matrix4x4 &matrix) const

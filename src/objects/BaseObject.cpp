@@ -24,7 +24,7 @@ float BaseObject::getSpecular()
 
 float BaseObject::getReflectivness()
 {
-	return reflectiveness<=1?reflectiveness:1;
+	return reflectiveness;
 }
 
 void BaseObject::setReflectivness(float r)

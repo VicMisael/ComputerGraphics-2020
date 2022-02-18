@@ -34,8 +34,5 @@ public:
     void SetShadowsOn(bool shadows);
     Color bgColor;
     Color computeColor(Ray &ray,float vz,int recursionDepth);
-    #ifdef _RENDERWITHREFLECTIONS_
-    Color ComputeReflectionColor(Ray &ray,int recursionDepth);
-    #endif
 };  
 #endif
