@@ -1,3 +1,5 @@
+#ifndef _CIRCLE_
+#define _CIRCLE_
 #include <cmath>
 #include "../util/Vector3f.hpp"
 #include "../util/definitions.hpp"
@@ -15,3 +17,4 @@ public:
     Vector3f getNormal(const Point3f p) override;
     void ApplyCamera(const Matrix4x4 m) override;
 };
+#endif

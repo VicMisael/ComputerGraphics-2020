@@ -12,10 +12,10 @@
 #ifndef _RENDERWITHSHADOWS_
 //#define _RENDERWITHSHADOWS_
 #endif
-#define screenwidthheight 1000
+#define screenwidthheight 600
 #ifndef _SUPERSAMPLE_
 //#define _SUPERSAMPLE_
-#define SSRate 4
+#define SSRate 2
 #endif
 
 #ifndef _SUBSAMPLE_

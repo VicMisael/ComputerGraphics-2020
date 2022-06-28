@@ -1,6 +1,7 @@
 #include "Cube.hpp"
 #include <algorithm>
-#include <thread>
+
+
 Cube::Cube(float height, float width, float depth, Color c)
 {
 	Point3f p0(0, 0, 0);
@@ -11,7 +12,7 @@ Cube::Cube(float height, float width, float depth, Color c)
 	face[0] = p0;
 	face[1] = p0 + right * width;
 	face[2] = p0 + up * height + right * width,
-	face[3] = p0 + up * height;
+		face[3] = p0 + up * height;
 
 
 
@@ -46,11 +47,11 @@ void Cube::CalculateTriangles()
 	triangles[i++] = Triangle(face[1], face[2], face2[1]);
 	triangles[i] = Triangle(face[2], face2[2], face2[1]);
 
-} 
+}
 
 static int intersectionCount = 0;
 
-void inline Cube::checkIntersect(Triangle &t,Ray &ray) {
+void inline Cube::checkIntersect(Triangle& t, Ray& ray) {
 	if (VectorUtilities::dotProduct(ray.D, t.getNormal(Point3f(0, 0, 0))) < 0) {
 		if (t.Intersects(ray))
 		{
@@ -66,18 +67,18 @@ void inline Cube::checkIntersect(Triangle &t,Ray &ray) {
 }
 int Cube::Intersects(Ray& ray)
 {
-
-	t_min = INFINITY;
-
-	using namespace std;
-	using namespace VectorUtilities;
-	intersectionCount = 0;
-	for (Triangle t : triangles)
-	{
-		checkIntersect(t, ray);
+	if (this->aabb.intersects(ray)) {
+		t_min = INFINITY;
+		using namespace std;
+		using namespace VectorUtilities;
+		intersectionCount = 0;
+		for (Triangle t : triangles)
+		{
+			checkIntersect(t, ray);
+		}
+		return intersectionCount > 0;
 	}
-
-	return intersectionCount > 0;
+	return 0;
 }
 
 
@@ -106,4 +107,25 @@ void Cube::ApplyCamera(const Matrix4x4 mm)
 	for (Triangle& t : triangles) {
 		t.ApplyCamera(mm);
 	}
+	computeAABB();
+}
+
+void Cube::computeAABB() {
+	float xmin = HUGE_VALF;
+	float ymin = HUGE_VALF;
+	float zmin = HUGE_VALF;
+	float xmax = -1 * HUGE_VALF;
+	float ymax = -1 * HUGE_VALF;
+	float zmax = -1 * HUGE_VALF;
+	for (Triangle t : triangles) {
+		for (Vector3f vertex : t.Vertex) {
+			xmax = vertex.x > xmax ? vertex.x : xmax;
+			ymax = vertex.y > ymax ? vertex.y : ymax;
+			zmax = vertex.z > zmax ? vertex.z : zmax;
+			xmin = vertex.x < xmin ? vertex.x : xmin;
+			ymin = vertex.y < ymin ? vertex.y : ymin;
+			zmin = vertex.z < zmin ? vertex.z : zmin;
+		}
+	}
+	this->aabb = AABB(Vector3f(xmin, ymin, zmin), Vector3f(xmax, ymax, zmax));
 }

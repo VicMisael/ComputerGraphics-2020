@@ -33,17 +33,17 @@ int main(int argc, char** argv)
     int reflectionDepth = 12;
     float vcx = 4;
     float vcy = 0;
-    float vcz = -6;
+    float vcz = -3;
     int Cw = screenwidthheight;
     int Ch = screenwidthheight;
-    bool parallelProjection = true;
+    bool parallelProjection = false;
     bool shadows = true;
     auto draw = [&]() {
         while (run) {
 
             Point3f eye = Point3f(vcx, vcy, vcz);
             Point3f at = Point3f(1, 2, 5);
-            Point3f up = Point3f(4, 12, -6);
+            Point3f up = Point3f(vcx, 12, vcz);
             Camera camera = Camera(eye, at, up);
             World world(camera);
             world.SetShadowsOn(shadows);
@@ -92,7 +92,6 @@ int main(int argc, char** argv)
     };
     
     std::thread t(draw);
-
     while (run)
     {
 

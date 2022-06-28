@@ -23,24 +23,25 @@ int Cone::Intersects(Ray& ray)
     t_min = INFINITY;
     Point3f Po = ray.O;
 
-    Vector3f d = ray.D;
-    Vector3f n = Vector3f(axis);
-    Vector3f v = (vertice-Po);
+    const Vector3f d = ray.D;
+    const Vector3f n = Vector3f(axis);
+    const Vector3f v = (vertice-Po);
     
     using namespace VectorUtilities;
     using namespace std;
     
 
 
-    float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2Theta;
-    float b = dotProduct(v, d) * cos2Theta - dotProduct(v, n) * dotProduct(d, n);
-    float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2Theta;
-    float delta = b * b - (a * c);
+    const float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2Theta;
+    const float b = dotProduct(v, d) * cos2Theta - dotProduct(v, n) * dotProduct(d, n);
+    const float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2Theta;
+    const float delta = b * b - (a * c);
     vector<float> intersections;
     if (delta > 0)
     {
-        float t1= (-b + sqrtf(delta))/ a;
-        float t2 =(-b - sqrtf(delta))/ a;
+        const float sqrtDelta = sqrtf(delta);
+        float t1= (-b + sqrtDelta)/ a;
+        float t2 =(-b - sqrtDelta)/ a;
         Point3f p1 = ray.getPoint(t1);
         Point3f p2 = ray.getPoint(t2);
         float dp1 = dotProduct(vertice - p1, n);
