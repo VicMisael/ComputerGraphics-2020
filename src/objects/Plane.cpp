@@ -17,7 +17,7 @@ int Plane::Intersects(Ray& ray)
 	Vector3f p0 = ray.O;
 	Vector3f Dir = ray.D;
 	float dn = dotProduct(Dir, n);
-	if (dn == 0) {
+	if (abs(dn) < 0.001) {
 		return 0;
 	}
 	float intersection = dotProduct(pplane-p0, n) / dn;

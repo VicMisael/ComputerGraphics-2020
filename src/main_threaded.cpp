@@ -14,8 +14,8 @@
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = -Cx * (1.0 / vpw);
-    float vy = -Cy * (1.0 / vph);
+    float vx = -Cx * ((4.0f / 3.0f) / vpw);
+    float vy = -Cy * ((3.0f/4.0f) / vph);
     float vz = d;
     return Point3f(vx, vy, vz);
 }
@@ -30,17 +30,16 @@ int main(int argc, char** argv)
     bool run = true;
     //auto window = new Color[screenwidthheight][screenwidthheight];
     uint32_t* rgba = new uint32_t[screenwidthheight * screenwidthheight];
-    int reflectionDepth = 12;
+    int reflectionDepth = -2;
     float vcx = 4;
     float vcy = 0;
-    float vcz = -3;
+    float vcz = -6;
     int Cw = screenwidthheight;
     int Ch = screenwidthheight;
-    bool parallelProjection = false;
+    bool parallelProjection = true;
     bool shadows = true;
     auto draw = [&]() {
         while (run) {
-
             Point3f eye = Point3f(vcx, vcy, vcz);
             Point3f at = Point3f(1, 2, 5);
             Point3f up = Point3f(vcx, 12, vcz);

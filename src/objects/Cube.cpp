@@ -66,7 +66,7 @@ void inline Cube::checkIntersect(Triangle& t, Ray& ray) {
 
 }
 int Cube::Intersects(Ray& ray)
-{
+{	
 	if (this->aabb.intersects(ray)) {
 		t_min = INFINITY;
 		using namespace std;
@@ -79,7 +79,8 @@ int Cube::Intersects(Ray& ray)
 		return intersectionCount > 0;
 	}
 	return 0;
-}
+
+	}
 
 
 void Cube::ApplyTransformation()

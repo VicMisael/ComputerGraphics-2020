@@ -36,7 +36,7 @@ int Triangle::Intersects(Ray &ray)
 
 	using namespace VectorUtilities;
 	Vector3f e1 = Vertex[1] - Vertex[0];
-	Vector3f e2 = Vertex[2] - Vertex[0];
+ 	Vector3f e2 = Vertex[2] - Vertex[0];
 	Vector3f q = crossProduct(ray.D, e2);
 	float a = dotProduct(e1, q);
 	if (a <= epsilon) {

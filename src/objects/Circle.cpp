@@ -7,24 +7,27 @@ Circle::Circle(float radius, Color c)
 }
 int Circle::Intersects(Ray &ray)
 {
-	using namespace VectorUtilities;
-	t_min = INFINITY;
-	float a = 1;//dotProduct(ray.D, ray.D);
-	float b = dotProduct(ray.O - Center, ray.D);
-	float c = dotProduct(ray.O - Center, ray.O - Center) - radius * radius;
-	float delta = (b * b) - (a * c);
-	if (delta < 0)
-	{
-		return 0;
-	}if (delta == 0) {
-		t_min=-b / a;
+	if(aabb.intersects(ray)){
+		using namespace VectorUtilities;
+		t_min = INFINITY;
+		float a = 1;//dotProduct(ray.D, ray.D);
+		float b = dotProduct(ray.O - Center, ray.D);
+		float c = dotProduct(ray.O - Center, ray.O - Center) - radius * radius;
+		float delta = (b * b) - (a * c);
+		if (delta < 0)
+		{
+			return 0;
+		}if (delta == 0) {
+			t_min=-b / a;
+			return 1;
+		}
+		float int1 = (-b + sqrt(delta)) / a;
+		float int2 = (-b - sqrt(delta)) / a;
+		//get the smallest
+		t_min = (int1 > int2) ? int2 : int1;
 		return 1;
 	}
-	float int1 = (-b + sqrt(delta)) / a;
-	float int2 = (-b - sqrt(delta)) / a;
-	//get the smallest
-	t_min = (int1 > int2) ? int2 : int1;
-	return 1;
+	return 0;
 }
 
 Vector3f Circle::getNormal(const Point3f p){
@@ -39,7 +42,24 @@ void Circle::ApplyCamera(const Matrix4x4 m)
 	Center4f=m* Center4f;
 	Center = Center4f.toVector3f();
 	//std::cout << "Ball vector" << std::endl;
+	computeAABB();
+}
 
+void Circle::computeAABB()
+{
+	float cx=Center.x;
+	float cy=Center.y;
+	float cz=Center.z;
+	this->aabb = AABB(Point3f(
+		std::fmax(cx + radius, cx - radius),
+		std::fmax(cy + radius, cy - radius),
+		std::fmax(cz + radius, cz - radius)
+	)
+		, Point3f(
+			std::fmin(cx + radius, cx - radius),
+			std::fmin(cy + radius, cy - radius),
+			std::fmin(cz + radius, cz - radius)
+		));
 }
 
 void Circle::ApplyTransformation()
@@ -47,5 +67,5 @@ void Circle::ApplyTransformation()
 	Vector4f Center4f(Center, 1);
 	Center4f = transFMat * Center4f;
 	Center= Center4f.toVector3f();
-
+	computeAABB();
 }

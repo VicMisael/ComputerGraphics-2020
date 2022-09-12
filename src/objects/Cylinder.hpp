@@ -4,6 +4,7 @@
 #include "../util/Vector3f.hpp"
 #include "../util/definitions.hpp"
 #include "../util/VectorUtilities.hpp"
+#include "AABB.h"
 #include "BaseObject.hpp"
 
 class Cylinder : public BaseObject
@@ -15,12 +16,16 @@ class Cylinder : public BaseObject
         float radius;
         Color  BaseColor;
         bool baseIntersected=false;
+        Point3f minimalPoint;
+        Point3f maximalPoint;
+        AABB aabb;
     public:
         Cylinder(Vector3f axis, float height, float radius, const Color color) :Cylinder(axis, height, radius, color, color) {};
         Cylinder(Vector3f axis, float height, float radius,const Color color,const Color BaseColor);
         int Intersects(Ray& ray) override;
         Color getColor() override;
         void ApplyTransformation() override;
+        void computeAABB();
         Vector3f getNormal(const Point3f p) override;
         void ApplyCamera(const Matrix4x4 m) override;
 };

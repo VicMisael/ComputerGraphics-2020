@@ -12,7 +12,7 @@ Vector3f inline ReflectRay(const Vector3f R, const Vector3f N)
 }
 
 float World::ComputeLighting(Point3f &p, Vector3f &n, Vector3f &V, float s)
-{
+{	
 	using namespace VectorUtilities;
 	float intensity = 0;
 	Vector3f lVec;
@@ -67,7 +67,7 @@ float World::ComputeLighting(Point3f &p, Vector3f &n, Vector3f &V, float s)
 				float r_dot_v = dotProduct(R, V);
 				if (r_dot_v > 0)
 				{
-					float _pow = pow(r_dot_v / (R.length() * V.length()), s);
+					float _pow = powf(r_dot_v / (R.length() * V.length()), s);
 					intensity += _intensity * _pow;
 				}
 			}
@@ -96,10 +96,16 @@ void inline World::init()
 	l3->SetType(LightType::point);
 	lights.push_back(l3);
 
-	Light *l4 = new Light(Point3f(0, 0, 0), Point3f(0, 1, 0), 0.1);
-	l4->SetType(LightType::directional);
+
+	Light* l4 = new Light(Point3f(3, 1.2, 6), Point3f(0, 0, 0), 1);
+	l4->SetType(LightType::point);
 	lights.push_back(l4);
 
+
+	Light *l5 = new Light(Point3f(0, -1, 0), Point3f(0, 1, 0), 0.1);
+	l5->SetType(LightType::directional);
+	lights.push_back(l5);
+	
 	Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -1, 0), Color(255, 226, 198));
 	p->setReflectivness(0.1);
 	p->setSpecular(1000);
@@ -109,11 +115,12 @@ void inline World::init()
 	p2->setReflectivness(1);
 	p2->setSpecular(300);
 	objects.push_back(p2);
-
+	/*
 	Plane* p3 = new Plane(Vector3f(1, 0, 0), Point3f(-15, 0, 0), RED);
 	p3->setReflectivness(0.9);
 	p3->setSpecular(300);
 	objects.push_back(p3);
+	*/
 
 	Cube *building = new Cube(1, 1, 1, Color(169, 169, 169));
 	building->Scale(2, 4, 1);
@@ -122,6 +129,16 @@ void inline World::init()
 	building->Translate(-1, -0.5, 6);
 	building->setReflectivness(.7);
 	objects.push_back(building);
+
+
+	Cube* building4 = new Cube(1, 1, 1, Color(169, 169, 169));
+	building4->Scale(2, 3, 1);
+	building4->RotateY(PI / 4);
+	building4->Translate(-1, 0, -1);
+	building4->setReflectivness(.1);
+	objects.push_back(building4);
+
+
 
 	Cube *buildin2 = new Cube(1, 1, 1, Color(169, 169, 169));
 	buildin2->Scale(2, 4, 1);
@@ -140,11 +157,31 @@ void inline World::init()
 	objects.push_back(buildin3);
 
 	//Objetos extras
-	Circle *cBola = new Circle(6, WHITE);
+	Circle *cBola = new Circle(1, WHITE);
 	cBola->setSpecular(1000);
 	cBola->Translate(-3, -1, 9);
 	cBola->setReflectivness(1);
 	objects.push_back(cBola);
+	
+	Circle* cBola2 = new Circle(1, Color(255,255,0));
+	cBola2->Translate(3, 9, 3);
+	cBola2->setReflectivness(0.5);
+	objects.push_back(cBola2);
+
+	Circle* cBola3 = new Circle(1, Color(255, 255, 0));
+	cBola3->Translate(0, 7, 3);
+	cBola3->setReflectivness(0.5);
+	objects.push_back(cBola3);
+
+
+	Circle* cBola4 = new Circle(1, Color(255, 255, 0));
+	cBola4->Translate(1, 10, 2);
+	cBola4->setReflectivness(0.5);
+	objects.push_back(cBola4);
+
+	Light* lt = new Light(Point3f(0, 7, 0),Vector3f(1,-1,1),1);
+	lt->SetType(LightType::point);
+	lights.push_back(lt);
 
 	//Snowman
 	//Diferen�a do raio do primeiro pro 0
@@ -217,17 +254,8 @@ void inline World::init()
 	cube2->Translate(-0.9, -1, 2);
 	objects.push_back(cube2);
 
-	//Mirror
-	Triangle *t1 = new Triangle(Point3f(0, 1, 0), Point3f(1, 0, 0), Point3f(0, 0, 0), Color(0, 0, 255));
-	objects.push_back(t1);
-	Triangle *t2 = new Triangle(Point3f(1, 1, 0), Point3f(1, 0, 0), Point3f(0, 1, 0), Color(0, 0, 255));
-	objects.push_back(t2);
-	t2->Scale(5, 2, 1);
-	t1->Scale(5, 2, 1);
-	t2->Translate(0, -1, 9);
-	t1->Translate(0, -1, 9);
-	t1->setReflectivness(1);
-	t2->setReflectivness(1);
+
+
 	for (Light *l : lights)
 	{
 		l->ApplyCamera(camTransformation);
@@ -263,7 +291,7 @@ Color World::computeColor(Ray &ray, float vz, int rd)
 {
 
 	Color retColor = bgColor;
-	BaseObject *ClosestIntersected = NULL;
+	BaseObject *ClosestIntersected = nullptr;
 	float minimalT = INFINITY;
 	bool isReflective = false;
 	float reflectT;
@@ -294,7 +322,7 @@ Color World::computeColor(Ray &ray, float vz, int rd)
 		}
 	}
 
-	if (rd > 0 && isReflective)
+	if (isReflective && rd > 0 )
 	{
 		const float rindex = ClosestIntersected->getReflectivness();
 		const Vector3f Normal = ClosestIntersected->getNormal(ray.getPoint(reflectT));
