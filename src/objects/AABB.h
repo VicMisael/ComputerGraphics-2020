@@ -12,9 +12,9 @@ public:
         this->min=Vector3f(minV.x,minV.y,minV.z);
         this->max=Vector3f(maxV.x,maxV.y,maxV.z);
     };
-    int intersects(Ray& ray){
-        Vector3f& dir = ray.D;
-        Vector3f invdir(1 / dir.x, 1 / dir.y, 1 / dir.z);
+    int intersects(const Ray& ray){
+        const Vector3f& dir = ray.D;
+        const Vector3f invdir(1 / dir.x, 1 / dir.y, 1 / dir.z);
         float tmin = (min.x - ray.O.x) / ray.D.x;
         float tmax = (max.x - ray.O.x) / ray.D.x;
 

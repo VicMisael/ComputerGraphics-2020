@@ -89,11 +89,6 @@ void BaseObject::LoadIdentity()
 	transFMat.loadIdentity();
 }
 
-float BaseObject::getTmin()
-{
-	return t_min;
-}
-
 Vector3f BaseObject::getNormal(Point3f p){
 	return Vector3f(0,1,0);
 }

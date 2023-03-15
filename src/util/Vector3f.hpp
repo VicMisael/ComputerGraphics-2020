@@ -35,7 +35,7 @@ public:
 
 
 
-    float length();
+    float length() const;
     void normalize();
     union
     {       

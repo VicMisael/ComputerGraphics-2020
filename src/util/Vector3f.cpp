@@ -50,7 +50,7 @@ void Vector3f::normalize()
 #endif
     
 }
-float Vector3f::length()
+float Vector3f::length() const
 {
     return sqrtf(x * x + y * y + z * z);
 }

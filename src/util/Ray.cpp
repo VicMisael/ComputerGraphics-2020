@@ -1,15 +1,14 @@
 #include "Ray.hpp"
 
 
-Ray::Ray(Point3f origin, Vector3f D, float t)
+Ray::Ray(Point3f origin, Vector3f D)
 {
 	this->O = origin;
 	this->D = D;
-	this->t = t;
 	this->D.normalize();
 }
 
-Point3f Ray::getPoint(float t)
+Point3f Ray::getPoint(const float t) const
 {
 	return (O + D * t);
 }

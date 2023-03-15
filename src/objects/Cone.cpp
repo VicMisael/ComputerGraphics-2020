@@ -19,10 +19,10 @@ Cone::Cone( Vector3f axis, float height, float radius, Color c)
     this->cos2Theta= powf(cosTheta, 2);
 }
 
-int Cone::Intersects(Ray& ray)
+std::tuple<int, float, Vector3f>Cone::Intersects(const Ray& ray)
 {
-    if(aabb.intersects(ray)){
-        t_min = INFINITY;
+        float t_min = INFINITY;
+        int intersections = 0;
         Point3f Po = ray.O;
 
         const Vector3f d = ray.D;
@@ -38,7 +38,6 @@ int Cone::Intersects(Ray& ray)
         const float b = dotProduct(v, d) * cos2Theta - dotProduct(v, n) * dotProduct(d, n);
         const float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2Theta;
         const float delta = b * b - (a * c);
-        vector<float> intersections;
         if (delta > 0)
         {
             const float sqrtDelta = sqrtf(delta);
@@ -49,32 +48,19 @@ int Cone::Intersects(Ray& ray)
             float dp1 = dotProduct(vertice - p1, n);
             float dp2 = dotProduct(vertice - p2, n);
             if ( (0 <= dp1 && dp1 <= height)) {
-                intersections.push_back(t1);
+               
+                intersections++;
+                t_min = std::min(t1,t_min);
             }
             if ((0 <= dp2 && dp2 <= height))
             {
-                intersections.push_back(t2);
+                intersections++;
+                t_min = std::min(t2, t_min);
             }
 
         }
-     
-
-        if (intersections.size() < 2 ) {
-            //Plane base(center, n, this->c);
-            //if (base.Intersects(ray)) {
-            //   float t=base.getTmin();
-            //   if (t > 0) {
-            //       intersections.push_back(t);
-            //   }
-            //   }
-        }
-        for(float t:intersections){
-            if (t < t_min)
-                t_min = t;
-        }
-        return intersections.size() > 0;
-    }
-    return 0;
+    
+        return { intersections > 0,t_min,getNormal(ray.getPoint(t_min))};
 }
 
 void Cone::ApplyTransformation()

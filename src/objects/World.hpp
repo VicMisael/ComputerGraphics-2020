@@ -27,7 +27,7 @@ class World{
      Camera *camera;
      void init();
      bool renderShadows=true;
-     float ComputeLighting(Point3f& p,Vector3f& n,Vector3f& V,float s);
+     float ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f& V, const float s);
 public:
     World();
     World(const Camera c);

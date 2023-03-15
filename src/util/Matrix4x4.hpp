@@ -9,7 +9,7 @@ class Matrix4x4
 
 public:
     Matrix4x4();
-    Matrix4x4(float _mm44[4][4]);
+    Matrix4x4(const float _mm44[4][4]);
     Vector4f operator*(const Vector4f &v) const
     {
         Vector4f vec(0, 0, 0, 0);

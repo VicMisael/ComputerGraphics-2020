@@ -1,5 +1,6 @@
 #include "World.hpp"
 #include <algorithm>
+#include <tuple>
 
 static uint8_t r = 203;
 static uint8_t g = 224;
@@ -11,22 +12,20 @@ Vector3f inline ReflectRay(const Vector3f R, const Vector3f N)
 	return ((N * 2) * dotProduct(N, R) - R);
 }
 
-float World::ComputeLighting(Point3f &p, Vector3f &n, Vector3f &V, float s)
-{	
+float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f &V,const float s)
+{
 	using namespace VectorUtilities;
 	float intensity = 0;
 	Vector3f lVec;
 	float distanceFactor = 1;
 	for (Light *l : lights)
 	{
-		if (l->lt == LightType::ambient)
-		{
-			intensity += l->getIntensity();
-		}
-		else
-		{
 			switch (l->lt)
 			{
+			case LightType::ambient:
+				intensity += l->getIntensity();
+				continue;
+				break;
 			case LightType::point:
 				lVec = ((l->getPosition()) - p);
 				distanceFactor = inverseSquare(lVec.length());
@@ -37,47 +36,43 @@ float World::ComputeLighting(Point3f &p, Vector3f &n, Vector3f &V, float s)
 			default:
 				break;
 			}
-			float lveclength = lVec.length();
+			const float lveclength = lVec.length();
 			lVec.normalize();
 			if (renderShadows)
 			{
-				for (BaseObject *ob : objects)
+				for ( BaseObject *ob : objects)
 				{
-					Ray r = Ray(p, lVec, 0);
-					if (ob->Intersects(r))
+					const Ray r = Ray(p, lVec);
+					const auto [intersects, t_min,normal] = ob->Intersects(r);
+					if (intersects && t_min > 0.1f && t_min <= lveclength)
 					{
-						float t_min = ob->getTmin();
-						if (t_min > 0.01 && t_min <= lveclength)
-						{
-							return intensity;
-						}
+						return intensity;
 					}
 				}
 			}
 
-			float n_dot_l = dotProduct(n, lVec);
-			float _intensity = l->getIntensity();
+			const float n_dot_l = dotProduct(n, lVec);
+			const float _intensity = l->getIntensity();
 			if (n_dot_l > 0)
 			{
 				intensity += (_intensity * distanceFactor) * (n_dot_l / (n.length() * lVec.length()));
 			}
 			if (s >= 0)
 			{
-				Vector3f R = ReflectRay(lVec, n);
-				float r_dot_v = dotProduct(R, V);
+				const Vector3f R = ReflectRay(lVec, n);
+				const float r_dot_v = dotProduct(R, V);
 				if (r_dot_v > 0)
 				{
-					float _pow = powf(r_dot_v / (R.length() * V.length()), s);
+					const float _pow = powf(r_dot_v / (R.length() * V.length()), s);
 					intensity += _intensity * _pow;
 				}
 			}
-		}
+		
 	}
 	return intensity;
 };
 void inline World::init()
 {
-	//camera = Camera(Point3f(5, 5, 5), Point3f(0, 0, 0), Point3f(0, 1, 0));
 	Matrix4x4 camTransformation;
 	if (camera != NULL)
 	{
@@ -106,21 +101,18 @@ void inline World::init()
 	l5->SetType(LightType::directional);
 	lights.push_back(l5);
 	
-	Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -1, 0), Color(255, 226, 198));
-	p->setReflectivness(0.1);
+	Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -2, 0), Color(255, 226, 198));
+	p->setReflectivness(0.5);
 	p->setSpecular(1000);
 	objects.push_back(p);
 
-	Plane *p2 = new Plane(Vector3f(0, 0, -1), Point3f(0, -1, 40), WHITE);
-	p2->setReflectivness(1);
+	Plane *p2 = new Plane(Vector3f(0, -1, -1), Point3f(0, 5, 10), WHITE);
+	p2->setReflectivness(0.6);
 	p2->setSpecular(300);
 	objects.push_back(p2);
+
+
 	/*
-	Plane* p3 = new Plane(Vector3f(1, 0, 0), Point3f(-15, 0, 0), RED);
-	p3->setReflectivness(0.9);
-	p3->setSpecular(300);
-	objects.push_back(p3);
-	*/
 
 	Cube *building = new Cube(1, 1, 1, Color(169, 169, 169));
 	building->Scale(2, 4, 1);
@@ -155,7 +147,7 @@ void inline World::init()
 	buildin3->Translate(-2, -0.5, 3);
 	buildin3->setReflectivness(.07);
 	objects.push_back(buildin3);
-
+	*/
 	//Objetos extras
 	Circle *cBola = new Circle(1, WHITE);
 	cBola->setSpecular(1000);
@@ -221,6 +213,12 @@ void inline World::init()
 	//cyl2->setReflectivness(0.8);
 	cyl2->Translate(1.8, 0.5, 2.3);
 	objects.push_back(cyl2);
+
+
+	Cylinder* cylaa = new Cylinder(Vector3f(0, 1, 0), 5, 5, Color(0, 120, 120));
+	cylaa->Translate(5, 3, 8);
+	cylaa->setReflectivness(0.8);
+	objects.push_back(cylaa);
 
 	Cone *cone2 = new Cone(Vector3f(0, 1, 0), 0.7, 0.8, Color(173, 216, 230));
 	cone2->setSpecular(1000);
@@ -289,45 +287,43 @@ void World::SetShadowsOn(bool shadows)
 
 Color World::computeColor(Ray &ray, float vz, int rd)
 {
-
 	Color retColor = bgColor;
 	BaseObject *ClosestIntersected = nullptr;
 	float minimalT = INFINITY;
 	bool isReflective = false;
 	float reflectT;
+	Vector3f normalClosest;
+
 	for(BaseObject *ob:objects)
 	{
-		if (ob->Intersects(ray))
+		const auto [intersects, t,normal] = ob->Intersects(ray);
+		if (intersects)
 		{
-			float t = ob->getTmin();
-			if (t > vz)
+			if (t > vz && t < minimalT)
 			{
-				if (t < minimalT)
-				{
 					minimalT = t;
 					Point3f point = ray.getPoint(t);
 
-					Vector3f Normal = ob->getNormal(point);
-
 					Vector3f invdir = ray.D * -1;
-					retColor = ob->getColor() * ComputeLighting(point, Normal, invdir, ob->getSpecular());
+					retColor = ob->getColor() * ComputeLighting(point, normal, invdir, ob->getSpecular());
 					isReflective = (ob->getReflectivness() > 0);
 					if (isReflective)
 					{
 						ClosestIntersected = ob;
 						reflectT = t;
+						normalClosest.x = normal.x;
+						normalClosest.y = normal.y;
+						normalClosest.z = normal.z;
 					}
-				}
 			}
 		}
 	}
-
 	if (isReflective && rd > 0 )
 	{
 		const float rindex = ClosestIntersected->getReflectivness();
-		const Vector3f Normal = ClosestIntersected->getNormal(ray.getPoint(reflectT));
-		Vector3f dir = ray.D * -1;
-		Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, Normal), 0);
+		//const Vector3f Normal = ClosestIntersected->getNormal(ray.getPoint(reflectT));
+		const Vector3f dir = ray.D * -1;
+		Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, normalClosest));
 		retColor = retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
 	}
 

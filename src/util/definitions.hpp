@@ -12,7 +12,7 @@
 #ifndef _RENDERWITHSHADOWS_
 //#define _RENDERWITHSHADOWS_
 #endif
-#define screenwidthheight 600
+#define screenwidthheight 350
 #ifndef _SUPERSAMPLE_
 //#define _SUPERSAMPLE_
 //#define SSRate 2
@@ -22,8 +22,9 @@
 //#define _SUBSAMPLE_
 //#define SubSSampleRate 6
 #endif
-
-#define inverseSquare(_x)  1/sqrtf(_x);
+#include <cmath>
+template<typename T>
+constexpr auto inverseSquare(T _x) { return 1/std::sqrt(_x);; }
 
 #if defined(_SUBSAMPLE_) && defined (_SUPERSAMPLE_)
 #error "it's not possible to subsample and supersample"

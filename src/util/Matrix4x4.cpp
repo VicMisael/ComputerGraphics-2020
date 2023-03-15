@@ -27,7 +27,7 @@ Matrix4x4::Matrix4x4()
         }
     }
 }
-Matrix4x4::Matrix4x4(float _mm44[4][4])
+Matrix4x4::Matrix4x4(const float _mm44[4][4])
 {
     for (int i = 0; i < 4; i++)
     {
@@ -65,24 +65,24 @@ Matrix4x4 Matrix4x4::Transpose(const Matrix4x4 &matrix)
 Matrix4x4 Matrix4x4::Inverse()
 {
     float inverted[4][4];
-    float adj2323 = mm44[2][2] * mm44[3][3] - mm44[2][3] * mm44[3][2];
-    float adj1323 = mm44[2][1] * mm44[3][3] - mm44[2][3] * mm44[3][1];
-    float adj1223 = mm44[2][1] * mm44[3][2] - mm44[2][2] * mm44[3][1];
-    float adj0323 = mm44[2][0] * mm44[3][3] - mm44[2][3] * mm44[3][0];
-    float adj0223 = mm44[2][0] * mm44[3][2] - mm44[2][2] * mm44[3][0];
-    float adj0123 = mm44[2][0] * mm44[3][1] - mm44[2][1] * mm44[3][0];
-    float adj2313 = mm44[1][2] * mm44[3][3] - mm44[1][3] * mm44[3][2];
-    float adj1313 = mm44[1][1] * mm44[3][3] - mm44[1][3] * mm44[3][1];
-    float adj1213 = mm44[1][1] * mm44[3][2] - mm44[1][2] * mm44[3][1];
-    float adj2312 = mm44[1][2] * mm44[2][3] - mm44[1][3] * mm44[2][2];
-    float adj1312 = mm44[1][1] * mm44[2][3] - mm44[1][3] * mm44[2][1];
-    float adj1212 = mm44[1][1] * mm44[2][2] - mm44[1][2] * mm44[2][1];
-    float adj0313 = mm44[1][0] * mm44[3][3] - mm44[1][3] * mm44[3][0];
-    float adj0213 = mm44[1][0] * mm44[3][2] - mm44[1][2] * mm44[3][0];
-    float adj0312 = mm44[1][0] * mm44[2][3] - mm44[1][3] * mm44[2][0];
-    float adj0212 = mm44[1][0] * mm44[2][2] - mm44[1][2] * mm44[2][0];
-    float adj0113 = mm44[1][0] * mm44[3][1] - mm44[1][1] * mm44[3][0];
-    float adj0112 = mm44[1][0] * mm44[2][1] - mm44[1][1] * mm44[2][0];
+    const float adj2323 = mm44[2][2] * mm44[3][3] - mm44[2][3] * mm44[3][2];
+    const float adj1323 = mm44[2][1] * mm44[3][3] - mm44[2][3] * mm44[3][1];
+    const float adj1223 = mm44[2][1] * mm44[3][2] - mm44[2][2] * mm44[3][1];
+    const float adj0323 = mm44[2][0] * mm44[3][3] - mm44[2][3] * mm44[3][0];
+    const float adj0223 = mm44[2][0] * mm44[3][2] - mm44[2][2] * mm44[3][0];
+    const float adj0123 = mm44[2][0] * mm44[3][1] - mm44[2][1] * mm44[3][0];
+    const float adj2313 = mm44[1][2] * mm44[3][3] - mm44[1][3] * mm44[3][2];
+    const float adj1313 = mm44[1][1] * mm44[3][3] - mm44[1][3] * mm44[3][1];
+    const float adj1213 = mm44[1][1] * mm44[3][2] - mm44[1][2] * mm44[3][1];
+    const float adj2312 = mm44[1][2] * mm44[2][3] - mm44[1][3] * mm44[2][2];
+    const float adj1312 = mm44[1][1] * mm44[2][3] - mm44[1][3] * mm44[2][1];
+    const float adj1212 = mm44[1][1] * mm44[2][2] - mm44[1][2] * mm44[2][1];
+    const float adj0313 = mm44[1][0] * mm44[3][3] - mm44[1][3] * mm44[3][0];
+    const float adj0213 = mm44[1][0] * mm44[3][2] - mm44[1][2] * mm44[3][0];
+    const float adj0312 = mm44[1][0] * mm44[2][3] - mm44[1][3] * mm44[2][0];
+    const float adj0212 = mm44[1][0] * mm44[2][2] - mm44[1][2] * mm44[2][0];
+    const float adj0113 = mm44[1][0] * mm44[3][1] - mm44[1][1] * mm44[3][0];
+    const float adj0112 = mm44[1][0] * mm44[2][1] - mm44[1][1] * mm44[2][0];
 
     float det = mm44[0][0] * (mm44[1][1] * adj2323 - mm44[1][2] * adj1323 + mm44[1][3] * adj1223)
         - mm44[0][1] * (mm44[1][0] * adj2323 - mm44[1][2] * adj0323 + mm44[1][3] * adj0223)

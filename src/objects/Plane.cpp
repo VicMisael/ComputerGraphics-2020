@@ -10,22 +10,22 @@ Plane::Plane(Vector3f _u, Point3f _kp, Color color)
 	c = color;
 }
 
-int Plane::Intersects(Ray& ray)
+std::tuple<int, float,Vector3f> Plane::Intersects(const Ray& ray)
 {
-	t_min = INFINITY;
+	float t_min = INFINITY;
 	using namespace VectorUtilities;
 	Vector3f p0 = ray.O;
 	Vector3f Dir = ray.D;
-	float dn = dotProduct(Dir, n);
+	const float dn = dotProduct(Dir, n);
 	if (abs(dn) < 0.001) {
-		return 0;
+		return NO_INTERSECT;
 	}
-	float intersection = dotProduct(pplane-p0, n) / dn;
+	const float intersection = dotProduct(pplane-p0, n) / dn;
 	if (intersection < 0){
-		return 0;
+		return NO_INTERSECT;
 	}
-	t_min = intersection;
-	return 1;
+
+	return {1,intersection,this->getNormal(ray.getPoint(t_min))};
 
 }
 

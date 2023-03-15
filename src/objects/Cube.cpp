@@ -49,38 +49,31 @@ void Cube::CalculateTriangles()
 
 }
 
-static int intersectionCount = 0;
 
-void inline Cube::checkIntersect(Triangle& t, Ray& ray) {
-	if (VectorUtilities::dotProduct(ray.D, t.getNormal(Point3f(0, 0, 0))) < 0) {
-		if (t.Intersects(ray))
-		{
-			if (t.getTmin() < t_min)
-			{
-				t_min = t.getTmin();
-				this->Normal = t.getNormal(ray.getPoint(t_min));
-			}
-			intersectionCount++;
-		}
-	}
-
-}
-int Cube::Intersects(Ray& ray)
+std::tuple<int, float, Vector3f> Cube::Intersects(const Ray& ray)
 {	
 	if (this->aabb.intersects(ray)) {
-		t_min = INFINITY;
+		float t_min = INFINITY;
 		using namespace std;
 		using namespace VectorUtilities;
-		intersectionCount = 0;
+		int intersectionCount = 0;
 		for (Triangle t : triangles)
 		{
-			checkIntersect(t, ray);
+				const auto [intersects_t,t_tmin,normal]=t.Intersects(ray);
+				if (intersects_t && VectorUtilities::dotProduct(ray.D,normal)<0)
+				{
+					if (t_tmin < t_min)
+					{
+						t_min = t_tmin;
+						this->Normal = normal;
+					}
+					intersectionCount++;
+				}
 		}
-		return intersectionCount > 0;
+		return { intersectionCount > 0 ,t_min,this->Normal};
 	}
-	return 0;
-
-	}
+	return NO_INTERSECT;
+}
 
 
 void Cube::ApplyTransformation()

@@ -8,7 +8,7 @@
 #include "BaseObject.hpp"
 
 // Definindo o código do cone
-class Cone : public BaseObject
+class Cone final : public BaseObject
 {
     private:
         Point3f center;
@@ -24,7 +24,7 @@ class Cone : public BaseObject
 
     public:
         Cone( Vector3f axis, float height, float radius,const Color c);
-        int Intersects(Ray& ray) override;
+        std::tuple<int, float, Vector3f> Intersects(const Ray& ray) final override;
         void ApplyTransformation() override;
         Vector3f getNormal(const Point3f p) override;
         void ApplyCamera(const Matrix4x4 mm44) override;

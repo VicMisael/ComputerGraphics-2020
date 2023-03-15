@@ -17,14 +17,14 @@ Cylinder::Cylinder(Vector3f axis, float height, float radius, Color c, Color bas
 
 
 
-int Cylinder::Intersects(Ray& ray)
+std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 {
-	if (aabb.intersects(ray)) {
-		t_min = -INFINITY;
-		baseIntersected = false;
+		float t_min = INFINITY;
 		Point3f p0 = ray.O; //P0;
 		Vector3f d = ray.D;; //Vetor direção do raio;
 		using namespace VectorUtilities;
+		float nx, ny, nz;
+		bool basesIsTheClosestIntersected = false;
 		//Vectors
 		Vector3f pMBase = (p0 - Base);
 		Vector3f v = pMBase - axis * (dotProduct(pMBase, axis));
@@ -35,7 +35,7 @@ int Cylinder::Intersects(Ray& ray)
 		float delta = b * b - (a * c);
 		if (delta < 0)
 		{
-			return 0;
+			return NO_INTERSECT;
 		}
 		float int1 = (-1 * b + sqrtf(delta)) / a;
 		float int2 = (-1 * b - sqrtf(delta)) / a;
@@ -43,58 +43,69 @@ int Cylinder::Intersects(Ray& ray)
 		Point3f p1r = ray.getPoint(int2);
 		float hPo = dotProduct(Base - p0r, axis);
 		float hPo1 = dotProduct(Base - p1r, axis);
-		std::vector<float> intersecs;
+		int intersecs=0;
 		if ((0 <= hPo && hPo <= height)) {
-			intersecs.push_back(int1);
+			intersecs++;
+			t_min=std::min(int1, t_min);
 		}
 		if ((0 <= hPo1 && hPo1 <= height)) {
-			intersecs.push_back(int2);
+			intersecs++;
+			t_min = std::min(int2, t_min);
 		}
-		if (intersecs.size() < 2) {
+		if (intersecs < 2) {
 			Point3f top_center = Base + axis * height;
 			Plane plane_base(axis, Base, this->BaseColor);
 			Plane plane_top(axis, top_center, this->BaseColor);
-			if (plane_base.Intersects(ray)) {
-				float t = plane_base.getTmin();
+			const auto [intersects_base,t_base,base_normal] = plane_base.Intersects(ray);
+			if (intersects_base && fabs(t_base) < t_min) {
+				const float t = t_base;
 				Point3f intpoint = ray.getPoint(t);
 				Vector3f difBaseP = intpoint - Base;
 
 				if (difBaseP.length() <= radius) {
-					baseIntersected = true;
-					intersecs.push_back(fabs(t));
+					basesIsTheClosestIntersected = true;
+					intersecs++;
+					t_min = std::min(fabs(t), t_min);
 				}
-
+				nx = base_normal.x;
+				ny = base_normal.y;
+				nz = base_normal.z;
 
 			}
-			if (plane_top.Intersects(ray)) {
-				float t = plane_top.getTmin();
+
+			const auto [intersects_top, t_top,top_normal] = plane_top.Intersects(ray);
+			if (intersects_top && fabs(t_top)<t_min) {
+				const float t = t_top;
 				Point3f intpoint = ray.getPoint(t);
 				Vector3f difBaseP = Base - intpoint;
 
 				if (difBaseP.length() <= radius) {
-					baseIntersected = true;
-					intersecs.push_back(fabs(t));
+					basesIsTheClosestIntersected = true;
+					intersecs++;
+					t_min = std::min(fabs(t), t_min);
 				}
 
+				nx = top_normal.x;
+				ny = top_normal.y;
+				nz = top_normal.z;
 			}
+	
 		}
-		t_min = INFINITY;
-		for (float f : intersecs) {
-			if (f < t_min) {
-				t_min = f;
-			}
+		if (!basesIsTheClosestIntersected) {
+			Vector3f normal=getNormal(ray.getPoint(t_min));
+			nx = normal.x;
+			ny = normal.y;
+			nz = normal.z;
 		}
 	
-		return intersecs.size() > 0;
-	}
-	return 0;
+
+
+		return { intersecs > 0, t_min,Vector3f(nx,ny,nz)};
+
 }
 
 Color Cylinder::getColor()
 {
-	if (baseIntersected) {
-		return BaseColor;
-	}
 	return c;
 }
 

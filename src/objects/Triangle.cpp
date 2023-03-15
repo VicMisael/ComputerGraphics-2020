@@ -29,19 +29,19 @@ void Triangle::CalculateNormal(){
     //Normal.normalize();
 }
 
-int Triangle::Intersects(Ray &ray)
+std::tuple<int, float, Vector3f>Triangle::Intersects(const Ray &ray)
 {
 	static const float epsilon = 0.0000001;
 	static const float epsilon2 = 0.000001;
 
+    float t_min = INFINITY;
 	using namespace VectorUtilities;
 	Vector3f e1 = Vertex[1] - Vertex[0];
  	Vector3f e2 = Vertex[2] - Vertex[0];
 	Vector3f q = crossProduct(ray.D, e2);
 	float a = dotProduct(e1, q);
 	if (a <= epsilon) {
-		t_min = INFINITY;
-		return 0;
+        return NO_INTERSECT;
 	}
 	Vector3f s = ray.O - Vertex[0];
 	Vector3f r = crossProduct(s, e1);
@@ -51,20 +51,15 @@ int Triangle::Intersects(Ray &ray)
 	weight[0] = 1.0f - (weight[1] + weight[2]);
 
 	if ((weight[0] < -epsilon2) || (weight[1] < -epsilon2) || (weight[2] < -epsilon2)) {
-		t_min = INFINITY;
-		return 0;
+        return NO_INTERSECT;
 	}
 
 	const float dist = dotProduct(e2, r) / a;
 	if (dist <= epsilon) {
-		t_min = INFINITY;
-		return 0;
+        return NO_INTERSECT;
 	}
 
-
-
-	t_min = dist;
-    return 1;
+    return { 1,dist,this->Normal };
 
 }
 
