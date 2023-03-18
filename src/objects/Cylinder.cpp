@@ -8,7 +8,6 @@ Cylinder::Cylinder(Vector3f axis, float height, float radius, Color c, Color bas
 {
 	this->Base = Point3f(0, 0, 0);
 	this->axis = axis; //eixo que "aponta" pro topo do cilindro
-	this->axis.normalize();
 	this->height = height;
 	this->radius = radius;
 	this->BaseColor = basecolor;
@@ -62,7 +61,7 @@ std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 				Point3f intpoint = ray.getPoint(t);
 				Vector3f difBaseP = intpoint - Base;
 
-				if (difBaseP.length() <= radius) {
+				if (glm::length(difBaseP)<= radius) {
 					basesIsTheClosestIntersected = true;
 					intersecs++;
 					t_min = std::min(fabs(t), t_min);
@@ -79,7 +78,7 @@ std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 				Point3f intpoint = ray.getPoint(t);
 				Vector3f difBaseP = Base - intpoint;
 
-				if (difBaseP.length() <= radius) {
+				if (glm::length(difBaseP) <= radius) {
 					basesIsTheClosestIntersected = true;
 					intersecs++;
 					t_min = std::min(fabs(t), t_min);
@@ -115,17 +114,17 @@ void Cylinder::ApplyTransformation()
 	Point3f top = transFMat * (Base + axis * height);
 	Base = transFMat * Base;
 	Vector3f eixo = (top - Base);
-	eixo.normalize();
-	axis = eixo;
+	axis = glm::normalize(eixo);
 	computeAABB();
 }
 void Cylinder::computeAABB() {
+	using namespace VectorUtilities;
 	Matrix4x4 matrix;
 	matrix.ConcatRotateX(PI / 2);
-	Vector3f xAxisProjection = (matrix * Vector4f(axis, 0)).toVector3f();
+	Vector3f xAxisProjection = toVector3f(matrix * Vector4f(axis.x, axis.y, axis.z, 0));
 	matrix.loadIdentity();
 	matrix.ConcatRotateZ(PI / 2);
-	Vector3f zAxisProjection = (matrix * Vector4f(axis, 0)).toVector3f();
+	Vector3f zAxisProjection = toVector3f((matrix * Vector4f(axis.x,axis.y,axis.z, 0)));
 	Point3f topPoint = axis * height;
 
 	std::vector<float> elementsX{
@@ -175,8 +174,7 @@ Vector3f Cylinder::getNormal(const Point3f p)
 	using namespace VectorUtilities;
 	Vector3f W= p-Base;
 	Vector3f N = (W-axis*dotProduct(W,axis));
-	N.normalize();
-	return N;
+	return  glm::normalize(N);;
 
 }
 
@@ -185,7 +183,6 @@ void Cylinder::ApplyCamera(const Matrix4x4 m)
 	Point3f top =m*(Base + axis * height);
 	Base = m*Base;
 	Vector3f eixo = (top - Base);
-	eixo.normalize();
 	this->axis = eixo;
 	computeAABB();
 	//

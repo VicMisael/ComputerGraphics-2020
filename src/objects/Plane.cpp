@@ -6,7 +6,6 @@ Plane::Plane(Vector3f _u, Point3f _kp, Color color)
 {
 	n = _u;
 	pplane = _kp;
-	n.normalize();
 	c = color;
 }
 
@@ -36,8 +35,8 @@ void Plane::ApplyTransformation()
 	NormalVector=transFMat* NormalVector;
 	Point4f Point = Vector4f(pplane, 1);
 	Point=transFMat* Point;
-	n = NormalVector.toVector3f();
-	pplane = Point.toVector3f();
+	n = VectorUtilities::toVector3f(NormalVector);
+	pplane = VectorUtilities::toVector3f(Point);
 }
 
 Vector3f Plane::getNormal(const Point3f p)
@@ -50,6 +49,6 @@ void Plane::ApplyCamera(const Matrix4x4 m)
 	pplane = m * pplane;
 	Vector4f normal = Vector4f(n,0);
 	normal=m* normal;
-	n=normal.toVector3f();
+	n = VectorUtilities::toVector3f(normal);
 	//n.normalize();
 }

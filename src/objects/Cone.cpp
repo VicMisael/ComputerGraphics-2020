@@ -7,13 +7,11 @@ Cone::Cone( Vector3f axis, float height, float radius, Color c)
 {
     this->center = Point3f(0, 0, 0);
     // Eixo que aponta para o topo do cone.
-    axis.normalize();
-    this->axis = axis;
+    this->axis = VectorUtilities::normalizeCopy(axis);
     this->vertice = center+(axis*height);
     this->height = height;
     this->radius = radius;
     this->c = c;
-    this->axis.normalize();
     float hipothenuse = sqrtf((radius * radius) + (height * height));
     this->cosTheta = height / hipothenuse;
     this->cos2Theta= powf(cosTheta, 2);
@@ -65,15 +63,16 @@ std::tuple<int, float, Vector3f>Cone::Intersects(const Ray& ray)
 
 void Cone::ApplyTransformation()
 {
+    using namespace VectorUtilities;
     Point4f base4(center, 1);
     base4 = transFMat * base4;
     Vector4f axis4(axis, 0);
     //axis4 = transFMat * axis4;
     Point4f vertice4(vertice, 1);
     vertice4 = transFMat * vertice4;
-    center = base4.toVector3f();
+    center = toVector3f(base4);
     //axis = axis4.toVector3f();
-    vertice = vertice4.toVector3f();
+    vertice = toVector3f(vertice4);
     axis = vertice - center;
     float hipothenuse = sqrtf((radius * radius) + (height * height));
     this->cosTheta = height / hipothenuse;
@@ -82,10 +81,8 @@ void Cone::ApplyTransformation()
 
 Vector3f Cone::getNormal(const Point3f p)
 {
-    Vector3f v = vertice - p;
-    v.normalize();
-    Vector3f Normal = axis - v*cosTheta ;
-    Normal.normalize();
+    Vector3f v = glm::normalize(vertice - p);
+    Vector3f Normal = glm::normalize(axis - v*cosTheta);
     return Normal;
 }
 
@@ -93,8 +90,7 @@ void Cone::ApplyCamera(const Matrix4x4 mm44)
 {
     center = mm44 * center;
     vertice = mm44 * vertice;
-    Vector3f eixo=vertice - center;
-    eixo.normalize();
+    Vector3f eixo=glm::normalize(vertice - center);
     this->axis = eixo;
     computeAABB();
     //std::cout << axis.length()<<std::endl;
@@ -103,12 +99,13 @@ void Cone::ApplyCamera(const Matrix4x4 mm44)
 
 void Cone::computeAABB()
 {
+    using namespace VectorUtilities;
     Matrix4x4 matrix;
     matrix.ConcatRotateX(PI / 2);
-    Vector3f xAxisProjection = (matrix * Vector4f(axis, 0)).toVector3f();
+    Vector3f xAxisProjection = toVector3f((matrix * Vector4f(axis, 0)));
     matrix.loadIdentity();
     matrix.ConcatRotateZ(PI / 2);
-    Vector3f zAxisProjection = (matrix * Vector4f(axis, 0)).toVector3f();
+    Vector3f zAxisProjection = toVector3f((matrix * Vector4f(axis, 0)));
     Point3f topPoint = axis * height;
     std::vector<float> elementsX{
     (xAxisProjection * radius).x,

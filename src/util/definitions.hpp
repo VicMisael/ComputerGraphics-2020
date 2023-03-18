@@ -26,8 +26,12 @@
 template<typename T>
 constexpr auto inverseSquare(T _x) { return 1/std::sqrt(_x);; }
 
+
+#define GLM_FORCE_SWIZZLE
+
 #if defined(_SUBSAMPLE_) && defined (_SUPERSAMPLE_)
 #error "it's not possible to subsample and supersample"
+
 
 #endif
 #define PI 3.14159265358979323846

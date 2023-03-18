@@ -30,15 +30,6 @@
     <ClCompile Include="src\util\Ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\util\Vector3f.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\util\Vector4f.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\util\VectorUtilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,9 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\Circle.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\World.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\util\Color.hpp">
@@ -129,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\AABB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\World.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

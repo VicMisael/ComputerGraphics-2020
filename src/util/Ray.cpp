@@ -1,11 +1,10 @@
 #include "Ray.hpp"
-
+#include "VectorUtilities.hpp"
 
 Ray::Ray(Point3f origin, Vector3f D)
 {
 	this->O = origin;
-	this->D = D;
-	this->D.normalize();
+	this->D = VectorUtilities::normalizeCopy(D);
 }
 
 Point3f Ray::getPoint(const float t) const

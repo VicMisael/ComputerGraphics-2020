@@ -8,14 +8,10 @@ Camera::Camera(Point3f eye, Point3f at, Point3f up)
 	this->Eye = &eye;
 	this->at = &at;
 	//Klinha
-	Vector3f k = eye - at;
-	k.normalize();
-	Vector3f viewUp = up - eye;
-	viewUp.normalize();
-	Vector3f I = crossProduct( viewUp,eye);
-	I.normalize();
-	Vector3f J = crossProduct(k, I);
-	J.normalize();
+	Vector3f k = normalizeCopy(eye - at);
+	Vector3f viewUp = normalizeCopy(up - eye);
+	Vector3f I = normalizeCopy(crossProduct( viewUp,eye));
+	Vector3f J = normalizeCopy(crossProduct(k, I));
 	worldToCamera = Matrix4x4(new float[4][4]{
 		{I.x, I.y, I.z,-1.0f * dotProduct(I,eye)},
 		{J.x, J.y, J.z,-1.0f * dotProduct(J,eye)},

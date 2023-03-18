@@ -168,7 +168,7 @@
       <Optimization>Full</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <OpenMPSupport>true</OpenMPSupport>
@@ -192,9 +192,6 @@
     <ClCompile Include="src\util\Matrix3x3.cpp" />
     <ClCompile Include="src\util\Matrix4x4.cpp" />
     <ClCompile Include="src\util\Ray.cpp" />
-    <ClCompile Include="src\util\Vector3f.cpp" />
-    <ClCompile Include="src\util\Vector4f.cpp" />
-    <ClCompile Include="src\util\VectorUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\AABB.h" />

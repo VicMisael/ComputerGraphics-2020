@@ -92,8 +92,7 @@ void Cube::ApplyTransformation()
 
 Vector3f Cube::getNormal(const Point3f p)
 {
-	Normal.normalize();
-	return Normal;
+	return VectorUtilities::normalizeCopy(Normal);
 }
 
 void Cube::ApplyCamera(const Matrix4x4 mm)

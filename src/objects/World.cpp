@@ -9,7 +9,7 @@ static uint8_t b = 233;
 Vector3f inline ReflectRay(const Vector3f R, const Vector3f N)
 {
 	using namespace VectorUtilities;
-	return ((N * 2) * dotProduct(N, R) - R);
+	return ((N * 2.0f) * dotProduct(N, R) - R);
 }
 
 float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f &V,const float s)
@@ -28,7 +28,7 @@ float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f 
 				break;
 			case LightType::point:
 				lVec = ((l->getPosition()) - p);
-				distanceFactor = inverseSquare(lVec.length());
+				distanceFactor = inverseSquare(glm::length(lVec));
 				break;
 			case LightType::directional:
 				lVec = l->getDirection();
@@ -36,8 +36,8 @@ float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f 
 			default:
 				break;
 			}
-			const float lveclength = lVec.length();
-			lVec.normalize();
+			const float lveclength = glm::length(lVec);
+			lVec = glm::normalize(lVec);
 			if (renderShadows)
 			{
 				for ( BaseObject *ob : objects)
@@ -55,7 +55,7 @@ float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f 
 			const float _intensity = l->getIntensity();
 			if (n_dot_l > 0)
 			{
-				intensity += (_intensity * distanceFactor) * (n_dot_l / (n.length() * lVec.length()));
+				intensity += (_intensity * distanceFactor) * (n_dot_l / (glm::length(n) * glm::length(lVec)));
 			}
 			if (s >= 0)
 			{
@@ -63,7 +63,7 @@ float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f 
 				const float r_dot_v = dotProduct(R, V);
 				if (r_dot_v > 0)
 				{
-					const float _pow = powf(r_dot_v / (R.length() * V.length()), s);
+					const float _pow = powf(r_dot_v / (glm::length(R)* glm::length(V)), s);
 					intensity += _intensity * _pow;
 				}
 			}
@@ -304,7 +304,7 @@ Color World::computeColor(Ray &ray, float vz, int rd)
 					minimalT = t;
 					Point3f point = ray.getPoint(t);
 
-					Vector3f invdir = ray.D * -1;
+					Vector3f invdir = ray.D * -1.0f;
 					retColor = ob->getColor() * ComputeLighting(point, normal, invdir, ob->getSpecular());
 					isReflective = (ob->getReflectivness() > 0);
 					if (isReflective)
@@ -322,7 +322,7 @@ Color World::computeColor(Ray &ray, float vz, int rd)
 	{
 		const float rindex = ClosestIntersected->getReflectivness();
 		//const Vector3f Normal = ClosestIntersected->getNormal(ray.getPoint(reflectT));
-		const Vector3f dir = ray.D * -1;
+		const Vector3f dir = ray.D * -1.0f;
 		Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, normalClosest));
 		retColor = retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
 	}
