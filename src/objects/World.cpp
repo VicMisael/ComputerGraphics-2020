@@ -63,7 +63,7 @@ float World::ComputeLighting(const Point3f &p, const Vector3f& n,const Vector3f 
 				const float r_dot_v = dotProduct(R, V);
 				if (r_dot_v > 0)
 				{
-					const float _pow = powf(r_dot_v / (glm::length(R)* glm::length(V)), s);
+					const float _pow = glm::pow(r_dot_v / (glm::length(R)* glm::length(V)), s);
 					intensity += _intensity * _pow;
 				}
 			}

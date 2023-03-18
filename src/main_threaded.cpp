@@ -56,6 +56,9 @@ int main(int argc, char** argv)
 
                 for (int x = -Cw / 2; x < Cw / 2; x++)
                 {
+                    if (x == 138 && y == -45) {
+                        std::cout << "a";
+                    }
                     const auto origin = invViewMatrix * Point3f(x / (float)Cw, y / (float)Ch, 0);
                     const auto point = invViewMatrix * canvasToViewport(x, y, Cw, Ch, -1);
                     Ray r = Ray(origin, point-origin);

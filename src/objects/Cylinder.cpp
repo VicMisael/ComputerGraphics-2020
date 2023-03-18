@@ -4,10 +4,10 @@
 #include <algorithm>
 #include "Plane.hpp"
 
-Cylinder::Cylinder(Vector3f axis, float height, float radius, Color c, Color basecolor)
+Cylinder::Cylinder(Vector3f _axis, float height, float radius, Color c, Color basecolor)
 {
 	this->Base = Point3f(0, 0, 0);
-	this->axis = axis; //eixo que "aponta" pro topo do cilindro
+	this->axis = VectorUtilities::normalizeCopy(_axis); //eixo que "aponta" pro topo do cilindro
 	this->height = height;
 	this->radius = radius;
 	this->BaseColor = basecolor;
@@ -22,12 +22,12 @@ std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 		Point3f p0 = ray.O; //P0;
 		Vector3f d = ray.D;; //Vetor direção do raio;
 		using namespace VectorUtilities;
-		float nx, ny, nz;
+		float nx=0, ny=0, nz=0;
 		bool basesIsTheClosestIntersected = false;
 		//Vectors
-		Vector3f pMBase = (p0 - Base);
-		Vector3f v = pMBase - axis * (dotProduct(pMBase, axis));
-		Vector3f w = d - axis * (dotProduct(d, axis));
+		const Vector3f pMBase = (p0 - Base);
+		const Vector3f v = pMBase - (axis * (dotProduct(pMBase, axis)));
+		const Vector3f w = d - (axis * (dotProduct(d, axis)));
 		float a = dotProduct(w, w);
 		float b = dotProduct(v, w);
 		float c = dotProduct(v, v) - radius * radius;
@@ -51,6 +51,7 @@ std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 			intersecs++;
 			t_min = std::min(int2, t_min);
 		}
+	
 		if (intersecs < 2) {
 			Point3f top_center = Base + axis * height;
 			Plane plane_base(axis, Base, this->BaseColor);
@@ -90,7 +91,8 @@ std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 			}
 	
 		}
-		if (!basesIsTheClosestIntersected) {
+		
+		if (intersecs > 0 && !basesIsTheClosestIntersected) {
 			Vector3f normal=getNormal(ray.getPoint(t_min));
 			nx = normal.x;
 			ny = normal.y;
@@ -114,7 +116,7 @@ void Cylinder::ApplyTransformation()
 	Point3f top = transFMat * (Base + axis * height);
 	Base = transFMat * Base;
 	Vector3f eixo = (top - Base);
-	axis = glm::normalize(eixo);
+	axis = VectorUtilities::normalizeCopy(eixo);
 	computeAABB();
 }
 void Cylinder::computeAABB() {
@@ -182,7 +184,7 @@ void Cylinder::ApplyCamera(const Matrix4x4 m)
 {
 	Point3f top =m*(Base + axis * height);
 	Base = m*Base;
-	Vector3f eixo = (top - Base);
+	Vector3f eixo = glm::normalize(top - Base);
 	this->axis = eixo;
 	computeAABB();
 	//

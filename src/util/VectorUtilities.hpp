@@ -20,6 +20,14 @@ namespace VectorUtilities
         return glm::sqrt(glm::dot(a,b));
     };
     static Vector3f  normalizeCopy(const Vector3f& v) {
+        /*float sqrdlength = v.x * v.x + v.y * v.y + v.z * v.z;
+
+        float x = v.x*glm::inversesqrt(sqrdlength);
+        float y = v.y*glm::inversesqrt(sqrdlength);
+        float z = v.z*glm::inversesqrt(sqrdlength);
+        return Vector3f(x, y, z);
+        */   
+
         return glm::normalize(v);
     };
 
