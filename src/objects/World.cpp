@@ -181,23 +181,26 @@ void inline World::init()
 	Circle *c = new Circle(0.6, Color(255, 255, 255));
 	c->setSpecular(1000);
 	//c->setReflectivness(1);
-	c->Translate(1, radiusDiff, 5);
+	c->Translate(3, radiusDiff, 5);
+	c->setReflectivness(1);
 	objects.push_back(c);
 	c = new Circle(0.4, Color(255, 255, 255));
 	c->setSpecular(1000);
-	c->Translate(1, radiusDiff + 0.9, 5);
+	c->Translate(3, radiusDiff + 0.9, 5);
+	c->setReflectivness(1);
 	objects.push_back(c);
 	c = new Circle(0.25, Color(255, 255, 255));
 	c->setSpecular(1000);
-	c->Translate(1, radiusDiff + 1.4, 5);
+	c->Translate(3, radiusDiff + 1.4, 5);
+	c->setReflectivness(1);
 	objects.push_back(c);
 	Cone *nose = new Cone(Vector3f(0, 0, 1), 0.5, 0.1, Color(255, 165, 0));
 	nose->RotateY(PI / 2);
-	nose->Translate(1, radiusDiff + 1.4, 5);
+	nose->Translate(3, radiusDiff + 1.4, 5);
 	objects.push_back(nose);
 	Cone *snowManHat = new Cone(Vector3f(0, 1, 0), 0.6, 0.30, Color(18, 10, 143));
 	snowManHat->setReflectivness(0.5);
-	snowManHat->Translate(1, radiusDiff + 1.6, 5);
+	snowManHat->Translate(3, radiusDiff + 1.6, 5);
 	snowManHat->setSpecular(900);
 	objects.push_back(snowManHat);
 
@@ -215,7 +218,7 @@ void inline World::init()
 	objects.push_back(cyl2);
 
 
-	Cylinder* cylaa = new Cylinder(Vector3f(0, 1, 0), 5, 5, Color(0, 120, 120));
+	Cylinder* cylaa = new Cylinder(Vector3f(0, 1, 0), 3, 2, Color(0, 120, 120));
 	cylaa->Translate(5, 3, 8);
 	cylaa->setReflectivness(0.8);
 	objects.push_back(cylaa);

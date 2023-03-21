@@ -5,17 +5,15 @@
 #include <chrono>
 #include <thread>
 #include <cstdlib>
-#ifdef _WIN32
-#include <SDL.h>
-#else
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
-#endif
+
 
 
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
-    float vx = -Cx * ((4.0f / 3.0f) / vpw);
+    float vx =  - Cx * ((4.0f / 3.0f) / vpw);
     float vy = -Cy * ((3.0f/4.0f) / vph);
     float vz = d;
     return Point3f(vx, vy, vz);
@@ -31,7 +29,7 @@ int main(int argc, char** argv)
     bool run = true;
     //auto window = new Color[screenwidthheight][screenwidthheight];
     uint32_t* rgba = new uint32_t[screenwidthheight * screenwidthheight];
-    int reflectionDepth = 900;
+    int reflectionDepth = INT_MAX;
     float vcx = 4;
     float vcy = 0;
     float vcz = -6;
@@ -56,9 +54,6 @@ int main(int argc, char** argv)
 
                 for (int x = -Cw / 2; x < Cw / 2; x++)
                 {
-                    if (x == 138 && y == -45) {
-                        std::cout << "a";
-                    }
                     const auto origin = invViewMatrix * Point3f(x / (float)Cw, y / (float)Ch, 0);
                     const auto point = invViewMatrix * canvasToViewport(x, y, Cw, Ch, -1);
                     Ray r = Ray(origin, point-origin);
