@@ -33,6 +33,6 @@ public:
     World(const Camera c);
     void SetShadowsOn(bool shadows);
     Color bgColor;
-    Color computeColor(Ray &ray,float vz,int recursionDepth);
+    Color computeColor(Ray &ray,float vz,unsigned int recursionDepth);
 };  
 #endif

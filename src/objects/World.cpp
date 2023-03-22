@@ -288,7 +288,7 @@ void World::SetShadowsOn(bool shadows)
 	this->renderShadows = shadows;
 }
 
-Color World::computeColor(Ray &ray, float vz, int rd)
+Color World::computeColor(Ray &ray, float vz, unsigned int rd)
 {
 	Color retColor = bgColor;
 	BaseObject *ClosestIntersected = nullptr;

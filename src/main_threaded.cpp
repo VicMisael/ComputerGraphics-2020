@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     bool run = true;
     //auto window = new Color[screenwidthheight][screenwidthheight];
     uint32_t* rgba = new uint32_t[screenwidthheight * screenwidthheight];
-    int reflectionDepth = INT_MAX;
+    unsigned int reflectionDepth = INT_MAX;
     float vcx = 4;
     float vcy = 0;
     float vcz = -6;
