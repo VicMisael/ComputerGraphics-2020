@@ -1,1 +1,1 @@
-g++-10 util/*.cpp objects/*.cpp main.cpp -flto=4 -O3 -mavx -Wall -pipe -lSDL2 -fopt-info -o main
+g++-12 util/*.cpp objects/*.cpp main_threaded.cpp -mavx2-flto -Ofast -Wall -pipe -lSDL2 -Wall -Wno-unused-function -o main
