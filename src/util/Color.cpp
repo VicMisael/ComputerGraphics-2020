@@ -2,25 +2,18 @@
 #include <cmath>
 
 
-
-Color::Color()
-{
-	r = 0;
-	g = 0;
-	b = 0;
-}
-
-Color::Color(uint8_t _r, uint8_t _g, uint8_t _b)
+Color::Color(int _r, int _g, int _b)
 {
 	this->r = _r / 255.0;
 	this->g = _g / 255.0;
 	this->b = _b / 255.0;
 }
-Color::Color(float _r, float _g, float _b, float nf) {
-	this->r = _r / nf;
-	this->g = _g / nf;
-	this->b = _b / nf;
+Color::Color(float _r, float _g, float _b) {
+	this->r = _r;
+	this->g = _g;
+	this->b = _b;
 }
+
 uint32_t Color::rgba()
 {
 	union {

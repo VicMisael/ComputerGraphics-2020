@@ -83,7 +83,7 @@ void inline World::init()
 	Light *lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.1);
 	lights.push_back(lambient);
 
-	Light *l2 = new Light(Point3f(0, 7, -3), Point3f(0, 0, 0), 3);
+	Light *l2 = new Light(Point3f(0, 7, -3), Point3f(0, 0, 0), 0.5);
 	l2->SetType(LightType::point);
 	lights.push_back(l2);
 
@@ -91,16 +91,6 @@ void inline World::init()
 	l3->SetType(LightType::point);
 	lights.push_back(l3);
 
-
-	Light* l4 = new Light(Point3f(3, 1.2, 6), Point3f(0, 0, 0), 1);
-	l4->SetType(LightType::point);
-	lights.push_back(l4);
-
-
-	Light *l5 = new Light(Point3f(0, -1, 0), Point3f(0, 1, 0), 0.1);
-	l5->SetType(LightType::directional);
-	lights.push_back(l5);
-	
 	Plane *p = new Plane(Vector3f(0, 1, 0), Point3f(0, -2, 0), Color(255, 226, 198));
 	p->setReflectivness(0.5);
 	p->setSpecular(1000);
@@ -151,17 +141,17 @@ void inline World::init()
 	//Objetos extras
 	Circle *cBola = new Circle(1, WHITE);
 	cBola->setSpecular(1000);
-	cBola->Translate(-3, -1, 9);
+	cBola->Translate(-3, -1, -19);
 	cBola->setReflectivness(1);
 	objects.push_back(cBola);
 	
 	Circle* cBola2 = new Circle(1, Color(255,255,0));
-	cBola2->Translate(3, 9, 3);
+	cBola2->Translate(3, 9, -13);
 	cBola2->setReflectivness(0.5);
 	objects.push_back(cBola2);
 
 	Circle* cBola3 = new Circle(1, Color(255, 255, 0));
-	cBola3->Translate(0, 7, 3);
+	cBola3->Translate(0, 7, -13);
 	cBola3->setReflectivness(0.5);
 	objects.push_back(cBola3);
 
@@ -302,7 +292,7 @@ Color World::computeColor(Ray &ray, float vz, unsigned int rd)
 		const auto [intersects, t,normal] = ob->Intersects(ray);
 		if (intersects)
 		{
-			if (t > vz && t < minimalT)
+			if (t>vz && t < minimalT)
 			{
 					minimalT = t;
 					Point3f point = ray.getPoint(t);

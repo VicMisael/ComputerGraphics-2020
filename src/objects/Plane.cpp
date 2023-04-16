@@ -16,6 +16,7 @@ std::tuple<int, float,Vector3f> Plane::Intersects(const Ray& ray)
 	Vector3f p0 = ray.O;
 	Vector3f Dir = ray.D;
 	const float dn = dotProduct(Dir, n);
+
 	if (abs(dn) < 0.001) {
 		return NO_INTERSECT;
 	}
