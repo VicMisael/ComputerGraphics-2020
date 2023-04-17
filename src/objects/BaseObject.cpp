@@ -1,10 +1,9 @@
 #include "BaseObject.hpp"
 
-Color BaseObject::getColor(){
-
-    return c;
+Color BaseObject::getColor()
+{
+	return c;
 }
-
 
 
 BaseObject::BaseObject()
@@ -29,9 +28,8 @@ float BaseObject::getReflectivness()
 
 void BaseObject::setReflectivness(float r)
 {
-	this->reflectiveness=r;
+	this->reflectiveness = r;
 }
-
 
 
 void BaseObject::Translate(float x, float y, float z)
@@ -61,7 +59,7 @@ void BaseObject::Scale(float factor)
 
 void BaseObject::Scale(float x, float y, float z)
 {
-	transFMat.ConcatScale(x,y,z);
+	transFMat.ConcatScale(x, y, z);
 }
 
 void BaseObject::Shearx(float Shy, float Shz)
@@ -89,7 +87,7 @@ void BaseObject::LoadIdentity()
 	transFMat.loadIdentity();
 }
 
-Vector3f BaseObject::getNormal(Point3f p){
-	return Vector3f(0,1,0);
+Vector3f BaseObject::getNormal(Point3f p)
+{
+	return Vector3f(0, 1, 0);
 }
-

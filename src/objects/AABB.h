@@ -2,54 +2,62 @@
 #define _AABB_
 #include "BaseObject.hpp"
 #include "../util/Vector3f.hpp"
-class AABB{
+
+class AABB
+{
 private:
-    Vector3f min;
-    Vector3f max; 
+	Vector3f min;
+	Vector3f max;
+
 public:
-    AABB() :AABB(Vector3f(0,0,0),Vector3f(0,0,0)) {};
-    AABB(const Vector3f &minV,const Vector3f &maxV){
-        this->min=Vector3f(minV.x,minV.y,minV.z);
-        this->max=Vector3f(maxV.x,maxV.y,maxV.z);
-    };
-    int intersects(const Ray& ray){
-        const Vector3f& dir = ray.D;
-        const Vector3f invdir(1 / dir.x, 1 / dir.y, 1 / dir.z);
-        float tmin = (min.x - ray.O.x) / ray.D.x;
-        float tmax = (max.x - ray.O.x) / ray.D.x;
+	AABB() : AABB(Vector3f(0, 0, 0), Vector3f(0, 0, 0))
+	{
+	};
 
-        if (tmin > tmax) std::swap(tmin, tmax);
+	AABB(const Vector3f& minV, const Vector3f& maxV)
+	{
+		this->min = Vector3f(minV.x, minV.y, minV.z);
+		this->max = Vector3f(maxV.x, maxV.y, maxV.z);
+	};
 
-        float tymin = (min.y - ray.O.y) / ray.D.y;
-        float tymax = (max.y - ray.O.y) / ray.D.y;
+	int intersects(const Ray& ray)
+	{
+		const Vector3f& dir = ray.D;
+		const Vector3f invdir(1 / dir.x, 1 / dir.y, 1 / dir.z);
+		float tmin = (min.x - ray.O.x) / ray.D.x;
+		float tmax = (max.x - ray.O.x) / ray.D.x;
 
-        if (tymin > tymax)  std::swap(tymin, tymax);
+		if (tmin > tmax) std::swap(tmin, tmax);
 
-        if ((tmin > tymax) || (tymin > tmax))
-            return false;
+		float tymin = (min.y - ray.O.y) / ray.D.y;
+		float tymax = (max.y - ray.O.y) / ray.D.y;
 
-        if (tymin > tmin)
-            tmin = tymin;
+		if (tymin > tymax) std::swap(tymin, tymax);
 
-        if (tymax < tmax)
-            tmax = tymax;
+		if ((tmin > tymax) || (tymin > tmax))
+			return false;
 
-        float tzmin = (min.z - ray.O.z) / ray.D.z;
-        float tzmax = (max.z - ray.O.z) / ray.D.z;
+		if (tymin > tmin)
+			tmin = tymin;
 
-        if (tzmin > tzmax)  std::swap(tzmin, tzmax);
+		if (tymax < tmax)
+			tmax = tymax;
 
-        if ((tmin > tzmax) || (tzmin > tmax))
-            return false;
+		float tzmin = (min.z - ray.O.z) / ray.D.z;
+		float tzmax = (max.z - ray.O.z) / ray.D.z;
 
-        if (tzmin > tmin)
-            tmin = tzmin;
+		if (tzmin > tzmax) std::swap(tzmin, tzmax);
 
-        if (tzmax < tmax)
-            tmax = tzmax;
+		if ((tmin > tzmax) || (tzmin > tmax))
+			return false;
 
-        return true;
+		if (tzmin > tmin)
+			tmin = tzmin;
 
-    };
+		if (tzmax < tmax)
+			tmax = tzmax;
+
+		return true;
+	};
 };
 #endif // !_AABB_

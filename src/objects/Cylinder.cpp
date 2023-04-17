@@ -1,4 +1,3 @@
-
 #include "Cylinder.hpp"
 #include <vector>
 #include <algorithm>
@@ -15,94 +14,97 @@ Cylinder::Cylinder(Vector3f _axis, float height, float radius, Color c, Color ba
 }
 
 
-
 std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 {
-		float t_min = INFINITY;
-		Point3f p0 = ray.O; //P0;
-		Vector3f d = ray.D;; //Vetor direção do raio;
-		using namespace VectorUtilities;
-		float nx=0, ny=0, nz=0;
-		bool basesIsTheClosestIntersected = false;
-		//Vectors
-		const Vector3f pMBase = (p0 - Base);
-		const Vector3f v = pMBase - (axis * (dotProduct(pMBase, axis)));
-		const Vector3f w = d - (axis * (dotProduct(d, axis)));
-		float a = dotProduct(w, w);
-		float b = dotProduct(v, w);
-		float c = dotProduct(v, v) - radius * radius;
-		float delta = b * b - (a * c);
-		if (delta < 0)
+	float t_min = INFINITY;
+	Point3f p0 = ray.O; //P0;
+	Vector3f d = ray.D;
+	using namespace VectorUtilities;
+	float nx = 0, ny = 0, nz = 0;
+	bool basesIsTheClosestIntersected = false;
+	//Vectors
+	const Vector3f pMBase = (p0 - Base);
+	const Vector3f v = pMBase - (axis * (dotProduct(pMBase, axis)));
+	const Vector3f w = d - (axis * (dotProduct(d, axis)));
+	float a = dotProduct(w, w);
+	float b = dotProduct(v, w);
+	float c = dotProduct(v, v) - radius * radius;
+	float delta = b * b - (a * c);
+	if (delta < 0)
+	{
+		return NO_INTERSECT;
+	}
+	float int1 = (-1 * b + sqrtf(delta)) / a;
+	float int2 = (-1 * b - sqrtf(delta)) / a;
+	Point3f p0r = ray.getPoint(int1);
+	Point3f p1r = ray.getPoint(int2);
+	float hPo = dotProduct(Base - p0r, axis);
+	float hPo1 = dotProduct(Base - p1r, axis);
+	int intersecs = 0;
+	if ((0 <= hPo && hPo <= height))
+	{
+		intersecs++;
+		t_min = std::min(int1, t_min);
+	}
+	if ((0 <= hPo1 && hPo1 <= height))
+	{
+		intersecs++;
+		t_min = std::min(int2, t_min);
+	}
+
+	if (intersecs < 2)
+	{
+		Point3f top_center = Base + axis * height;
+		Plane plane_base(axis, Base, this->BaseColor);
+		Plane plane_top(axis, top_center, this->BaseColor);
+		const auto [intersects_base,t_base,base_normal] = plane_base.Intersects(ray);
+		if (intersects_base && fabs(t_base) < t_min)
 		{
-			return NO_INTERSECT;
-		}
-		float int1 = (-1 * b + sqrtf(delta)) / a;
-		float int2 = (-1 * b - sqrtf(delta)) / a;
-		Point3f p0r = ray.getPoint(int1);
-		Point3f p1r = ray.getPoint(int2);
-		float hPo = dotProduct(Base - p0r, axis);
-		float hPo1 = dotProduct(Base - p1r, axis);
-		int intersecs=0;
-		if ((0 <= hPo && hPo <= height)) {
-			intersecs++;
-			t_min=std::min(int1, t_min);
-		}
-		if ((0 <= hPo1 && hPo1 <= height)) {
-			intersecs++;
-			t_min = std::min(int2, t_min);
-		}
-	
-		if (intersecs < 2) {
-			Point3f top_center = Base + axis * height;
-			Plane plane_base(axis, Base, this->BaseColor);
-			Plane plane_top(axis, top_center, this->BaseColor);
-			const auto [intersects_base,t_base,base_normal] = plane_base.Intersects(ray);
-			if (intersects_base && fabs(t_base) < t_min) {
-				const float t = t_base;
-				Point3f intpoint = ray.getPoint(t);
-				Vector3f difBaseP = intpoint - Base;
+			const float t = t_base;
+			Point3f intpoint = ray.getPoint(t);
+			Vector3f difBaseP = intpoint - Base;
 
-				if (glm::length(difBaseP)<= radius) {
-					basesIsTheClosestIntersected = true;
-					intersecs++;
-					t_min = std::min(fabs(t), t_min);
-				}
-				nx = base_normal.x;
-				ny = base_normal.y;
-				nz = base_normal.z;
+			if (length(difBaseP) <= radius)
+			{
+				basesIsTheClosestIntersected = true;
+				intersecs++;
+				t_min = std::min(fabs(t), t_min);
+			}
+			nx = base_normal.x;
+			ny = base_normal.y;
+			nz = base_normal.z;
+		}
 
+		const auto [intersects_top, t_top,top_normal] = plane_top.Intersects(ray);
+		if (intersects_top && fabs(t_top) < t_min)
+		{
+			const float t = t_top;
+			Point3f intpoint = ray.getPoint(t);
+			Vector3f difBaseP = Base - intpoint;
+
+			if (length(difBaseP) <= radius)
+			{
+				basesIsTheClosestIntersected = true;
+				intersecs++;
+				t_min = std::min(fabs(t), t_min);
 			}
 
-			const auto [intersects_top, t_top,top_normal] = plane_top.Intersects(ray);
-			if (intersects_top && fabs(t_top)<t_min) {
-				const float t = t_top;
-				Point3f intpoint = ray.getPoint(t);
-				Vector3f difBaseP = Base - intpoint;
-
-				if (glm::length(difBaseP) <= radius) {
-					basesIsTheClosestIntersected = true;
-					intersecs++;
-					t_min = std::min(fabs(t), t_min);
-				}
-
-				nx = top_normal.x;
-				ny = top_normal.y;
-				nz = top_normal.z;
-			}
-	
+			nx = top_normal.x;
+			ny = top_normal.y;
+			nz = top_normal.z;
 		}
-		
-		if (intersecs > 0 && !basesIsTheClosestIntersected) {
-			Vector3f normal=getNormal(ray.getPoint(t_min));
-			nx = normal.x;
-			ny = normal.y;
-			nz = normal.z;
-		}
-	
+	}
+
+	if (intersecs > 0 && !basesIsTheClosestIntersected)
+	{
+		Vector3f normal = getNormal(ray.getPoint(t_min));
+		nx = normal.x;
+		ny = normal.y;
+		nz = normal.z;
+	}
 
 
-		return { intersecs > 0, t_min,Vector3f(nx,ny,nz)};
-
+	return {intersecs > 0, t_min, Vector3f(nx, ny, nz)};
 }
 
 Color Cylinder::getColor()
@@ -119,14 +121,16 @@ void Cylinder::ApplyTransformation()
 	axis = VectorUtilities::normalizeCopy(eixo);
 	computeAABB();
 }
-void Cylinder::computeAABB() {
+
+void Cylinder::computeAABB()
+{
 	using namespace VectorUtilities;
 	Matrix4x4 matrix;
 	matrix.ConcatRotateX(PI / 2);
 	Vector3f xAxisProjection = toVector3f(matrix * Vector4f(axis.x, axis.y, axis.z, 0));
 	matrix.loadIdentity();
 	matrix.ConcatRotateZ(PI / 2);
-	Vector3f zAxisProjection = toVector3f((matrix * Vector4f(axis.x,axis.y,axis.z, 0)));
+	Vector3f zAxisProjection = toVector3f((matrix * Vector4f(axis.x, axis.y, axis.z, 0)));
 	Point3f topPoint = axis * height;
 
 	std::vector<float> elementsX{
@@ -137,7 +141,8 @@ void Cylinder::computeAABB() {
 		(topPoint + xAxisProjection * radius).x,
 		(topPoint + xAxisProjection * (-1.0f * radius)).x,
 		(topPoint + zAxisProjection * radius).x,
-		(topPoint + zAxisProjection * (-1.0f * radius)).x };
+		(topPoint + zAxisProjection * (-1.0f * radius)).x
+	};
 	std::vector<float> elementsY{
 		(xAxisProjection * radius).y,
 		(xAxisProjection * (-1.0f * radius)).y,
@@ -146,7 +151,8 @@ void Cylinder::computeAABB() {
 		(topPoint + xAxisProjection * radius).y,
 		(topPoint + xAxisProjection * (-1.0f * radius)).y,
 		(topPoint + zAxisProjection * radius).y,
-		(topPoint + zAxisProjection * (-1.0f * radius)).y };
+		(topPoint + zAxisProjection * (-1.0f * radius)).y
+	};
 
 	std::vector<float> elementsZ{
 		(xAxisProjection * radius).z,
@@ -156,7 +162,8 @@ void Cylinder::computeAABB() {
 		(topPoint + xAxisProjection * radius).z,
 		(topPoint + xAxisProjection * (-1.0f * radius)).z,
 		(topPoint + zAxisProjection * radius).z,
-		(topPoint + zAxisProjection * (-1.0f * radius)).z };
+		(topPoint + zAxisProjection * (-1.0f * radius)).z
+	};
 
 	this->maximalPoint = Point3f(
 		*std::max_element(elementsX.begin(), elementsX.end()),
@@ -169,22 +176,22 @@ void Cylinder::computeAABB() {
 		*std::min_element(elementsZ.begin(), elementsZ.end())
 	);
 
-	this->aabb = AABB(this->minimalPoint,this->maximalPoint);
+	this->aabb = AABB(this->minimalPoint, this->maximalPoint);
 }
+
 Vector3f Cylinder::getNormal(const Point3f p)
 {
 	using namespace VectorUtilities;
-	Vector3f W= p-Base;
-	Vector3f N = (W-axis*dotProduct(W,axis));
-	return  glm::normalize(N);;
-
+	Vector3f W = p - Base;
+	Vector3f N = (W - axis * dotProduct(W, axis));
+	return normalize(N);
 }
 
 void Cylinder::ApplyCamera(const Matrix4x4 m)
 {
-	Point3f top =m*(Base + axis * height);
-	Base = m*Base;
-	Vector3f eixo = glm::normalize(top - Base);
+	Point3f top = m * (Base + axis * height);
+	Base = m * Base;
+	Vector3f eixo = normalize(top - Base);
 	this->axis = eixo;
 	computeAABB();
 	//

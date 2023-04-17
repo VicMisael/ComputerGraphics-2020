@@ -1,6 +1,6 @@
 #ifndef _DEFINITIONSHEADER
 #define _DEFINITIONSHEADER
-#if defined _M_AMD64 || __x86_64__ 
+#if defined _M_AMD64 || __x86_64__
 #ifndef _USESIMDINTRINSICS
 //#define _USESIMDINTRINSICS
 #ifndef _USESSE4DOTPRODUCT
@@ -12,7 +12,7 @@
 #ifndef _RENDERWITHSHADOWS_
 //#define _RENDERWITHSHADOWS_
 #endif
-#define screenwidthheight 900
+#define screenwidthheight 600
 #ifndef _SUPERSAMPLE_
 //#define _SUPERSAMPLE_
 //#define SSRate 2
@@ -23,8 +23,9 @@
 //#define SubSSampleRate 6
 #endif
 #include <cmath>
-template<typename T>
-constexpr auto inverseSquare(T _x) { return 1/std::sqrt(_x);; }
+
+template <typename T>
+constexpr auto inverseSquare(T _x) { return 1 / std::sqrt(_x); }
 
 
 #define GLM_FORCE_SWIZZLE

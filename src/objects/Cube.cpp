@@ -15,7 +15,6 @@ Cube::Cube(float height, float width, float depth, Color c)
 		face[3] = p0 + up * height;
 
 
-
 	face2[0] = face[0] + forward * depth;
 	face2[1] = face[1] + forward * depth;
 	face2[2] = face[2] + forward * depth;
@@ -24,9 +23,9 @@ Cube::Cube(float height, float width, float depth, Color c)
 	this->c = c;
 	CalculateTriangles();
 }
+
 void Cube::CalculateTriangles()
 {
-
 	int i = 0;
 	//Interseção na face frontal
 	triangles[i++] = Triangle(face[2], face[1], face[0]);
@@ -46,31 +45,31 @@ void Cube::CalculateTriangles()
 	//Interseção na Lateral 1
 	triangles[i++] = Triangle(face[1], face[2], face2[1]);
 	triangles[i] = Triangle(face[2], face2[2], face2[1]);
-
 }
 
 
 std::tuple<int, float, Vector3f> Cube::Intersects(const Ray& ray)
-{	
-	if (this->aabb.intersects(ray)) {
+{
+	if (this->aabb.intersects(ray))
+	{
 		float t_min = INFINITY;
 		using namespace std;
 		using namespace VectorUtilities;
 		int intersectionCount = 0;
 		for (Triangle t : triangles)
 		{
-				const auto [intersects_t,t_tmin,normal]=t.Intersects(ray);
-				if (intersects_t && VectorUtilities::dotProduct(ray.D,normal)<0)
+			const auto [intersects_t,t_tmin,normal] = t.Intersects(ray);
+			if (intersects_t && dotProduct(ray.D, normal) < 0)
+			{
+				if (t_tmin < t_min)
 				{
-					if (t_tmin < t_min)
-					{
-						t_min = t_tmin;
-						this->Normal = normal;
-					}
-					intersectionCount++;
+					t_min = t_tmin;
+					this->Normal = normal;
 				}
+				intersectionCount++;
+			}
 		}
-		return { intersectionCount > 0 ,t_min,this->Normal};
+		return {intersectionCount > 0, t_min, this->Normal};
 	}
 	return NO_INTERSECT;
 }
@@ -97,21 +96,25 @@ Vector3f Cube::getNormal(const Point3f p)
 
 void Cube::ApplyCamera(const Matrix4x4 mm)
 {
-	for (Triangle& t : triangles) {
+	for (Triangle& t : triangles)
+	{
 		t.ApplyCamera(mm);
 	}
 	computeAABB();
 }
 
-void Cube::computeAABB() {
+void Cube::computeAABB()
+{
 	float xmin = HUGE_VALF;
 	float ymin = HUGE_VALF;
 	float zmin = HUGE_VALF;
 	float xmax = -1 * HUGE_VALF;
 	float ymax = -1 * HUGE_VALF;
 	float zmax = -1 * HUGE_VALF;
-	for (Triangle t : triangles) {
-		for (Vector3f vertex : t.Vertex) {
+	for (Triangle t : triangles)
+	{
+		for (Vector3f vertex : t.Vertex)
+		{
 			xmax = vertex.x > xmax ? vertex.x : xmax;
 			ymax = vertex.y > ymax ? vertex.y : ymax;
 			zmax = vertex.z > zmax ? vertex.z : zmax;

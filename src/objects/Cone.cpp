@@ -3,149 +3,150 @@
 #include <algorithm>
 #include "Plane.hpp"
 
-Cone::Cone( Vector3f axis, float height, float radius, Color c)
+Cone::Cone(Vector3f axis, float height, float radius, Color c)
 {
-    this->center = Point3f(0, 0, 0);
-    // Eixo que aponta para o topo do cone.
-    this->axis = VectorUtilities::normalizeCopy(axis);
-    this->vertice = center+(axis*height);
-    this->height = height;
-    this->radius = radius;
-    this->c = c;
-    float hipothenuse = sqrtf((radius * radius) + (height * height));
-    this->cosTheta = height / hipothenuse;
-    this->cos2Theta= powf(cosTheta, 2);
+	this->center = Point3f(0, 0, 0);
+	// Eixo que aponta para o topo do cone.
+	this->axis = VectorUtilities::normalizeCopy(axis);
+	this->vertice = center + (axis * height);
+	this->height = height;
+	this->radius = radius;
+	this->c = c;
+	float hipothenuse = sqrtf((radius * radius) + (height * height));
+	this->cosTheta = height / hipothenuse;
+	this->cos2Theta = powf(cosTheta, 2);
 }
 
-std::tuple<int, float, Vector3f>Cone::Intersects(const Ray& ray)
+std::tuple<int, float, Vector3f> Cone::Intersects(const Ray& ray)
 {
-        float t_min = INFINITY;
-        int intersections = 0;
-        Point3f Po = ray.O;
+	float t_min = INFINITY;
+	int intersections = 0;
+	Point3f Po = ray.O;
 
-        const Vector3f d = ray.D;
-        const Vector3f n = Vector3f(axis);
-        const Vector3f v = (vertice-Po);
-    
-        using namespace VectorUtilities;
-        using namespace std;
-    
+	const Vector3f d = ray.D;
+	const auto n = Vector3f(axis);
+	const Vector3f v = (vertice - Po);
+
+	using namespace VectorUtilities;
+	using namespace std;
 
 
-        const float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2Theta;
-        const float b = dotProduct(v, d) * cos2Theta - dotProduct(v, n) * dotProduct(d, n);
-        const float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2Theta;
-        const float delta = b * b - (a * c);
-        if (delta > 0)
-        {
-            const float sqrtDelta = sqrtf(delta);
-            float t1= (-b + sqrtDelta)/ a;
-            float t2 =(-b - sqrtDelta)/ a;
-            Point3f p1 = ray.getPoint(t1);
-            Point3f p2 = ray.getPoint(t2);
-            float dp1 = dotProduct(vertice - p1, n);
-            float dp2 = dotProduct(vertice - p2, n);
-            if ( (0 <= dp1 && dp1 <= height)) {
-               
-                intersections++;
-                t_min = std::min(t1,t_min);
-            }
-            if ((0 <= dp2 && dp2 <= height))
-            {
-                intersections++;
-                t_min = std::min(t2, t_min);
-            }
+	const float a = (dotProduct(d, n) * dotProduct(d, n)) - dotProduct(d, d) * cos2Theta;
+	const float b = dotProduct(v, d) * cos2Theta - dotProduct(v, n) * dotProduct(d, n);
+	const float c = (dotProduct(v, n) * dotProduct(v, n)) - dotProduct(v, v) * cos2Theta;
+	const float delta = b * b - (a * c);
+	if (delta > 0)
+	{
+		const float sqrtDelta = sqrtf(delta);
+		float t1 = (-b + sqrtDelta) / a;
+		float t2 = (-b - sqrtDelta) / a;
+		Point3f p1 = ray.getPoint(t1);
+		Point3f p2 = ray.getPoint(t2);
+		float dp1 = dotProduct(vertice - p1, n);
+		float dp2 = dotProduct(vertice - p2, n);
+		if ((0 <= dp1 && dp1 <= height))
+		{
+			intersections++;
+			t_min = std::min(t1, t_min);
+		}
+		if ((0 <= dp2 && dp2 <= height))
+		{
+			intersections++;
+			t_min = std::min(t2, t_min);
+		}
+	}
 
-        }
-    
-        return { intersections > 0,t_min,getNormal(ray.getPoint(t_min))};
+	return {intersections > 0, t_min, getNormal(ray.getPoint(t_min))};
 }
 
 void Cone::ApplyTransformation()
 {
-    using namespace VectorUtilities;
-    Point4f base4(center, 1);
-    base4 = transFMat * base4;
-    Vector4f axis4(axis, 0);
-    //axis4 = transFMat * axis4;
-    Point4f vertice4(vertice, 1);
-    vertice4 = transFMat * vertice4;
-    center = toVector3f(base4);
-    //axis = axis4.toVector3f();
-    vertice = toVector3f(vertice4);
-    axis = vertice - center;
-    float hipothenuse = sqrtf((radius * radius) + (height * height));
-    this->cosTheta = height / hipothenuse;
-    computeAABB();
+	using namespace VectorUtilities;
+	Point4f base4(center, 1);
+	base4 = transFMat * base4;
+	Vector4f axis4(axis, 0);
+	//axis4 = transFMat * axis4;
+	Point4f vertice4(vertice, 1);
+	vertice4 = transFMat * vertice4;
+	center = toVector3f(base4);
+	//axis = axis4.toVector3f();
+	vertice = toVector3f(vertice4);
+	axis = vertice - center;
+	float hipothenuse = sqrtf((radius * radius) + (height * height));
+	this->cosTheta = height / hipothenuse;
+	computeAABB();
 }
 
 Vector3f Cone::getNormal(const Point3f p)
 {
-    Vector3f v = glm::normalize(vertice - p);
-    Vector3f Normal = glm::normalize(axis - v*cosTheta);
-    return Normal;
+	Vector3f v = normalize(vertice - p);
+	Vector3f Normal = normalize(axis - v * cosTheta);
+	return Normal;
 }
 
 void Cone::ApplyCamera(const Matrix4x4 mm44)
 {
-    center = mm44 * center;
-    vertice = mm44 * vertice;
-    Vector3f eixo=glm::normalize(vertice - center);
-    this->axis = eixo;
-    computeAABB();
-    //std::cout << axis.length()<<std::endl;
-    //vertice = mm44*vertice;
+	center = mm44 * center;
+	vertice = mm44 * vertice;
+	Vector3f eixo = normalize(vertice - center);
+	this->axis = eixo;
+	computeAABB();
+	//std::cout << axis.length()<<std::endl;
+	//vertice = mm44*vertice;
 }
 
 void Cone::computeAABB()
 {
-    using namespace VectorUtilities;
-    Matrix4x4 matrix;
-    matrix.ConcatRotateX(PI / 2);
-    Vector3f xAxisProjection = toVector3f((matrix * Vector4f(axis, 0)));
-    matrix.loadIdentity();
-    matrix.ConcatRotateZ(PI / 2);
-    Vector3f zAxisProjection = toVector3f((matrix * Vector4f(axis, 0)));
-    Point3f topPoint = axis * height;
-    std::vector<float> elementsX{
-    (xAxisProjection * radius).x,
-    (xAxisProjection * (-1.0f * radius)).x,
-    (zAxisProjection * radius).x,
-    (zAxisProjection * (-1.0f * radius)).x,
-    (topPoint + xAxisProjection * radius).x,
-    (topPoint + xAxisProjection * (-1.0f * radius)).x,
-    (topPoint + zAxisProjection * radius).x,
-    (topPoint + zAxisProjection * (-1.0f * radius)).x };
-    std::vector<float> elementsY{
-        (xAxisProjection * radius).y,
-        (xAxisProjection * (-1.0f * radius)).y,
-        (zAxisProjection * radius).y,
-        (zAxisProjection * (-1.0f * radius)).y,
-        (topPoint + xAxisProjection * radius).y,
-        (topPoint + xAxisProjection * (-1.0f * radius)).y,
-        (topPoint + zAxisProjection * radius).y,
-        (topPoint + zAxisProjection * (-1.0f * radius)).y };
+	using namespace VectorUtilities;
+	Matrix4x4 matrix;
+	matrix.ConcatRotateX(PI / 2);
+	Vector3f xAxisProjection = toVector3f((matrix * Vector4f(axis, 0)));
+	matrix.loadIdentity();
+	matrix.ConcatRotateZ(PI / 2);
+	Vector3f zAxisProjection = toVector3f((matrix * Vector4f(axis, 0)));
+	Point3f topPoint = axis * height;
+	std::vector<float> elementsX{
+		(xAxisProjection * radius).x,
+		(xAxisProjection * (-1.0f * radius)).x,
+		(zAxisProjection * radius).x,
+		(zAxisProjection * (-1.0f * radius)).x,
+		(topPoint + xAxisProjection * radius).x,
+		(topPoint + xAxisProjection * (-1.0f * radius)).x,
+		(topPoint + zAxisProjection * radius).x,
+		(topPoint + zAxisProjection * (-1.0f * radius)).x
+	};
+	std::vector<float> elementsY{
+		(xAxisProjection * radius).y,
+		(xAxisProjection * (-1.0f * radius)).y,
+		(zAxisProjection * radius).y,
+		(zAxisProjection * (-1.0f * radius)).y,
+		(topPoint + xAxisProjection * radius).y,
+		(topPoint + xAxisProjection * (-1.0f * radius)).y,
+		(topPoint + zAxisProjection * radius).y,
+		(topPoint + zAxisProjection * (-1.0f * radius)).y
+	};
 
-    std::vector<float> elementsZ{
-        (xAxisProjection * radius).z,
-        (xAxisProjection * (-1.0f * radius)).z,
-        (zAxisProjection * radius).z,
-        (zAxisProjection * (-1.0f * radius)).z,
-        (topPoint + xAxisProjection * radius).z,
-        (topPoint + xAxisProjection * (-1.0f * radius)).z,
-        (topPoint + zAxisProjection * radius).z,
-        (topPoint + zAxisProjection * (-1.0f * radius)).z };
+	std::vector<float> elementsZ{
+		(xAxisProjection * radius).z,
+		(xAxisProjection * (-1.0f * radius)).z,
+		(zAxisProjection * radius).z,
+		(zAxisProjection * (-1.0f * radius)).z,
+		(topPoint + xAxisProjection * radius).z,
+		(topPoint + xAxisProjection * (-1.0f * radius)).z,
+		(topPoint + zAxisProjection * radius).z,
+		(topPoint + zAxisProjection * (-1.0f * radius)).z
+	};
 
-    Point3f maximalPoint = Point3f(
-        *std::max_element(elementsX.begin(), elementsX.end()),
-        *std::max_element(elementsY.begin(), elementsY.end()),
-        *std::max_element(elementsZ.begin(), elementsZ.end())
-    );
-    Point3f minimalPoint = Point3f(
-        *std::min_element(elementsX.begin(), elementsX.end()),
-        *std::min_element(elementsY.begin(), elementsY.end()),
-        *std::min_element(elementsZ.begin(), elementsZ.end())
-    );
+	auto maximalPoint = Point3f(
+		*std::max_element(elementsX.begin(), elementsX.end()),
+		*std::max_element(elementsY.begin(), elementsY.end()),
+		*std::max_element(elementsZ.begin(), elementsZ.end())
+	);
+	auto minimalPoint = Point3f(
+		*std::min_element(elementsX.begin(), elementsX.end()),
+		*std::min_element(elementsY.begin(), elementsY.end()),
+		*std::min_element(elementsZ.begin(), elementsZ.end())
+	);
 
-    this->aabb = AABB(minimalPoint, maximalPoint);
+	this->aabb = AABB(minimalPoint, maximalPoint);
 }

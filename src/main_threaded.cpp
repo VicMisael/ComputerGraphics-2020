@@ -9,11 +9,12 @@
 #include <random>
 #include <glm/ext/matrix_transform.hpp>
 
-#include "sampler/circle_point_sampler.h"
 #include "sampler/diagonal_point_sampler.h"
-#include "sampler/horizontal_point_sampler.h"
+#include "sampler/equidistant_point_sampler.h"
+#include "sampler/mt19937_point_sampler.h"
 #include "sampler/random_point_sampler.h"
 #include "sampler/vertical_point_sampler.h"
+#include "sampler/horizontal_point_sampler.h"
 
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
@@ -42,8 +43,8 @@ int main(int argc, char** argv)
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	const uint32_t numsamples = 32;
-	sampler* sampler = new vertical_point_sampler(numsamples);
+	const uint32_t numsamples = 16;
+	sampler* sampler = new equidistant_point_sampler(numsamples);
 	auto draw = [&]()
 	{
 		while (run)
@@ -63,8 +64,8 @@ int main(int argc, char** argv)
 				for (int x = -Cw / 2; x < Cw / 2; x++)
 				{
 					Color color;
-					const auto &points = sampler->generate_points();
-					for (const std::tuple<float, float> &sample_point : points)
+					const auto& points = sampler->generate_points();
+					for (const std::tuple<float, float>& sample_point : points)
 					{
 						constexpr auto origin = Point3f(0, 0, 0);
 						const auto [x_sample, y_sample] = sample_point;

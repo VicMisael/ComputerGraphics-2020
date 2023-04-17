@@ -180,8 +180,9 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\sampler\equidistant_point_sampler.cpp" />
     <ClCompile Include="src\sampler\horizontal_point_sampler.cpp" />
-    <ClCompile Include="src\sampler\circle_point_sampler.cpp" />
+    <ClCompile Include="src\sampler\mt19937_point_sampler.cpp" />
     <ClCompile Include="src\sampler\diagonal_point_sampler.cpp" />
     <ClCompile Include="src\sampler\random_point_sampler.cpp" />
     <ClCompile Include="src\main_threaded.cpp" />
@@ -203,8 +204,9 @@
     <ClCompile Include="src\sampler\vertical_point_sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\sampler\equidistant_point_sampler.h" />
     <ClInclude Include="src\sampler\horizontal_point_sampler.h" />
-    <ClInclude Include="src\sampler\circle_point_sampler.h" />
+    <ClInclude Include="src\sampler\mt19937_point_sampler.h" />
     <ClInclude Include="src\sampler\diagonal_point_sampler.h" />
     <ClInclude Include="src\sampler\random_point_sampler.h" />
     <ClInclude Include="src\sampler\sampler.h" />

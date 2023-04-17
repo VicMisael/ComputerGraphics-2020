@@ -1,4 +1,3 @@
-
 #ifndef _WORLD_
 #define _WORLD_
 #include "BaseObject.hpp"
@@ -21,18 +20,20 @@
 #define GREEN Color(0,255,0)
 #define BLUE Color(0,0,255)
 
-class World{
-     std::vector<BaseObject*> objects;
-     std::vector<Light*> lights;
-     Camera *camera;
-     void init();
-     bool renderShadows=true;
-     float ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f& V, const float s);
+class World
+{
+	std::vector<BaseObject*> objects;
+	std::vector<Light*> lights;
+	Camera* camera;
+	void init();
+	bool renderShadows = true;
+	float ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f& V, float s);
+
 public:
-    World();
-    World(const Camera c);
-    void SetShadowsOn(bool shadows);
-    Color bgColor;
-    Color computeColor(Ray &ray,float vz,unsigned int recursionDepth);
-};  
+	World();
+	World(Camera c);
+	void SetShadowsOn(bool shadows);
+	Color bgColor;
+	Color computeColor(Ray& ray, float vz, unsigned int recursionDepth);
+};
 #endif
