@@ -9,8 +9,8 @@ class sampler
 public:
 	const unsigned int num_samples;
 
-	sampler(unsigned int num) : num_samples(num)
+	sampler(unsigned const int num) : num_samples(num)
 	{
-	};
+	}
 	virtual std::vector<std::tuple<float, float>> generate_points() = 0;
 };

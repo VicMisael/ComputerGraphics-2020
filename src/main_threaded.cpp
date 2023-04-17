@@ -37,20 +37,20 @@ int main(int argc, char** argv)
 	//auto window = new Color[screenwidthheight][screenwidthheight];
 	auto rgba = new uint32_t[screenwidthheight * screenwidthheight];
 	unsigned int reflectionDepth = 4;
-	float vcx = 6;
-	float vcy = 0;
-	float vcz = -16;
+	float vcx = 2;
+	float vcy = 3;
+	float vcz = -10;
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	const uint32_t numsamples = 16;
-	sampler* sampler = new equidistant_point_sampler(numsamples);
+	const uint32_t numsamples = 100;
+	sampler* sampler = new mt19937_point_sampler(numsamples);
 	auto draw = [&]()
 	{
 		while (run)
 		{
 			auto eye = Point3f(vcx, vcy, vcz);
-			auto at = Point3f(6, 3, 2);
+			auto at = Point3f(7, 5, 6);
 			auto up4 = Point4f(0.0f, 1.0f, 0.0f, 0.0f);
 			Point3f up = up4.xyz;
 			auto camera = Camera(eye, at, up);
@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 					{
 						constexpr auto origin = Point3f(0, 0, 0);
 						const auto [x_sample, y_sample] = sample_point;
-						const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 1);
+						const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 0.50f);
 						auto r = Ray(origin, origin - point);
 						color += world.computeColor(r, 1, reflectionDepth);
 					}
