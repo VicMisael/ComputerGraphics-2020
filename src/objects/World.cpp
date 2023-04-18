@@ -17,7 +17,7 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 	using namespace VectorUtilities;
 	float intensity = 0;
 	Vector3f lVec;
-	float distanceFactor = 1;
+	float distanceFactor = 1.0f;
 	for (Light* l : lights)
 	{
 		switch (l->lt)
@@ -32,6 +32,7 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 			break;
 		case LightType::directional:
 			lVec = l->getDirection();
+			//distanceFactor = inverseSquare(length(lVec));
 			break;
 		default:
 			break;
@@ -83,26 +84,29 @@ void inline World::init()
 	auto lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.1);
 	lights.push_back(lambient);
 
-	auto l2 = new Light(Point3f(0, 7, -3), Point3f(0, 0, 0), 0.5);
+	auto l2 = new Light(Point3f(-60, 60, -100), Point3f(0, 0, 0), 5);
 	l2->SetType(LightType::point);
 	lights.push_back(l2);
 
-	auto l3 = new Light(Point3f(3, 1.2, 0), Point3f(0, 0, 0), 1);
+	auto l3 = new Light(Point3f(3, 12, -4), Point3f(0, 0, 0), 1);
 	l3->SetType(LightType::point);
 	lights.push_back(l3);
 
+	auto l4 = new Light(Point3f(3, 12, 15), Point3f(0, -1, 0), 1);
+	l4->SetType(LightType::directional);
+	lights.push_back(l4);
+
+
+
 	auto p = new Plane(Vector3f(0, 1, 0), Point3f(0, -2, 0), Color(255, 226, 198));
-	p->setReflectivness(0.5);
+	p->setReflectivness(0.8);
 	p->setSpecular(1000);
 	objects.push_back(p);
 
 	auto p2 = new Plane(Vector3f(0, -1, -1), Point3f(0, 5, 10), WHITE);
-	p2->setReflectivness(0.6);
+	p2->setReflectivness(0.7);
 	p2->setSpecular(300);
 	objects.push_back(p2);
-
-
-	/*
 
 	Cube *building = new Cube(1, 1, 1, Color(169, 169, 169));
 	building->Scale(2, 4, 1);
@@ -137,7 +141,7 @@ void inline World::init()
 	buildin3->Translate(-2, -0.5, 3);
 	buildin3->setReflectivness(.07);
 	objects.push_back(buildin3);
-	*/
+	
 	//Objetos extras
 	auto cBola = new Circle(1, WHITE);
 	cBola->setSpecular(1000);
@@ -146,24 +150,22 @@ void inline World::init()
 	objects.push_back(cBola);
 
 	auto cBola2 = new Circle(1, Color(255, 255, 0));
-	cBola2->Translate(3, 9, -13);
-	cBola2->setReflectivness(0.5);
+	cBola2->Translate(3, 9, 0);
+	cBola2->setReflectivness(0.9);
 	objects.push_back(cBola2);
 
 	auto cBola3 = new Circle(1, Color(255, 255, 0));
-	cBola3->Translate(0, 7, -13);
+	cBola3->Translate(0, 5, 13);
 	cBola3->setReflectivness(0.5);
 	objects.push_back(cBola3);
 
 
 	auto cBola4 = new Circle(1, Color(255, 255, 0));
-	cBola4->Translate(1, 10, 2);
+	cBola4->Translate(1, 10, -2);
 	cBola4->setReflectivness(0.5);
 	objects.push_back(cBola4);
 
-	auto lt = new Light(Point3f(0, 7, 0), Vector3f(1, -1, 1), 1);
-	lt->SetType(LightType::point);
-	lights.push_back(lt);
+
 
 	//Snowman
 	//Diferen�a do raio do primeiro pro 0

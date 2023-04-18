@@ -24,7 +24,7 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 	//std::cout << "X: " << vx << "Y:" << vy << std::endl;
 	return Point3f(vx, vy, vz);
 }
-
+constexpr int screenwidthheight = 1000;
 int main(int argc, char** argv)
 {
 	std::cout << std::thread::hardware_concurrency() << std::endl;
@@ -35,22 +35,23 @@ int main(int argc, char** argv)
 	                                             screenwidthheight, screenwidthheight);
 	bool run = true;
 	//auto window = new Color[screenwidthheight][screenwidthheight];
-	auto rgba = new uint32_t[screenwidthheight * screenwidthheight];
-	unsigned int reflectionDepth = 4;
+	const auto rgba = new uint32_t[screenwidthheight * screenwidthheight];
+	unsigned int reflectionDepth = 6;
 	float vcx = 2;
 	float vcy = 3;
 	float vcz = -10;
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	const uint32_t numsamples = 100;
+	constexpr uint32_t numsamples = 4;
 	sampler* sampler = new mt19937_point_sampler(numsamples);
+
 	auto draw = [&]()
 	{
 		while (run)
 		{
 			auto eye = Point3f(vcx, vcy, vcz);
-			auto at = Point3f(7, 5, 6);
+			auto at = Point3f(10, 5, 13);
 			auto up4 = Point4f(0.0f, 1.0f, 0.0f, 0.0f);
 			Point3f up = up4.xyz;
 			auto camera = Camera(eye, at, up);
@@ -58,18 +59,19 @@ int main(int argc, char** argv)
 			world.SetShadowsOn(shadows);
 			//Get timings
 			auto t1 = std::chrono::high_resolution_clock::now();
-			//const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
+			const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
+			const auto& points = sampler->generate_points();
 			for (int y = -Ch / 2; y < Ch / 2; y++)
 			{
 				for (int x = -Cw / 2; x < Cw / 2; x++)
 				{
 					Color color;
-					const auto& points = sampler->generate_points();
+
 					for (const std::tuple<float, float>& sample_point : points)
 					{
-						constexpr auto origin = Point3f(0, 0, 0);
+						const auto origin = Point3f(0, 0, 0);
 						const auto [x_sample, y_sample] = sample_point;
-						const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 0.50f);
+						const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 1.0f);
 						auto r = Ray(origin, origin - point);
 						color += world.computeColor(r, 1, reflectionDepth);
 					}

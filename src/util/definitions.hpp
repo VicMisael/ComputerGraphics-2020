@@ -12,16 +12,7 @@
 #ifndef _RENDERWITHSHADOWS_
 //#define _RENDERWITHSHADOWS_
 #endif
-#define screenwidthheight 900
-#ifndef _SUPERSAMPLE_
-//#define _SUPERSAMPLE_
-//#define SSRate 2
-#endif
 
-#ifndef _SUBSAMPLE_
-//#define _SUBSAMPLE_
-//#define SubSSampleRate 6
-#endif
 #include <cmath>
 
 template <typename T>
