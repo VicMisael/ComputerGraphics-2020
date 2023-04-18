@@ -43,24 +43,25 @@ int main(int argc, char** argv)
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	constexpr uint32_t numsamples = 4;
-	sampler* sampler = new mt19937_point_sampler(numsamples);
+	constexpr uint32_t numsamples = 8;
+	sampler* sampler = new equidistant_point_sampler(numsamples);
 
+	auto eye = Point3f(vcx, vcy, vcz);
+	auto at = Point3f(10, 5, 13);
+	auto up4 = Point4f(0.0f, 1.0f, 0.0f, 0.0f);
+	Point3f up = up4.xyz;
+	auto camera = Camera(eye, at, up);
+	World world(camera);
+	world.SetShadowsOn(shadows);
+	//Get timings
+	auto t1 = std::chrono::high_resolution_clock::now();
+	const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
+	const auto& points = sampler->generate_points();
 	auto draw = [&]()
 	{
 		while (run)
 		{
-			auto eye = Point3f(vcx, vcy, vcz);
-			auto at = Point3f(10, 5, 13);
-			auto up4 = Point4f(0.0f, 1.0f, 0.0f, 0.0f);
-			Point3f up = up4.xyz;
-			auto camera = Camera(eye, at, up);
-			World world(camera);
-			world.SetShadowsOn(shadows);
-			//Get timings
-			auto t1 = std::chrono::high_resolution_clock::now();
-			const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
-			const auto& points = sampler->generate_points();
+
 			for (int y = -Ch / 2; y < Ch / 2; y++)
 			{
 				for (int x = -Cw / 2; x < Cw / 2; x++)

@@ -118,6 +118,8 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -171,17 +173,20 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <Optimization>Full</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <WarningLevel>Level2</WarningLevel>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\sampler\equidistant_point_sampler.cpp" />
     <ClCompile Include="src\sampler\horizontal_point_sampler.cpp" />
+    <ClCompile Include="src\sampler\main_sampler.cpp" />
     <ClCompile Include="src\sampler\mt19937_point_sampler.cpp" />
     <ClCompile Include="src\sampler\diagonal_point_sampler.cpp" />
     <ClCompile Include="src\sampler\random_point_sampler.cpp" />

@@ -7,7 +7,7 @@ std::vector<std::tuple<float, float>> vertical_point_sampler::generate_points()
 	for (unsigned int i = 1; i <= num_samples; i++)
 	{
 		const float val = static_cast<float>(i) / static_cast<float>(num_samples);
-		points.emplace_back(std::tuple(0.5f, val));
+		points.emplace_back(0.5f, val);
 	}
 	return points;
 }
