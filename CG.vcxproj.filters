@@ -81,9 +81,6 @@
     <ClCompile Include="src\sampler\equidistant_point_sampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\sampler\main_sampler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\Circle.hpp">

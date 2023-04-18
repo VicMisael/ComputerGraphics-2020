@@ -186,7 +186,6 @@
   <ItemGroup>
     <ClCompile Include="src\sampler\equidistant_point_sampler.cpp" />
     <ClCompile Include="src\sampler\horizontal_point_sampler.cpp" />
-    <ClCompile Include="src\sampler\main_sampler.cpp" />
     <ClCompile Include="src\sampler\mt19937_point_sampler.cpp" />
     <ClCompile Include="src\sampler\diagonal_point_sampler.cpp" />
     <ClCompile Include="src\sampler\random_point_sampler.cpp" />
