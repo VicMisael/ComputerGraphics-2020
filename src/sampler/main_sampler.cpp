@@ -3,23 +3,28 @@
 #include <SDL2/SDL.h>
 
 #include "equidistant_point_sampler.h"
-/*
+#include "diagonal_point_sampler.h"
+#include "mt19937_point_sampler.h"
+#include "random_point_sampler.h"
+#include "vertical_point_sampler.h"
+#include "horizontal_point_sampler.h"
 constexpr int screenwidthheight = 400;
-int main(int argc, char** argv)
+int _main(int argc, char** argv)
 {
 	bool run = true;
+	SDL_Window* win = nullptr;
+	win = SDL_CreateWindow("Sampler", 100, 100, screenwidthheight, screenwidthheight, 0);
+	SDL_Renderer* renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
+	SDL_Texture* framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING,
+		screenwidthheight, screenwidthheight);
 	while (run) {
-		SDL_Window* win = nullptr;
-		win = SDL_CreateWindow("RayCaster", 100, 100, screenwidthheight, screenwidthheight, 0);
-		SDL_Renderer* renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-		SDL_Texture* framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING,
-			screenwidthheight, screenwidthheight);
+
 
 		int Cw = screenwidthheight;
 		int Ch = screenwidthheight;
 		const auto rgba = new uint32_t[screenwidthheight * screenwidthheight];
 		constexpr int numsamples = 90;
-		sampler* sampler = new equidistant_point_sampler(numsamples);
+		sampler* sampler = new diagonal_point_sampler(numsamples);
 
 		const auto& points = sampler->generate_points();
 		for (uint16_t y = 0; y < Ch; y++) {
@@ -58,4 +63,3 @@ int main(int argc, char** argv)
 		}
 	}
 }
-*/
