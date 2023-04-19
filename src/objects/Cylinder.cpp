@@ -34,8 +34,8 @@ std::tuple<int, float, Vector3f> Cylinder::Intersects(const Ray& ray)
 	{
 		return NO_INTERSECT;
 	}
-	float int1 = (-1 * b + sqrtf(delta)) / a;
-	float int2 = (-1 * b - sqrtf(delta)) / a;
+	const float int1 = (-1 * b + sqrtf(delta)) / a;
+	const float int2 = (-1 * b - sqrtf(delta)) / a;
 	Point3f p0r = ray.getPoint(int1);
 	Point3f p1r = ray.getPoint(int2);
 	float hPo = dotProduct(Base - p0r, axis);

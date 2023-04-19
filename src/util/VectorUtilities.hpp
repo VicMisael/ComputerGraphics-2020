@@ -1,5 +1,4 @@
-#ifndef _VECTOR_UTILITIES_
-#define _VECTOR_UTILITIES_
+#pragma once
 
 
 #include "definitions.hpp"
@@ -27,14 +26,6 @@ namespace VectorUtilities
 
 	static Vector3f normalizeCopy(const Vector3f& v)
 	{
-		/*float sqrdlength = v.x * v.x + v.y * v.y + v.z * v.z;
-
-		float x = v.x*glm::inversesqrt(sqrdlength);
-		float y = v.y*glm::inversesqrt(sqrdlength);
-		float z = v.z*glm::inversesqrt(sqrdlength);
-		return Vector3f(x, y, z);
-		*/
-
 		return normalize(v);
 	};
 
@@ -64,4 +55,3 @@ namespace VectorUtilities
 	}
 }
 
-#endif

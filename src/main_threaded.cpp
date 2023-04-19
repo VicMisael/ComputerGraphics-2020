@@ -1,3 +1,5 @@
+#include "util/definitions.hpp"
+#define GLM_FORCE_SWIZZLE
 #include <iostream>
 #include "util/Color.hpp"
 #include "objects/World.hpp"
@@ -24,7 +26,7 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 	//std::cout << "X: " << vx << "Y:" << vy << std::endl;
 	return Point3f(vx, vy, vz);
 }
-constexpr int screenwidthheight = 1000;
+constexpr int screenwidthheight = 900;
 int main(int argc, char** argv)
 {
 	std::cout << std::thread::hardware_concurrency() << std::endl;
@@ -43,13 +45,12 @@ int main(int argc, char** argv)
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	constexpr uint32_t numsamples = 8;
-	sampler* sampler = new equidistant_point_sampler(numsamples);
+	constexpr uint32_t numsamples = 10;
+	sampler* sampler = new mt19937_point_sampler(numsamples);
 
 	auto eye = Point3f(vcx, vcy, vcz);
 	auto at = Point3f(10, 5, 13);
-	auto up4 = Point4f(0.0f, 1.0f, 0.0f, 0.0f);
-	Point3f up = up4.xyz;
+	auto up = Point3f(0.0f, 1.0f, 0.0f);
 	auto camera = Camera(eye, at, up);
 	World world(camera);
 	world.SetShadowsOn(shadows);
@@ -57,7 +58,7 @@ int main(int argc, char** argv)
 	auto t1 = std::chrono::high_resolution_clock::now();
 	const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
 	const auto& points = sampler->generate_points();
-	auto draw = [&]()
+	auto draw = [&]
 	{
 		while (run)
 		{
@@ -76,7 +77,8 @@ int main(int argc, char** argv)
 						auto r = Ray(origin, origin - point);
 						color += world.computeColor(r, 1, reflectionDepth);
 					}
-					color = color * (1.0f / numsamples);
+					
+					color = color*(1.0f/(numsamples));
 					rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] = color.rgba();
 				}
 			}

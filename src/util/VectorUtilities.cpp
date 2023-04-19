@@ -1,3 +1,4 @@
+/*
 #include "VectorUtilities.hpp"
 #include <glm/geometric.hpp>
 
@@ -12,14 +13,6 @@ float  VectorUtilities::Length(const Vector3f& a, const Vector3f& b) {
     return glm::sqrt(glm::dot(a, b));
 };
 Vector3f  VectorUtilities::normalizeCopy(const Vector3f& v) {
-    /*float sqrdlength = v.x * v.x + v.y * v.y + v.z * v.z;
-
-    float x = v.x*glm::inversesqrt(sqrdlength);
-    float y = v.y*glm::inversesqrt(sqrdlength);
-    float z = v.z*glm::inversesqrt(sqrdlength);
-    return Vector3f(x, y, z);
-    */
-
     return glm::normalize(v);
 };
 
@@ -41,3 +34,4 @@ Vector3f VectorUtilities::toVector3f(const Vector4f vec) {
     return Vector3f(vec.x / vec.w, vec.y / vec.w, vec.z / vec.w);
 }
 
+*/

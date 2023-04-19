@@ -45,7 +45,7 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 			{
 				const auto r = Ray(p, lVec);
 				const auto [intersects, t_min,normal] = ob->Intersects(r);
-				if (intersects && t_min > 0.1f && t_min <= lveclength)
+				if (intersects && t_min>0.001f && t_min <= lveclength)
 				{
 					return intensity;
 				}
@@ -121,7 +121,7 @@ void inline World::init()
 	building4->Scale(2, 3, 1);
 	building4->RotateY(PI / 4);
 	building4->Translate(-1, 0, -1);
-	building4->setReflectivness(.1);
+	building4->setReflectivness(1);
 	objects.push_back(building4);
 
 
@@ -139,7 +139,7 @@ void inline World::init()
 	buildin3->Shearx(1, 1);
 	buildin3->RotateY(PI / 6);
 	buildin3->Translate(-2, -0.5, 3);
-	buildin3->setReflectivness(.07);
+	buildin3->setReflectivness(.7);
 	objects.push_back(buildin3);
 	
 	//Objetos extras
@@ -315,7 +315,7 @@ Color World::computeColor(Ray& ray, float vz, unsigned int rd)
 	if (isReflective && rd > 0)
 	{
 		const float rindex = ClosestIntersected->getReflectivness();
-		//const Vector3f Normal = ClosestIntersected->getNormal(ray.getPoint(reflectT));
+
 		const Vector3f dir = ray.D * -1.0f;
 		Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, normalClosest));
 		retColor = retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
