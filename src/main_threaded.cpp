@@ -18,6 +18,10 @@
 #include "sampler/vertical_point_sampler.h"
 #include "sampler/horizontal_point_sampler.h"
 
+bool inline should_draw(const unsigned int x,const unsigned int x_to_skip)
+{
+	return (x % (x_to_skip + 1)) == 0;
+}
 Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 {
 	const float vx = Cx * ((vph / static_cast<float>(vpw)) / vpw);
@@ -45,8 +49,8 @@ int main(int argc, char** argv)
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	constexpr uint32_t numsamples = 10;
-	sampler* sampler = new mt19937_point_sampler(numsamples);
+	constexpr uint32_t numsamples = 2;
+	sampler* sampler = new random_point_sampler(numsamples);
 
 	auto eye = Point3f(vcx, vcy, vcz);
 	auto at = Point3f(10, 5, 13);
@@ -55,31 +59,34 @@ int main(int argc, char** argv)
 	World world(camera);
 	world.SetShadowsOn(shadows);
 	//Get timings
-	auto t1 = std::chrono::high_resolution_clock::now();
+
+
 	const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
 	const auto& points = sampler->generate_points();
 	auto draw = [&]
 	{
 		while (run)
 		{
-
+			auto t1 = std::chrono::high_resolution_clock::now();
 			for (int y = -Ch / 2; y < Ch / 2; y++)
 			{
 				for (int x = -Cw / 2; x < Cw / 2; x++)
 				{
-					Color color;
 
-					for (const std::tuple<float, float>& sample_point : points)
-					{
-						const auto origin = Point3f(0, 0, 0);
-						const auto [x_sample, y_sample] = sample_point;
-						const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 1.0f);
-						auto r = Ray(origin, origin - point);
-						color += world.computeColor(r, 1, reflectionDepth);
-					}
+	
+						Color color;
+						for (const std::tuple<float, float>& sample_point : points)
+						{
+							constexpr auto origin = Point3f(0, 0, 0);
+							const auto [x_sample, y_sample] = sample_point;
+							const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 1.0f);
+							auto r = Ray(origin, origin - point);
+							color += world.computeColor(r, 1, reflectionDepth);
+						}
+						
+						color = color*(1.0f/(numsamples));
+						rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] = color.rgba();
 					
-					color = color*(1.0f/(numsamples));
-					rgba[(y + Ch / 2) * screenwidthheight + (x + Cw / 2)] = color.rgba();
 				}
 			}
 			auto t2 = std::chrono::high_resolution_clock::now();

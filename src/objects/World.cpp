@@ -45,7 +45,7 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 			{
 				const auto r = Ray(p, lVec);
 				const auto [intersects, t_min,normal] = ob->Intersects(r);
-				if (intersects && t_min>0.001f && t_min <= lveclength)
+				if (intersects && t_min>0.01f && t_min <= lveclength)
 				{
 					return intensity;
 				}
@@ -282,44 +282,48 @@ void World::SetShadowsOn(bool shadows)
 Color World::computeColor(Ray& ray, float vz, unsigned int rd)
 {
 	Color retColor = bgColor;
-	BaseObject* ClosestIntersected = nullptr;
 	float minimalT = INFINITY;
-	bool isReflective = false;
-	float reflectT;
-	Vector3f normalClosest;
+	struct 
+	{
+		bool hits = false;
+		float t= INFINITY;
+		Point3f at;
+		Vector3f normal;
+		Color color;
+		float specular;
+		float reflectiveness;
+		
+	} closest;
 
 	for (BaseObject* ob : objects)
 	{
 		const auto [intersects, t,normal] = ob->Intersects(ray);
 		if (intersects)
 		{
-			if (t > vz && t < minimalT)
+			if (t > vz && t < closest.t)
 			{
-				minimalT = t;
-				Point3f point = ray.getPoint(t);
-
-				Vector3f invdir = ray.D * -1.0f;
-				retColor = ob->getColor() * ComputeLighting(point, normal, invdir, ob->getSpecular());
-				isReflective = (ob->getReflectivness() > 0);
-				if (isReflective)
-				{
-					ClosestIntersected = ob;
-					reflectT = t;
-					normalClosest.x = normal.x;
-					normalClosest.y = normal.y;
-					normalClosest.z = normal.z;
-				}
+				closest.hits = true;
+				closest.t = t;
+				closest.at = ray.getPoint(t);
+				closest.normal = normalize(normal);
+				closest.color = ob->getColor();
+				closest.specular = ob->getSpecular();
+				closest.reflectiveness = ob->getReflectivness();
 			}
 		}
 	}
-	if (isReflective && rd > 0)
-	{
-		const float rindex = ClosestIntersected->getReflectivness();
+	if(closest.hits){
 
-		const Vector3f dir = ray.D * -1.0f;
-		Ray reflected_ray(ray.getPoint(minimalT), ReflectRay(dir, normalClosest));
-		retColor = retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
+		retColor = (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular));
+		if (closest.reflectiveness > 0 && rd > 0)
+		{
+			const float rindex = closest.reflectiveness;
+			Ray reflected_ray(closest.at, ReflectRay(ray.D * -1.0f, closest.normal));
+			retColor = retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
+		}
+
 	}
+
 
 	return retColor;
 }
