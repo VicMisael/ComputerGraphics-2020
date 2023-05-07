@@ -30,7 +30,7 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 	//std::cout << "X: " << vx << "Y:" << vy << std::endl;
 	return Point3f(vx, vy, vz);
 }
-constexpr int screenwidthheight = 900;
+constexpr int screenwidthheight = 650;
 int main(int argc, char** argv)
 {
 	std::cout << std::thread::hardware_concurrency() << std::endl;

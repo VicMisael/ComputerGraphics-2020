@@ -281,8 +281,7 @@ void World::SetShadowsOn(bool shadows)
 
 Color World::computeColor(Ray& ray, float vz, unsigned int rd)
 {
-	Color retColor = bgColor;
-	float minimalT = INFINITY;
+	
 	struct 
 	{
 		bool hits = false;
@@ -314,16 +313,16 @@ Color World::computeColor(Ray& ray, float vz, unsigned int rd)
 	}
 	if(closest.hits){
 
-		retColor = (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular));
 		if (closest.reflectiveness > 0 && rd > 0)
 		{
 			const float rindex = closest.reflectiveness;
 			Ray reflected_ray(closest.at, ReflectRay(ray.D * -1.0f, closest.normal));
-			retColor = retColor * (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
+			return  (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular))
+			* (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
 		}
-
+		return (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular));
 	}
 
 
-	return retColor;
+	return bgColor;
 }
