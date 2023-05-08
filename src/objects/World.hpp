@@ -28,7 +28,7 @@ class World
 	void init();
 	bool renderShadows = true;
 	float ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f& V, float s);
-
+	bool inShadow(const Point3f p, const Vector3f Ldir, const float lvecLength) const ;
 public:
 	World();
 	World(Camera c);

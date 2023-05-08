@@ -12,14 +12,34 @@ Vector3f inline ReflectRay(const Vector3f R, const Vector3f N)
 	return ((N * 2.0f) * dotProduct(N, R) - R);
 }
 
+bool inShadow(Point3f p,Vector3f light)
+{
+	
+}
+inline bool World::inShadow(const Point3f p,const Vector3f Ldir,const float lvecLength) const
+{
+	for (BaseObject* ob : objects)
+	{
+		const auto r = Ray(p, Ldir);
+		const auto [intersects, t_min, normal] = ob->Intersects(r);
+		if (intersects && t_min > 0.01f && t_min <= lvecLength)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f& V, const float s)
 {
 	using namespace VectorUtilities;
 	float intensity = 0;
-	Vector3f lVec;
+
 	float distanceFactor = 1.0f;
-	for (Light* l : lights)
+	Vector3f lVec;
+	for (const Light* l : lights)
 	{
+
 		switch (l->lt)
 		{
 		case LightType::ambient:
@@ -39,18 +59,8 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 		}
 		const float lveclength = length(lVec);
 		lVec = normalize(lVec);
-		if (renderShadows)
-		{
-			for (BaseObject* ob : objects)
-			{
-				const auto r = Ray(p, lVec);
-				const auto [intersects, t_min,normal] = ob->Intersects(r);
-				if (intersects && t_min>0.01f && t_min <= lveclength)
-				{
-					return intensity;
-				}
-			}
-		}
+
+		if (inShadow(p, lVec, lveclength)) continue;
 
 		const float n_dot_l = dotProduct(n, lVec);
 		const float _intensity = l->getIntensity();
@@ -58,13 +68,13 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 		{
 			intensity += (_intensity * distanceFactor) * (n_dot_l / (length(n) * length(lVec)));
 		}
-		if (s >= 0)
+		if (s > 0)
 		{
 			const Vector3f R = ReflectRay(lVec, n);
 			const float r_dot_v = dotProduct(R, V);
 			if (r_dot_v > 0)
 			{
-				const float _pow = glm::pow(r_dot_v / (length(R) * length(V)), s);
+				const float _pow = std::pow(r_dot_v / (length(R) * length(V)), s);
 				intensity += _intensity * _pow;
 			}
 		}
@@ -81,8 +91,7 @@ void inline World::init()
 	}
 	bgColor = Color(r, g, b);
 
-	auto lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.1);
-	lights.push_back(lambient);
+
 
 	auto l2 = new Light(Point3f(-60, 60, -100), Point3f(0, 0, 0), 5);
 	l2->SetType(LightType::point);
@@ -95,6 +104,9 @@ void inline World::init()
 	auto l4 = new Light(Point3f(3, 12, 15), Point3f(0, -1, 0), 1);
 	l4->SetType(LightType::directional);
 	lights.push_back(l4);
+
+	auto lambient = new Light(Point3f(0, 0, 0), Vector3f(0, 1, 0), 0.1);
+	lights.push_back(lambient);
 
 
 
@@ -318,7 +330,8 @@ Color World::computeColor(Ray& ray, float vz, unsigned int rd)
 			const float rindex = closest.reflectiveness;
 			Ray reflected_ray(closest.at, ReflectRay(ray.D * -1.0f, closest.normal));
 			return  (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular))
-			* (1 - rindex) + computeColor(reflected_ray, vz, rd - 1) * rindex;
+			* (1 - rindex) + 
+				computeColor(reflected_ray, vz, rd - 1) * rindex;
 		}
 		return (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular));
 	}

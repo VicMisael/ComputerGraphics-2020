@@ -20,9 +20,9 @@ public:
 	LightType lt = LightType::ambient;
 	Light(Point3f point, Vector3f Direction, float intensity);
 	void SetType(LightType lt);
-	float getIntensity();
-	Point3f getPosition();
-	Vector3f getDirection();
+	float getIntensity() const ;
+	Point3f getPosition() const;
+	Vector3f getDirection() const;
 	void ApplyCamera(Matrix4x4 m);
 };
 

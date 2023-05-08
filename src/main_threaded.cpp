@@ -30,7 +30,7 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 	//std::cout << "X: " << vx << "Y:" << vy << std::endl;
 	return Point3f(vx, vy, vz);
 }
-constexpr int screenwidthheight = 650;
+constexpr int screenwidthheight = 950;
 int main(int argc, char** argv)
 {
 	std::cout << std::thread::hardware_concurrency() << std::endl;
@@ -44,12 +44,12 @@ int main(int argc, char** argv)
 	const auto rgba = new uint32_t[screenwidthheight * screenwidthheight];
 	unsigned int reflectionDepth = 6;
 	float vcx = 2;
-	float vcy = 3;
-	float vcz = -10;
+	float vcy = 6;
+	float vcz = -14;
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
-	constexpr uint32_t numsamples = 2;
+	constexpr uint32_t numsamples = 1;
 	sampler* sampler = new random_point_sampler(numsamples);
 
 	auto eye = Point3f(vcx, vcy, vcz);
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 	//Get timings
 
 
-	const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
+	//const Matrix4x4 invViewMatrix = camera.getCameraToWorld();
 	const auto& points = sampler->generate_points();
 	auto draw = [&]
 	{

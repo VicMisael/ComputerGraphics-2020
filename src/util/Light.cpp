@@ -13,12 +13,12 @@ void Light::SetType(LightType lt)
 	this->lt = lt;
 }
 
-float Light::getIntensity()
+float Light::getIntensity() const
 {
 	return intensity;
 }
 
-Point3f Light::getDirection()
+Point3f Light::getDirection() const
 {
 	return Direction;
 }
@@ -31,4 +31,4 @@ void Light::ApplyCamera(const Matrix4x4 m)
 	Direction = normalize(toVector3f(m * dir));
 }
 
-Point3f Light::getPosition() { return point; }
+Point3f Light::getPosition() const { return point; }
