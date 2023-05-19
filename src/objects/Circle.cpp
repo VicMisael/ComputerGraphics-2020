@@ -22,7 +22,7 @@ std::tuple<int, float, Vector3f> Circle::Intersects(const Ray& ray)
 		{
 			return NO_INTERSECT;
 		}
-		if (delta == 0)
+		if (abs(delta)<FLT_EPSILON)
 		{
 			t_min = -b / a;
 			return {1, t_min, getNormal(ray.getPoint(t_min))};
@@ -38,8 +38,8 @@ std::tuple<int, float, Vector3f> Circle::Intersects(const Ray& ray)
 
 Vector3f Circle::getNormal(const Point3f p)
 {
-	Vector3f pMc = normalize(p - Center);
-	return pMc;
+	;
+	return normalize(p - Center);
 }
 
 void Circle::ApplyCamera(const Matrix4x4 m)

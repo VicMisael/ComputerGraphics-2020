@@ -1,6 +1,8 @@
 #pragma once
 
 
+#include <random>
+
 #include "definitions.hpp"
 #include "Vector3f.hpp"
 #include "Vector4f.hpp"
@@ -52,6 +54,25 @@ namespace VectorUtilities
 			return Point3f(vec.x, vec.y, vec.z);
 		}
 		return Vector3f(vec.x / vec.w, vec.y / vec.w, vec.z / vec.w);
+	}
+
+	inline std::mt19937 generator(time(NULL));
+	static Vector3f random(float min, float max)
+	{
+		std::uniform_real_distribution dis(min, max);
+		//std::uniform_int_distribution<float> dist();
+		return { dis(generator), dis(generator), dis(generator) };
+	}
+
+	static Vector3f random_in_unit_sphere()
+	{
+		while (true) {
+			auto p = random(-1, 1);
+
+			auto sqrd_length = length(p) * length(p);
+			if (sqrd_length >= 1) continue;
+			return p;
+		}
 	}
 }
 

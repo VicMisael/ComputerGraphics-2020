@@ -6,17 +6,13 @@ static uint8_t r = 203;
 static uint8_t g = 224;
 static uint8_t b = 233;
 
-Vector3f inline ReflectRay(const Vector3f R, const Vector3f N)
+Vector3f  ReflectRay(const Vector3f R, const Vector3f N)
 {
 	using namespace VectorUtilities;
 	return ((N * 2.0f) * dotProduct(N, R) - R);
 }
 
-bool inShadow(Point3f p,Vector3f light)
-{
-	
-}
-inline bool World::inShadow(const Point3f p,const Vector3f Ldir,const float lvecLength) const
+bool World::inShadow(const Point3f p,const Vector3f Ldir,const float lvecLength) const
 {
 	for (BaseObject* ob : objects)
 	{
@@ -34,7 +30,6 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 {
 	using namespace VectorUtilities;
 	float intensity = 0;
-
 	float distanceFactor = 1.0f;
 	Vector3f lVec;
 	for (const Light* l : lights)
@@ -45,7 +40,6 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 		case LightType::ambient:
 			intensity += l->getIntensity();
 			continue;
-			break;
 		case LightType::point:
 			lVec = ((l->getPosition()) - p);
 			distanceFactor = inverseSquare(length(lVec));
@@ -60,7 +54,7 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 		const float lveclength = length(lVec);
 		lVec = normalize(lVec);
 
-		if (inShadow(p, lVec, lveclength)) continue;
+		if ( inShadow(p, lVec, lveclength)) continue;
 
 		const float n_dot_l = dotProduct(n, lVec);
 		const float _intensity = l->getIntensity();
@@ -78,6 +72,7 @@ float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f
 				intensity += _intensity * _pow;
 			}
 		}
+
 	}
 	return intensity;
 };
@@ -93,11 +88,11 @@ void inline World::init()
 
 
 
-	auto l2 = new Light(Point3f(-60, 60, -100), Point3f(0, 0, 0), 5);
+	auto l2 = new Light(Point3f(-60, 60, -100), Point3f(0, 0, 0), 0.5);
 	l2->SetType(LightType::point);
 	lights.push_back(l2);
 
-	auto l3 = new Light(Point3f(3, 12, -4), Point3f(0, 0, 0), 1);
+	auto l3 = new Light(Point3f(3, 12, -4), Point3f(0, 0, 0),2);
 	l3->SetType(LightType::point);
 	lights.push_back(l3);
 
@@ -291,27 +286,26 @@ void World::SetShadowsOn(bool shadows)
 	this->renderShadows = shadows;
 }
 
-Color World::computeColor(Ray& ray, float vz, unsigned int rd)
+Color World::computeColor(Ray& ray, const float vz,const unsigned int rd)
 {
-	
 	struct 
 	{
-		bool hits = false;
+		float specular;
+		float reflectiveness;
 		float t= INFINITY;
 		Point3f at;
 		Vector3f normal;
 		Color color;
-		float specular;
-		float reflectiveness;
-		
+		bool hits=false;
 	} closest;
+
 
 	for (BaseObject* ob : objects)
 	{
 		const auto [intersects, t,normal] = ob->Intersects(ray);
 		if (intersects)
 		{
-			if (t > vz && t < closest.t)
+			if ( t > vz && t < closest.t)
 			{
 				closest.hits = true;
 				closest.t = t;
@@ -324,11 +318,10 @@ Color World::computeColor(Ray& ray, float vz, unsigned int rd)
 		}
 	}
 	if(closest.hits){
-
 		if (closest.reflectiveness > 0 && rd > 0)
 		{
 			const float rindex = closest.reflectiveness;
-			Ray reflected_ray(closest.at, ReflectRay(ray.D * -1.0f, closest.normal));
+			Ray reflected_ray(closest.at, ReflectRay(ray.D * -1.0f, closest.normal) + VectorUtilities::random(0, 1.0) * VectorUtilities::random_in_unit_sphere());
 			return  (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular))
 			* (1 - rindex) + 
 				computeColor(reflected_ray, vz, rd - 1) * rindex;
