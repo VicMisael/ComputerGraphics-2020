@@ -26,7 +26,7 @@ std::tuple<int, float, Vector3f> Plane::Intersects(const Ray& ray)
 		return NO_INTERSECT;
 	}
 
-	return {1, intersection, this->getNormal(ray.getPoint(t_min))};
+	return {1, intersection, n};
 }
 
 

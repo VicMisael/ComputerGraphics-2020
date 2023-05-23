@@ -6,10 +6,10 @@ static uint8_t r = 203;
 static uint8_t g = 224;
 static uint8_t b = 233;
 
-Vector3f  ReflectRay(const Vector3f R, const Vector3f N)
+Vector3f  ReflectRay(const Vector3f in, const Vector3f normal)
 {
 	using namespace VectorUtilities;
-	return ((N * 2.0f) * dotProduct(N, R) - R);
+	return in - 2 * dotProduct(in, normal) * normal;
 }
 
 bool World::inShadow(const Point3f p,const Vector3f Ldir,const float lvecLength) const
@@ -168,9 +168,14 @@ void inline World::init()
 
 
 	auto cBola4 = new Circle(1, Color(255, 255, 0));
-	cBola4->Translate(1, 10, -2);
+	cBola4->Translate(1, 10, 2);
 	cBola4->setReflectivness(0.5);
 	objects.push_back(cBola4);
+
+	auto cBola123 = new Circle(1, Color(255, 255, 0));
+	cBola4->Translate(0, 5, -4);
+	cBola4->setReflectivness(0.5);
+	objects.push_back(cBola123);
 
 
 
@@ -321,12 +326,13 @@ Color World::computeColor(Ray& ray, const float vz,const unsigned int rd)
 		if (closest.reflectiveness > 0 && rd > 0)
 		{
 			const float rindex = closest.reflectiveness;
-			Ray reflected_ray(closest.at, ReflectRay(ray.D * -1.0f, closest.normal) + VectorUtilities::random(0, 1.0) * VectorUtilities::random_in_unit_sphere());
-			return  (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular))
+			// VectorUtilities::random(0, 1.0) * VectorUtilities::random_in_unit_sphere();
+			Ray reflected_ray(closest.at, ReflectRay(normalize(ray.D), closest.normal)+ VectorUtilities::random(0, 1.0) * VectorUtilities::random_in_unit_sphere());
+			return  (closest.color * ComputeLighting(closest.at, closest.normal, ray.D*-1.0f, closest.specular))
 			* (1 - rindex) + 
 				computeColor(reflected_ray, vz, rd - 1) * rindex;
 		}
-		return (closest.color * ComputeLighting(closest.at, closest.normal, ray.D * -1.0f, closest.specular));
+		return (closest.color * ComputeLighting(closest.at, closest.normal, ray.D*-1.0f, closest.specular));
 	}
 
 

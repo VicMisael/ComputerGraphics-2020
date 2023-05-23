@@ -30,7 +30,7 @@ Point3f inline canvasToViewport(float Cx, float Cy, int vpw, int vph, float d)
 	//std::cout << "X: " << vx << "Y:" << vy << std::endl;
 	return Point3f(vx, vy, vz);
 }
-constexpr int screenwidthheight = 980;
+constexpr int screenwidthheight = 650;
 int main(int argc, char** argv)
 {
 	std::cout << std::thread::hardware_concurrency() << std::endl;
@@ -42,16 +42,16 @@ int main(int argc, char** argv)
 	bool run = true;
 	//auto window = new Color[screenwidthheight][screenwidthheight];
 	const auto rgba = new uint32_t[screenwidthheight * screenwidthheight];
-	unsigned int reflectionDepth = 1;
+	unsigned int reflectionDepth = 16;
 	float vcx = 2;
-	float vcy = 6;
-	float vcz = -14;
+	float vcy = 0;
+	float vcz = -40;
 	int Cw = screenwidthheight;
 	int Ch = screenwidthheight;
 	bool shadows = true;
 	constexpr uint32_t numsamples = 16;
 	sampler* sampler = new mt19937_point_sampler(numsamples);
-
+	bool perspective = true;
 	auto eye = Point3f(vcx, vcy, vcz);
 	auto at = Point3f(10, 5, 13);
 	auto up = Point3f(0.0f, 1.0f, 0.0f);
@@ -77,11 +77,14 @@ int main(int argc, char** argv)
 						Color color;
 						for (const std::tuple<float, float>& sample_point : points)
 						{
-							constexpr auto origin = Point3f(0, 0, 0);
+							if(perspective){
+							const auto origin = Point3f(0, 0, 0);
 							const auto [x_sample, y_sample] = sample_point;
-							const auto point = canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 1.0f);
-							auto r = Ray(origin, origin - point);
-							color += world.computeColor(r, 1 , reflectionDepth);
+							const auto point =  canvasToViewport(x + x_sample, y + y_sample, Cw, Ch, 1.0f);
+							auto r = Ray(origin,  (origin - point));
+							color += world.computeColor(r, 1, reflectionDepth);
+							}
+							
 						}
 						
 						color = color*(1.0f/(numsamples));
@@ -91,7 +94,7 @@ int main(int argc, char** argv)
 			}
 			auto t2 = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<double, std::milli> ms_double = t2 - t1;
-			std::cout << ms_double.count() << "ms" << std::endl;
+			std::cout << " Took" << ms_double.count() / 1000 << "s" << std::endl;
 		}
 	};
 
@@ -135,6 +138,10 @@ int main(int argc, char** argv)
 				if (e.key.keysym.sym == SDLK_s)
 				{
 					shadows = !shadows;
+				}
+				if(e.key.keysym.sym == SDLK_p)
+				{
+					perspective = !perspective;
 				}
 				if (e.key.keysym.sym == SDLK_r)
 				{
